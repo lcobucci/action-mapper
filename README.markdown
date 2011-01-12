@@ -29,28 +29,26 @@ On your project include the ActionMapper's autoloader and register it with SPL:
 
 On your project you have to have a .htaccess file like this (to redirect all URI's to a unique file):
 
-   RewriteEngine On
-   RewriteRule !\.(js|ico|txt|gif|jpg|jpeg|png|css|pdf|swf)$ index.php
+    RewriteEngine On
+    RewriteRule !\.(js|ico|txt|gif|jpg|jpeg|png|css|pdf|swf)$ index.php
     
 Basic Usage
 -----------
 
 Create a class that implements the AppAction interface:
 
-   class TestAction implements AppAction
-   {
-      public function process(AppRequest $request)
-      {
-         echo 'Hello World';
-      }
-   }
+    class TestAction implements AppAction
+    {
+        public function process(AppRequest $request)
+        {
+            echo 'Hello World';
+        }
+    }
 
 Map it to an application:
 
-   $app = WebApplication::getInstance();
-   $app->attachAction('*', new TestAction());
-   $app->run();
+    $app = WebApplication::getInstance();
+    $app->attachAction('*', new TestAction());
+    $app->run();
 
-Now all your project's URI will use thhe TestAction::process, and will display **Hello World**.
-
-
+Now all your project's URI will use thhe TestAction::process, and will display **Hello World**
