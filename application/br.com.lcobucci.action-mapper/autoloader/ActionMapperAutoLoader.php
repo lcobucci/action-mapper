@@ -1,8 +1,14 @@
 <?php
 class ActionMapperAutoLoader
 {
+	/**
+	 * @var array
+	 */
 	private $dir;
 	
+	/**
+	 * @param string $class
+	 */
 	public function load($class)
 	{
 		if (is_null($this->dir)) {
@@ -33,8 +39,8 @@ class ActionMapperAutoLoader
 		return false;
 	}
 	
-	public function register()
+	public static function register()
 	{
-		spl_autoload_register(array($this, 'load'));
+		spl_autoload_register(array(new self(), 'load'));
 	}
 }

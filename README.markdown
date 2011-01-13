@@ -10,4 +10,4 @@ It's based on Struts framework, and the basic features are:
 - Automatic action mapper (classes that implements AppAction interface and has the "ActionController");
 - Error handler (HTTP 404, HTTP 403 and HTTP 500).
 
-See http://github.com/lcobucci/action-mapper/wiki for more informations.
+See [[wiki pages|Home]] for more informations.
