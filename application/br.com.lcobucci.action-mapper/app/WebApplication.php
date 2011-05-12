@@ -119,6 +119,14 @@ class WebApplication
 	}
 	
 	/**
+	 * @return string
+	 */
+	public function getApplicationUrl()
+	{
+		return 'http://' . $_SERVER['HTTP_HOST'] . $this->getApplicationUri();
+	}
+	
+	/**
 	 * @param string $sessionName
 	 * @return AppSession
 	 */
@@ -160,7 +168,7 @@ class WebApplication
 	 */
 	public function redirect($uri)
 	{
-		header('Location: http://' . $_SERVER['HTTP_HOST'] . $this->getApplicationUri() . $uri);
+		header('Location: ' . $this->getApplicationUrl() . $uri);
 		exit;
 	}
 }
