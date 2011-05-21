@@ -3,7 +3,7 @@ ActionMapper
 
 ActionMapper is an open source front-controller framework for PHP 5.
 
-It's based on Struts framework, and the basic features are:
+It's based on JSP's mapping style, and the basic features are:
 
 - Basic action map;
 - Filters map;
