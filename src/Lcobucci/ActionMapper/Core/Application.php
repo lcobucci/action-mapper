@@ -121,11 +121,11 @@ class Application
 
 			$this->getFilterChain()->applyFilters($request, $response);
 			$this->getActionMapper()->process($request, $response);
-
-			$response->send();
 		} catch (Exception $e) {
 			$this->getErrorHandler()->handleError($request, $response, $e);
 		}
+
+		$response->send();
 	}
 
 	/**
