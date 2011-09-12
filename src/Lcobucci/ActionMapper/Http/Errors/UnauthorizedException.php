@@ -1,5 +1,5 @@
 <?php
-namespace Lcobucci\ActionMapper\HttpErrors;
+namespace Lcobucci\ActionMapper\Http\Errors;
 
 class UnauthorizedException extends HttpException
 {
