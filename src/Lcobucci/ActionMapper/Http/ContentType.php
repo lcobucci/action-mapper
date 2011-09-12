@@ -1,5 +1,5 @@
 <?php
-namespace Lcobucci\ActionMapper\Request;
+namespace Lcobucci\ActionMapper\Http;
 
 class ContentType
 {
