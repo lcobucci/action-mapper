@@ -41,6 +41,11 @@ class Application
 	private $response;
 
 	/**
+	 * @var object
+	 */
+	private $dependencyContainer;
+
+	/**
 	 * @param Lcobucci\ActionMapper\Action\Mapper $actionMapper
 	 * @param Lcobucci\ActionMapper\Filter\FilterChain $filterChain
 	 * @param Lcobucci\ActionMapper\Core\AbstractErrorHandler $errorHandler
@@ -150,5 +155,21 @@ class Application
 		}
 
 		return $this->response;
+	}
+
+	/**
+	 * @return object
+	 */
+	public function getDependencyContainer()
+	{
+		return $this->dependencyContainer;
+	}
+
+	/**
+	 * @param object $dependencyContainer
+	 */
+	public function setDependencyContainer($dependencyContainer)
+	{
+		$this->dependencyContainer = $dependencyContainer;
 	}
 }
