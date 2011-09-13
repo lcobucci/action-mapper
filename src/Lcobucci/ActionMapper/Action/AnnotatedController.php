@@ -112,4 +112,20 @@ class AnnotatedController implements Action
     		// Ignore
     	}
     }
+
+    /**
+     * @return \Lcobucci\ActionMapper\Core\Application
+     */
+    protected function getApplication()
+    {
+    	return $this->getRequest()->getApplication();
+    }
+
+    /**
+     * @return object
+     */
+    protected function getDependencyContainer()
+    {
+    	return $this->getApplication()->getDependencyContainer();
+    }
 }
