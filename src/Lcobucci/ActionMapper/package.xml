@@ -10,11 +10,11 @@
   <email>lcobucci@gmail.com</email>
   <active>yes</active>
  </lead>
- <date>2011-09-12</date>
- <time>16:36:07</time>
+ <date>2011-09-13</date>
+ <time>16:36:51</time>
  <version>
-  <release>0.1.0</release>
-  <api>0.1.0</api>
+  <release>0.1.2</release>
+  <api>0.1.2</api>
  </version>
  <stability>
   <release>alpha</release>
@@ -22,19 +22,20 @@
  </stability>
  <license uri="http://www.opensource.org/licenses/bsd-license.php">BSD Style</license>
  <notes>
-Initial release
+* Added support for dependency injection
+* Default content-type setted
  </notes>
  <contents>
   <dir baseinstalldir="Lcobucci/ActionMapper" name="/">
    <file baseinstalldir="Lcobucci/ActionMapper" md5sum="ab64d5a4176d33c69ab1639002e4db52" name="Action/Action.php" role="php" />
    <file baseinstalldir="Lcobucci/ActionMapper" md5sum="ad7da8184f67a148a34cf6d6e0364152" name="Action/ActionAlreadyMappedException.php" role="php" />
    <file baseinstalldir="Lcobucci/ActionMapper" md5sum="03e14ea4d5709f4c28e6d99f89dfe2fd" name="Action/ActionNotFoundException.php" role="php" />
-   <file baseinstalldir="Lcobucci/ActionMapper" md5sum="ebd558631f25612d294ec6a1366bbcb8" name="Action/AnnotatedController.php" role="php" />
+   <file baseinstalldir="Lcobucci/ActionMapper" md5sum="32d0c8127c1a019184cc494789f3879b" name="Action/AnnotatedController.php" role="php" />
    <file baseinstalldir="Lcobucci/ActionMapper" md5sum="c30ca67d8d0ee71c51a565c4bf4abe7b" name="Action/Mapper.php" role="php" />
    <file baseinstalldir="Lcobucci/ActionMapper" md5sum="642308c0947087bd058a6bbd23ef1c69" name="Action/MatchedAction.php" role="php" />
    <file baseinstalldir="Lcobucci/ActionMapper" md5sum="d60f61f79ece443a2ef69c8dfafa6a20" name="Annotations/RouteAnnotation.php" role="php" />
    <file baseinstalldir="Lcobucci/ActionMapper" md5sum="81ada8a34a388c6acc84d80fcf43f551" name="Core/AbstractErrorHandler.php" role="php" />
-   <file baseinstalldir="Lcobucci/ActionMapper" md5sum="b5efd5e0419c95f18d42b704505eca57" name="Core/Application.php" role="php" />
+   <file baseinstalldir="Lcobucci/ActionMapper" md5sum="1c9a8df99aad15f139bb03f7ef27c70e" name="Core/Application.php" role="php" />
    <file baseinstalldir="Lcobucci/ActionMapper" md5sum="b90152ff886dc43beeb0c0208adee307" name="Core/ApplicationFactory.php" role="php" />
    <file baseinstalldir="Lcobucci/ActionMapper" md5sum="1bf40862262c594054c871e8fe69071a" name="Core/DefaultErrorHandler.php" role="php" />
    <file baseinstalldir="Lcobucci/ActionMapper" md5sum="cfffb7f114db3481a604d8f2689c99f8" name="Core/ErrorHandler.php" role="php" />
@@ -42,7 +43,7 @@ Initial release
    <file baseinstalldir="Lcobucci/ActionMapper" md5sum="915c026ef59001c0111f926e7c97d521" name="Filter/FilterChain.php" role="php" />
    <file baseinstalldir="Lcobucci/ActionMapper" md5sum="d83412c7c005d3e672cca4813589f8e7" name="Http/ContentType.php" role="php" />
    <file baseinstalldir="Lcobucci/ActionMapper" md5sum="16bb38ddfd748881e983b797fffcd087" name="Http/Request.php" role="php" />
-   <file baseinstalldir="Lcobucci/ActionMapper" md5sum="2876a1959cd7a0dce49fe1e9bd1110d3" name="Http/Response.php" role="php" />
+   <file baseinstalldir="Lcobucci/ActionMapper" md5sum="1a4487a1d62f30d8d22e2a651b607c4a" name="Http/Response.php" role="php" />
    <file baseinstalldir="Lcobucci/ActionMapper" md5sum="97d63be41f8a243e63f91ecfc2643374" name="Http/Errors/BadRequestException.php" role="php" />
    <file baseinstalldir="Lcobucci/ActionMapper" md5sum="1a4be3cedf52867aebf188c6c279a7d4" name="Http/Errors/ForbiddenException.php" role="php" />
    <file baseinstalldir="Lcobucci/ActionMapper" md5sum="25377c5a2d5c1dfd056d27d8aeec95e3" name="Http/Errors/HttpException.php" role="php" />
@@ -90,6 +91,37 @@ Initial release
    <license uri="http://www.opensource.org/licenses/bsd-license.php">BSD Style</license>
    <notes>
 Initial release
+   </notes>
+  </release>
+  <release>
+   <version>
+    <release>0.1.1</release>
+    <api>0.1.1</api>
+   </version>
+   <stability>
+    <release>alpha</release>
+    <api>alpha</api>
+   </stability>
+   <date>2011-09-13</date>
+   <license uri="http://www.opensource.org/licenses/bsd-license.php">BSD Style</license>
+   <notes>
+Initial release
+   </notes>
+  </release>
+  <release>
+   <version>
+    <release>0.1.2</release>
+    <api>0.1.2</api>
+   </version>
+   <stability>
+    <release>alpha</release>
+    <api>alpha</api>
+   </stability>
+   <date>2011-09-13</date>
+   <license uri="http://www.opensource.org/licenses/bsd-license.php">BSD Style</license>
+   <notes>
+* Added support for dependency injection
+* Default content-type setted
    </notes>
   </release>
  </changelog>
