@@ -28,6 +28,8 @@ class Response
 		$this->application = $application;
 		$this->headers = array();
 		$this->content = '';
+
+		$this->contentType(ContentType::HTML, 'UTF-8');
 	}
 
 	/**
@@ -56,9 +58,9 @@ class Response
 		$this->send();
 	}
 
-	public function contentType($type)
+	public function contentType($type, $charset)
 	{
-		$this->headers[] = 'Content-Type: ' . $type;
+		$this->headers[] = 'Content-Type: ' . $type . '; charset=' . $charset;
 	}
 
 	public function statusCode($status)
