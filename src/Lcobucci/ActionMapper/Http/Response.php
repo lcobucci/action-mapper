@@ -65,7 +65,7 @@ class Response
 
 	public function statusCode($status)
 	{
-		$this->headers[] = 'HTTP/1.1 ' . $status;
+		$this->headers[] = $_SERVER['SERVER_PROTOCOL'] . ' ' . $status;
 	}
 
 	/**
