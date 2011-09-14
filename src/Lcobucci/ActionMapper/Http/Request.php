@@ -98,6 +98,14 @@ class Request
 	}
 
 	/**
+	 * @return string
+	 */
+	public function getUrl()
+	{
+		return $this->getApplication()->getUrl() . $this->getPath();
+	}
+
+	/**
 	 * Returns the path segments (removing the first one)
 	 *
 	 * @return array
