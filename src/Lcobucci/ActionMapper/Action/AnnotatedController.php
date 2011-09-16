@@ -1,14 +1,15 @@
 <?php
 namespace Lcobucci\ActionMapper\Action;
 
-use Lcobucci\ActionMapper\Http\Errors\PageNotFoundException;
-use Lcobucci\ActionMapper\Util\PathPatternComparer;
-use Lcobucci\ActionMapper\Annotations\RouteAnnotation;
-use Lcobucci\ActionMapper\Http\Response;
-use Lcobucci\ActionMapper\Http\Request;
-use Mindplay\Annotation\Core\Annotations;
-use Mindplay\Annotation\Core\AnnotationException;
+use \Lcobucci\ActionMapper\Http\Errors\PageNotFoundException;
+use \Lcobucci\ActionMapper\Util\PathPatternComparer;
+use \Lcobucci\ActionMapper\Annotations\RouteAnnotation;
+use \Lcobucci\ActionMapper\Http\Response;
+use \Lcobucci\ActionMapper\Http\Request;
+use \Mindplay\Annotation\Core\Annotations;
+use \Mindplay\Annotation\Core\AnnotationException;
 use \ReflectionClass;
+use \ReflectionMethod;
 
 class AnnotatedController implements Action
 {
@@ -44,8 +45,8 @@ class AnnotatedController implements Action
 	}
 
     /**
-     * @param Lcobucci\ActionMapper\Http\Request $request
-     * @param Lcobucci\ActionMapper\Http\Response $request
+     * @param \Lcobucci\ActionMapper\Http\Request $request
+     * @param \Lcobucci\ActionMapper\Http\Response $request
      * @see Action::process()
      */
     public function process(Request $request, Response $response)
@@ -72,7 +73,7 @@ class AnnotatedController implements Action
 
         $reflection = new ReflectionClass($this);
 
-        foreach ($reflection->getMethods() as $method) {
+        foreach ($reflection->getMethods(ReflectionMethod::IS_PUBLIC) as $method) {
             $annotations = Annotations::ofMethod(
             	$method,
             	null,
@@ -90,7 +91,7 @@ class AnnotatedController implements Action
     }
 
     /**
-     * @param Lcobucci\ActionMapper\Annotations\RouteAnnotation $route
+     * @param \Lcobucci\ActionMapper\Annotations\RouteAnnotation $route
      * @return boolean
      */
     private function validateRoute(RouteAnnotation $route)
