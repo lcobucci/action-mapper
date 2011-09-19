@@ -10,10 +10,10 @@
   <email>lcobucci@gmail.com</email>
   <active>yes</active>
  </lead>
- <date>2011-09-16</date>
- <time>15:02:58</time>
+ <date>2011-09-19</date>
+ <time>10:36:00</time>
  <version>
-  <release>0.1.4</release>
+  <release>0.1.5</release>
   <api>0.1.4</api>
  </version>
  <stability>
@@ -22,7 +22,7 @@
  </stability>
  <license uri="http://www.opensource.org/licenses/bsd-license.php">BSD Style</license>
  <notes>
-Minor improvement
+Dependencies fixed
  </notes>
  <contents>
   <dir baseinstalldir="Lcobucci/ActionMapper" name="/">
@@ -65,13 +65,11 @@ Minor improvement
     <name>Session</name>
     <channel>lcobucci.github.com</channel>
     <min>0.1.0</min>
-    <max>0.1.0</max>
    </package>
    <package>
     <name>Annotation</name>
     <channel>lcobucci.github.com</channel>
     <min>0.1.0</min>
-    <max>0.1.0</max>
    </package>
   </required>
  </dependencies>
@@ -151,6 +149,21 @@ Minor fixes and improvements
    <license uri="http://www.opensource.org/licenses/bsd-license.php">BSD Style</license>
    <notes>
 Minor improvement
+   </notes>
+  </release>
+  <release>
+   <version>
+    <release>0.1.5</release>
+    <api>0.1.4</api>
+   </version>
+   <stability>
+    <release>alpha</release>
+    <api>alpha</api>
+   </stability>
+   <date>2011-09-19</date>
+   <license uri="http://www.opensource.org/licenses/bsd-license.php">BSD Style</license>
+   <notes>
+Dependencies fixed
    </notes>
   </release>
  </changelog>
