@@ -51,8 +51,7 @@ class Application
 	 * @param Lcobucci\ActionMapper\Core\AbstractErrorHandler $errorHandler
 	 * @param Lcobucci\Session\SessionStorage $session
 	 */
-	public function __construct(Mapper $actionMapper, FilterChain $filterChain,
-		AbstractErrorHandler $errorHandler, SessionStorage $session)
+	public function __construct(Mapper $actionMapper, FilterChain $filterChain, AbstractErrorHandler $errorHandler, SessionStorage $session)
 	{
 		$this->actionMapper = $actionMapper;
 		$this->filterChain = $filterChain;
@@ -106,8 +105,13 @@ class Application
 	public function getPath()
 	{
 		$uri = parse_url($_SERVER['PHP_SELF']);
+		$uri = dirname($uri['path']);
 
-		return dirname($uri['path']) . '/';
+		if (substr($uri, -1) != '/') {
+		    $uri .= '/';
+		}
+
+		return $uri;
 	}
 
 	/**
