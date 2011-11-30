@@ -47,7 +47,7 @@ class Request
 	public function getParams()
 	{
 		if (is_null($this->params)) {
-			$vars = array_merget($_GET, $_POST);
+			$vars = array_merge($_GET, $_POST);
 
 			if ($this->getMethod() == 'PUT' || $this->getMethod() == 'DELETE') {
 				$vars = array_merge($vars, $this->getStreamParams());
