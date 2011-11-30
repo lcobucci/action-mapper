@@ -10,11 +10,11 @@
   <email>lcobucci@gmail.com</email>
   <active>yes</active>
  </lead>
- <date>2011-09-19</date>
- <time>10:36:00</time>
+ <date>2011-11-29</date>
+ <time>23:52:32</time>
  <version>
-  <release>0.1.5</release>
-  <api>0.1.4</api>
+  <release>0.1.8</release>
+  <api>0.1.8</api>
  </version>
  <stability>
   <release>alpha</release>
@@ -22,7 +22,7 @@
  </stability>
  <license uri="http://www.opensource.org/licenses/bsd-license.php">BSD Style</license>
  <notes>
-Dependencies fixed
+Small fixes at the Path calculator
  </notes>
  <contents>
   <dir baseinstalldir="Lcobucci/ActionMapper" name="/">
@@ -34,14 +34,13 @@ Dependencies fixed
    <file baseinstalldir="Lcobucci/ActionMapper" md5sum="642308c0947087bd058a6bbd23ef1c69" name="Action/MatchedAction.php" role="php" />
    <file baseinstalldir="Lcobucci/ActionMapper" md5sum="d60f61f79ece443a2ef69c8dfafa6a20" name="Annotations/RouteAnnotation.php" role="php" />
    <file baseinstalldir="Lcobucci/ActionMapper" md5sum="81ada8a34a388c6acc84d80fcf43f551" name="Core/AbstractErrorHandler.php" role="php" />
-   <file baseinstalldir="Lcobucci/ActionMapper" md5sum="1c9a8df99aad15f139bb03f7ef27c70e" name="Core/Application.php" role="php" />
+   <file baseinstalldir="Lcobucci/ActionMapper" md5sum="66f6f641c51190f3eb249f75b3c09607" name="Core/Application.php" role="php" />
    <file baseinstalldir="Lcobucci/ActionMapper" md5sum="b90152ff886dc43beeb0c0208adee307" name="Core/ApplicationFactory.php" role="php" />
    <file baseinstalldir="Lcobucci/ActionMapper" md5sum="1bf40862262c594054c871e8fe69071a" name="Core/DefaultErrorHandler.php" role="php" />
-   <file baseinstalldir="Lcobucci/ActionMapper" md5sum="cfffb7f114db3481a604d8f2689c99f8" name="Core/ErrorHandler.php" role="php" />
    <file baseinstalldir="Lcobucci/ActionMapper" md5sum="01de385b3a4fe2223d098ee65729a6ff" name="Filter/Filter.php" role="php" />
    <file baseinstalldir="Lcobucci/ActionMapper" md5sum="915c026ef59001c0111f926e7c97d521" name="Filter/FilterChain.php" role="php" />
    <file baseinstalldir="Lcobucci/ActionMapper" md5sum="d83412c7c005d3e672cca4813589f8e7" name="Http/ContentType.php" role="php" />
-   <file baseinstalldir="Lcobucci/ActionMapper" md5sum="afd361da0a63214199a73d1d42abcc25" name="Http/Request.php" role="php" />
+   <file baseinstalldir="Lcobucci/ActionMapper" md5sum="aa00c5de6bedf6bb48330a875e7aacdc" name="Http/Request.php" role="php" />
    <file baseinstalldir="Lcobucci/ActionMapper" md5sum="ec9b8a22acadc60283ff2cdec7ae86e3" name="Http/Response.php" role="php" />
    <file baseinstalldir="Lcobucci/ActionMapper" md5sum="97d63be41f8a243e63f91ecfc2643374" name="Http/Errors/BadRequestException.php" role="php" />
    <file baseinstalldir="Lcobucci/ActionMapper" md5sum="1a4be3cedf52867aebf188c6c279a7d4" name="Http/Errors/ForbiddenException.php" role="php" />
@@ -164,6 +163,51 @@ Minor improvement
    <license uri="http://www.opensource.org/licenses/bsd-license.php">BSD Style</license>
    <notes>
 Dependencies fixed
+   </notes>
+  </release>
+  <release>
+   <version>
+    <release>0.1.6</release>
+    <api>0.1.6</api>
+   </version>
+   <stability>
+    <release>alpha</release>
+    <api>alpha</api>
+   </stability>
+   <date>2011-11-29</date>
+   <license uri="http://www.opensource.org/licenses/bsd-license.php">BSD Style</license>
+   <notes>
+Small fixes at the Path calculator
+   </notes>
+  </release>
+  <release>
+   <version>
+    <release>0.1.7</release>
+    <api>0.1.7</api>
+   </version>
+   <stability>
+    <release>alpha</release>
+    <api>alpha</api>
+   </stability>
+   <date>2011-11-29</date>
+   <license uri="http://www.opensource.org/licenses/bsd-license.php">BSD Style</license>
+   <notes>
+Small fixes at the Path calculator
+   </notes>
+  </release>
+  <release>
+   <version>
+    <release>0.1.8</release>
+    <api>0.1.8</api>
+   </version>
+   <stability>
+    <release>alpha</release>
+    <api>alpha</api>
+   </stability>
+   <date>2011-11-29</date>
+   <license uri="http://www.opensource.org/licenses/bsd-license.php">BSD Style</license>
+   <notes>
+Small fixes at the Path calculator
    </notes>
   </release>
  </changelog>
