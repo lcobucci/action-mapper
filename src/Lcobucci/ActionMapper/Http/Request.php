@@ -81,7 +81,10 @@ class Request
 	{
 		if (is_null($this->path)) {
 			$uri = parse_url($_SERVER['REQUEST_URI']);
-			$uri = str_replace($this->getApplication()->getPath(), '', $uri['path']);
+
+			if ($this->getApplication()->getPath() != '/') {
+			    $uri = str_replace($this->getApplication()->getPath(), '', $uri['path']);
+			}
 
 			$this->setPath($uri);
 		}
