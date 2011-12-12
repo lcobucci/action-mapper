@@ -96,7 +96,7 @@ class AnnotatedController implements Action
      */
     private function validateRoute(RouteAnnotation $route)
     {
-    	$path = $this->getRequest()->getPath();
+    	$path = implode('/', $this->getRequest()->getPathSegments());
 
     	if (PathPatternComparer::patternMatches($path, $route->pattern)) {
     		return in_array($this->getRequest()->getMethod(), $route->allowedMethods);
