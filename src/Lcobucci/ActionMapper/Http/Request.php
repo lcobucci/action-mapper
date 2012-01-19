@@ -58,6 +58,21 @@ class Request
 
 		return $this->params;
 	}
+	
+	/**
+	 * Return a request specific parameter. If the parameter is NULL,
+	 * the $defaultValue will be returned.
+	 * 
+	 * @param string $key The parameter to return
+	 * @param mixed $defaultValue The default value to be returned in case of NULL param
+	 * @return string
+	 */
+	public function getParam($param, $defaultValue = NULL)
+	{
+		$params = $this->getParams();
+
+		return isset($params[$param]) ? $params[$param] : $defaultValue;
+	}
 
 	/**
 	 * Returns the PUT and DELETE request parameters
@@ -164,5 +179,18 @@ class Request
 	public function getSession()
 	{
 		return $this->getApplication()->getSession();
+	}
+
+	/**
+	 * Checks if the request was made by ajax by looking for the
+	 * "X_Requested_With" header sent by most javascript frameworks,
+	 * like jQuery, Prototype and ExtJS.
+	 *
+	 * @return boolean
+	 */
+	public function isAjax()
+	{
+		return isset($_SERVER['HTTP_X_REQUESTED_WITH']) &&
+		    strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest';
 	}
 }
