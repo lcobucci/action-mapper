@@ -119,7 +119,23 @@ class Application
 	 */
 	public function getUrl()
 	{
-		return $this->getProtocol() . $_SERVER['HTTP_HOST'] . $this->getPath();
+		return $this->getProtocol() . '://' . $_SERVER['HTTP_HOST']
+			. $this->getPath();
+	}
+
+	/**
+	 * Return if is http or https protocol
+	 *
+	 * @return string
+	 */
+	public function getProtocol()
+	{
+		if ((isset($_SERVER['HTTPS']) && strtolower($_SERVER['HTTPS']) == 'on')
+			|| $_SERVER['SERVER_PORT'] == 443) {
+			return $protocol = 'https';
+		}
+
+		return 'http';
 	}
 
 	public function run()
@@ -175,18 +191,5 @@ class Application
 		}
 
 		return $this->response;
-	}
-
-	/**
-	 * @return string
-	 */
-	protected function getProtocol()
-	{
-		if (isset($_SERVER['HTTPS']) && strtolower($_SERVER['HTTPS']) == 'on'
-			|| $_SERVER['SERVER_PORT'] == 443) {
-			return $protocol = 'https://';
-		}
-
-		return 'http://';
 	}
 }
