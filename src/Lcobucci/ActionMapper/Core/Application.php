@@ -119,7 +119,7 @@ class Application
 	 */
 	public function getUrl()
 	{
-		return 'http://' . $_SERVER['HTTP_HOST'] . $this->getPath();
+		return $this->getProtocol() . $_SERVER['HTTP_HOST'] . $this->getPath();
 	}
 
 	public function run()
@@ -135,6 +135,22 @@ class Application
 		}
 
 		$response->send();
+	}
+
+	/**
+	 * @return object
+	 */
+	public function getDependencyContainer()
+	{
+		return $this->dependencyContainer;
+	}
+
+	/**
+	 * @param object $dependencyContainer
+	 */
+	public function setDependencyContainer($dependencyContainer)
+	{
+		$this->dependencyContainer = $dependencyContainer;
 	}
 
 	/**
@@ -162,18 +178,15 @@ class Application
 	}
 
 	/**
-	 * @return object
+	 * @return string
 	 */
-	public function getDependencyContainer()
+	protected function getProtocol()
 	{
-		return $this->dependencyContainer;
-	}
+		if (isset($_SERVER['HTTPS']) && strtolower($_SERVER['HTTPS']) == 'on'
+			|| $_SERVER['SERVER_PORT'] == 443) {
+			return $protocol = 'https://';
+		}
 
-	/**
-	 * @param object $dependencyContainer
-	 */
-	public function setDependencyContainer($dependencyContainer)
-	{
-		$this->dependencyContainer = $dependencyContainer;
+		return 'http://';
 	}
 }
