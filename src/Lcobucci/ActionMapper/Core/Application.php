@@ -119,7 +119,23 @@ class Application
 	 */
 	public function getUrl()
 	{
-		return 'http://' . $_SERVER['HTTP_HOST'] . $this->getPath();
+		return $this->getProtocol() . '://' . $_SERVER['HTTP_HOST']
+			. $this->getPath();
+	}
+
+	/**
+	 * Return if is http or https protocol
+	 *
+	 * @return string
+	 */
+	public function getProtocol()
+	{
+		if ((isset($_SERVER['HTTPS']) && strtolower($_SERVER['HTTPS']) == 'on')
+			|| $_SERVER['SERVER_PORT'] == 443) {
+			return $protocol = 'https';
+		}
+
+		return 'http';
 	}
 
 	public function run()
@@ -135,6 +151,22 @@ class Application
 		}
 
 		$response->send();
+	}
+
+	/**
+	 * @return object
+	 */
+	public function getDependencyContainer()
+	{
+		return $this->dependencyContainer;
+	}
+
+	/**
+	 * @param object $dependencyContainer
+	 */
+	public function setDependencyContainer($dependencyContainer)
+	{
+		$this->dependencyContainer = $dependencyContainer;
 	}
 
 	/**
@@ -159,21 +191,5 @@ class Application
 		}
 
 		return $this->response;
-	}
-
-	/**
-	 * @return object
-	 */
-	public function getDependencyContainer()
-	{
-		return $this->dependencyContainer;
-	}
-
-	/**
-	 * @param object $dependencyContainer
-	 */
-	public function setDependencyContainer($dependencyContainer)
-	{
-		$this->dependencyContainer = $dependencyContainer;
 	}
 }
