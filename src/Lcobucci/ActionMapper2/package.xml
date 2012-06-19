@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<package packagerversion="1.9.4" version="2.0" xmlns="http://pear.php.net/dtd/package-2.0" xmlns:tasks="http://pear.php.net/dtd/tasks-1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://pear.php.net/dtd/tasks-1.0     http://pear.php.net/dtd/tasks-1.0.xsd     http://pear.php.net/dtd/package-2.0     http://pear.php.net/dtd/package-2.0.xsd">
+ <name>ActionMapper2</name>
+ <channel>lcobucci.github.com</channel>
+ <summary>Front controller framework for PHP 5.3+ applications</summary>
+ <description>Microframework to map routes and filters of PHP 5.3+ applications</description>
+ <lead>
+  <name>Luís Otávio Cobucci Oblonczyk</name>
+  <user>lcobucci</user>
+  <email>lcobucci@gmail.com</email>
+  <active>yes</active>
+ </lead>
+ <date>2012-06-18</date>
+ <time>23:51:17</time>
+ <version>
+  <release>1.0.0</release>
+  <api>1.0.0</api>
+ </version>
+ <stability>
+  <release>alpha</release>
+  <api>alpha</api>
+ </stability>
+ <license uri="http://www.opensource.org/licenses/bsd-license.php">BSD Style</license>
+ <notes>
+Initial release
+ </notes>
+ <contents>
+  <dir baseinstalldir="Lcobucci/ActionMapper2" name="/">
+   <file baseinstalldir="Lcobucci/ActionMapper2" md5sum="4e1bec33e5733f9108fabbf4ff959b78" name="Action/Action.php" role="php" />
+   <file baseinstalldir="Lcobucci/ActionMapper2" md5sum="4bdef44e43c933fec476b2c5d91444dc" name="Action/ActionAlreadyMappedException.php" role="php" />
+   <file baseinstalldir="Lcobucci/ActionMapper2" md5sum="f608549717d56b11b984c4b46432e94c" name="Action/ActionNotFoundException.php" role="php" />
+   <file baseinstalldir="Lcobucci/ActionMapper2" md5sum="b8e2df2dbaa03adb247b2b2f2771b886" name="Action/AnnotatedController.php" role="php" />
+   <file baseinstalldir="Lcobucci/ActionMapper2" md5sum="b0ac669d9704ced25890732763e88dde" name="Action/Mapper.php" role="php" />
+   <file baseinstalldir="Lcobucci/ActionMapper2" md5sum="35d028d85d4c7623b04b580a50b12098" name="Action/MatchedAction.php" role="php" />
+   <file baseinstalldir="Lcobucci/ActionMapper2" md5sum="c13b10e970934316ced76c386968fffd" name="Annotations/RouteAnnotation.php" role="php" />
+   <file baseinstalldir="Lcobucci/ActionMapper2" md5sum="32d48c8e8804c4478347c67f4a0da464" name="Core/AbstractErrorHandler.php" role="php" />
+   <file baseinstalldir="Lcobucci/ActionMapper2" md5sum="21d3293c29da8325ec12b3cc800d2bfa" name="Core/Application.php" role="php" />
+   <file baseinstalldir="Lcobucci/ActionMapper2" md5sum="42e0c6c52c99d940d649ed93dab24a51" name="Core/ApplicationFactory.php" role="php" />
+   <file baseinstalldir="Lcobucci/ActionMapper2" md5sum="9574b8eb03b24538a17b4907eb8abb92" name="Core/DefaultErrorHandler.php" role="php" />
+   <file baseinstalldir="Lcobucci/ActionMapper2" md5sum="f835ad10c93faebee06a9a124485d581" name="Filter/Filter.php" role="php" />
+   <file baseinstalldir="Lcobucci/ActionMapper2" md5sum="92e8b7fbc084a58e63990adeec3b266b" name="Filter/FilterChain.php" role="php" />
+   <file baseinstalldir="Lcobucci/ActionMapper2" md5sum="91d9f639ca6a688041acacd5fe426d37" name="Http/ContentType.php" role="php" />
+   <file baseinstalldir="Lcobucci/ActionMapper2" md5sum="95f2f6f5494deb49eacd08b3d6d75006" name="Http/Request.php" role="php" />
+   <file baseinstalldir="Lcobucci/ActionMapper2" md5sum="21aadc6b2d128f383a78adbf0246f269" name="Http/Response.php" role="php" />
+   <file baseinstalldir="Lcobucci/ActionMapper2" md5sum="65b162d2aaa9f4f49db97b422fb7b5aa" name="Http/Errors/BadRequestException.php" role="php" />
+   <file baseinstalldir="Lcobucci/ActionMapper2" md5sum="9e0dd92dbb7b17850090e631fe451944" name="Http/Errors/ForbiddenException.php" role="php" />
+   <file baseinstalldir="Lcobucci/ActionMapper2" md5sum="c8011e0c3bf8ecef875caa265b542bf0" name="Http/Errors/HttpException.php" role="php" />
+   <file baseinstalldir="Lcobucci/ActionMapper2" md5sum="c1664d4bad5bf166c67752febd2148f3" name="Http/Errors/InternalServerError.php" role="php" />
+   <file baseinstalldir="Lcobucci/ActionMapper2" md5sum="87e880dbfa4ed147e89c1e8ac3e5f946" name="Http/Errors/MethodNotAllowedException.php" role="php" />
+   <file baseinstalldir="Lcobucci/ActionMapper2" md5sum="651c64f7fbb101c21308021afe9f0ed7" name="Http/Errors/PageNotFoundException.php" role="php" />
+   <file baseinstalldir="Lcobucci/ActionMapper2" md5sum="e0b31ec02d19c8f931c1d50e058d6961" name="Http/Errors/UnauthorizedException.php" role="php" />
+   <file baseinstalldir="Lcobucci/ActionMapper2" md5sum="5333fe347ebfa3eb2ae20cf94d2599ab" name="Util/PathPatternComparer.php" role="php" />
+  </dir>
+ </contents>
+ <dependencies>
+  <required>
+   <php>
+    <min>5.3</min>
+   </php>
+   <pearinstaller>
+    <min>1.5.6</min>
+   </pearinstaller>
+  </required>
+ </dependencies>
+ <phprelease />
+ <changelog>
+  <release>
+   <version>
+    <release>1.0.0</release>
+    <api>1.0.0</api>
+   </version>
+   <stability>
+    <release>alpha</release>
+    <api>alpha</api>
+   </stability>
+   <date>2012-06-18</date>
+   <license uri="http://www.opensource.org/licenses/bsd-license.php">BSD Style</license>
+   <notes>
+Initial release
+   </notes>
+  </release>
+ </changelog>
+</package>
