@@ -1,5 +1,7 @@
 ActionMapper
 ============
+[![Build Status](https://secure.travis-ci.org/lcobucci/action-mapper.png?branch=master)](http://travis-ci.org/#!/lcobucci/action-mapper)
+
 
 ActionMapper is an open source front-controller framework for PHP 5.
 
