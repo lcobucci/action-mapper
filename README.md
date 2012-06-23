@@ -1,15 +1,16 @@
-ActionMapper
-============
+# ActionMapper2
+
 [![Build Status](https://secure.travis-ci.org/lcobucci/action-mapper.png?branch=master)](http://travis-ci.org/#!/lcobucci/action-mapper)
 
+ActionMapper 2 is an open source front-controller micro-framework for PHP 5.3+. [More information](http://lcobucci.github.com/action-mapper).
 
-ActionMapper is an open source front-controller framework for PHP 5.
+## Installation
 
-It's based on JSP's mapping style, and the basic features are:
+You can download or clone the repository from git (just the src/* contents are relevant), or install it from PEAR (recomended, because it will install all the dependencies automatically).
 
-- Basic action map;
-- Filters map;
-- Automatic action mapper (classes that implements AppAction interface and has the "ActionController" suffix);
-- Error handler (HTTP 404, HTTP 403 and HTTP 500).
+To install using PEAR you just have to type this on your console (as root if needed):
 
-See [wiki pages](https://github.com/lcobucci/action-mapper/wiki) for more informations.
+```
+$ pear config-set auto_discover 1
+$ pear install lcobucci.github.com/ActionMapper2
+```
