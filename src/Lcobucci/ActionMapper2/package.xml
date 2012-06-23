@@ -65,27 +65,27 @@ Initial release
     <min>1.5.6</min>
    </pearinstaller>
    <package>
-    <name>lcobucci/Common</name>
+    <name>Common</name>
     <channel>lcobucci.github.com</channel>
     <min>0.3.1</min>
    </package>
    <package>
-    <name>doctrine/DoctrineCommon</name>
+    <name>DoctrineCommon</name>
     <channel>pear.doctrine-project.org</channel>
     <min>2.2.2</min>
    </package>
    <package>
-    <name>symfony2/Config</name>
+    <name>Config</name>
     <channel>pear.symfony.com</channel>
     <min>2.1.0BETA1</min>
    </package>
    <package>
-    <name>symfony2/DependencyInjection</name>
+    <name>DependencyInjection</name>
     <channel>pear.symfony.com</channel>
     <min>2.1.0BETA1</min>
    </package>
    <package>
-    <name>symfony2/HttpFoundation</name>
+    <name>HttpFoundation</name>
     <channel>pear.symfony.com</channel>
     <min>2.1.0BETA1</min>
    </package>
