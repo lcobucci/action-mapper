@@ -1,0 +1,80 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>Action-mapper by lcobucci</title>
+
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
+    <script src="javascripts/scale.fix.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="wrapper">
+      <header>
+        <h1 class="header">Action-mapper</h1>
+        <p class="header">Front-controller micro-framework for PHP 5.3 web applications</p>
+
+        <ul>
+          <li class="download"><a class="buttons" href="https://github.com/lcobucci/action-mapper/zipball/master">Download ZIP</a></li>
+          <li class="download"><a class="buttons" href="https://github.com/lcobucci/action-mapper/tarball/master">Download TAR</a></li>
+          <li><a class="buttons github" href="https://github.com/lcobucci/action-mapper">View On GitHub</a></li>
+        </ul>
+
+        <p class="header">This project is maintained by <a class="header name" href="https://github.com/lcobucci">lcobucci</a></p>
+
+
+      </header>
+      <section>
+        <h3>What's ActionMapper?</h3>
+
+<p>ActionMapper is a front-controller micro-framework for PHP 5.3+ web applications created based on some <a href="https://github.com/symfony" class="user-mention">@symfony</a> 2 components (Http Foundation, Dependency Injection and Config). It allows you to map closures, classes and  classes methods to your application's routes.</p>
+
+<h3>Why to use it?</h3>
+
+<p>We all know that PHP has a lot of good frameworks, so why create another one? Our idea was to provide a freedom that we usually don't have when using a full-stack framework. With ActionMapper you can use closures or classes (with annotations or not), you can create your own error handler, map routes and filters using XML or PHP and other great things!
+Resuming: with ActionMapper you are the boss!</p>
+
+<h3>What's new on ActionMapper 2?</h3>
+
+<ul>
+<li>On this new version we choosed to join forces with <a href="https://github.com/symfony" class="user-mention">@symfony</a> and <a href="https://github.com/doctrine" class="user-mention">@doctrine</a>, by using some components like symfony2/HttpFoundation, symfony2/DependencyInjection and doctrine/Common;</li>
+<li>The route mapping was refactored bringing a more confortable way to map routes and extract URI parameters;</li>
+<li>You can override the RouteDefinition::validateCustomAnnotations() method in order to use your own annotations;</li>
+<li>Now it's possible to map routes and filters using a XML file.</li>
+</ul><h3>Installation</h3>
+
+<p>You can download or clone the repository from git (just the src/* contents are relevant), or install it from PEAR (recomended, because it will install all the dependencies automatically).</p>
+
+<p>To install using PEAR you just have to type this on your console (as root if needed):</p>
+
+<pre><code>$ pear config-set auto_discover 1
+$ pear install lcobucci.github.com/ActionMapper2
+</code></pre>
+
+<h3>More information</h3>
+
+<p>For more details about the ActionMapper 2 usage, you can check on our <a href="http://github.com/lcobucci/action-mapper/wiki">wiki</a>!</p>
+      </section>
+      <footer>
+        <p><small>Hosted on <a href="https://pages.github.com">GitHub Pages</a> using the Dinky theme</small></p>
+      </footer>
+    </div>
+    <!--[if !IE]><script>fixScale(document);</script><!--<![endif]-->
+		          <script type="text/javascript">
+            var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+            document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+          </script>
+          <script type="text/javascript">
+            try {
+              var pageTracker = _gat._getTracker("UA-32885836-1");
+            pageTracker._trackPageview();
+            } catch(err) {}
+          </script>
+
+  </body>
+</html>
