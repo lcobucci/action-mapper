@@ -1,6 +1,4 @@
-# ActionMapper2
-
-[![Build Status](https://secure.travis-ci.org/lcobucci/action-mapper.png?branch=master)](http://travis-ci.org/#!/lcobucci/action-mapper)
+# ActionMapper2 [![Build Status](https://secure.travis-ci.org/lcobucci/action-mapper.png?branch=master)](http://travis-ci.org/#!/lcobucci/action-mapper)
 
 ActionMapper 2 is an open source front-controller micro-framework for PHP 5.3+. [More information](http://lcobucci.github.com/action-mapper).
 
