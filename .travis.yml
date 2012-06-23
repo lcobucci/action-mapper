@@ -7,5 +7,5 @@ before_script:
   - pyrus install pear.symfony.com/DependencyInjection
   - pyrus install pear.symfony.com/HttpFoundation
   - pyrus install pear.doctrine-project.org/DoctrineCommon
-  - pyrus install http://lcobucci.github.com/Common
+  - pyrus install lcobucci.github.com/Common-alpha
   - phpenv rehash
