@@ -21,6 +21,12 @@ class Request extends \Symfony\Component\HttpFoundation\Request
      */
     public function getRequestedPath()
     {
-        return $this->requestedPath ?: $this->getPathInfo();
+        $path = $this->requestedPath ?: $this->getPathInfo();
+
+        if ($path != '/') {
+            rtrim($path, '/');
+        }
+
+        return $path;
     }
 }
