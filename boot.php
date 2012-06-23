@@ -1,25 +1,9 @@
 <?php
 set_include_path(get_include_path() . PATH_SEPARATOR . __DIR__ . '/src');
 
-spl_autoload_register(
-    function ($className)
-    {
-        $className = ltrim($className, '\\');
-        $fileName = '';
-        $namespace = '';
+require 'Lcobucci/ActionMapper2/ClassLoader/SplClassLoader.php';
 
-        if ($lastNsPos = strripos($className, '\\')) {
-            $namespace = substr($className, 0, $lastNsPos);
-            $className = substr($className, $lastNsPos + 1);
-            $fileName = str_replace('\\', DIRECTORY_SEPARATOR, $namespace) .
-                     DIRECTORY_SEPARATOR;
-        }
+use Lcobucci\ActionMapper2\ClassLoader\SplClassLoader;
 
-        $fileName .= str_replace('_', DIRECTORY_SEPARATOR, $className) . '.php';
-
-        if (stream_resolve_include_path($fileName)) {
-            include $fileName;
-        }
-    },
-    true
-);
+$loader = new SplClassLoader();
+$loader->register();
