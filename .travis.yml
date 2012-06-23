@@ -2,5 +2,10 @@ language: php
 php:
   - 5.3
   - 5.4
-env:
-  - SYMFONY_VERSION=origin/master
+before_script:
+  - pyrus install pear.symfony.com/Config
+  - pyrus install pear.symfony.com/DependencyInjection
+  - pyrus install pear.symfony.com/HttpFoundation
+  - pyrus install pear.doctrine-project.org/DoctrineCommon
+  - pyrus install http://lcobucci.github.com/Common
+  - phpenv rehash
