@@ -21,6 +21,6 @@ class SplClassLoader extends \Lcobucci\Common\ClassLoader\SplClassLoader
      */
     public function loadClass($className)
     {
-        parent::loadClass(ltrim($className, '\\'));
+        return parent::loadClass(ltrim($className, '\\'));
     }
 }
