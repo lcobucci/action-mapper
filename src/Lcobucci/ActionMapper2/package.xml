@@ -10,11 +10,11 @@
   <email>lcobucci@gmail.com</email>
   <active>yes</active>
  </lead>
- <date>2012-06-24</date>
- <time>21:41:29</time>
+ <date>2012-06-25</date>
+ <time>13:14:01</time>
  <version>
-  <release>1.0.0</release>
-  <api>1.0.0</api>
+  <release>1.0.0alpha1</release>
+  <api>1.0.0alpha1</api>
  </version>
  <stability>
   <release>alpha</release>
@@ -52,7 +52,7 @@ Initial release
    <file baseinstalldir="Lcobucci/ActionMapper2" md5sum="27c0b3bbff4c994102b15a6f71f02aae" name="Routing/RouteDefinition.php" role="php" />
    <file baseinstalldir="Lcobucci/ActionMapper2" md5sum="ded58f527a3fdb4c2173c1c33b8ea8f6" name="Routing/RouteDefinitionCreator.php" role="php" />
    <file baseinstalldir="Lcobucci/ActionMapper2" md5sum="f7d0a8d922ae07d4f8557e87e9e29346" name="Routing/RouteManager.php" role="php" />
-   <file baseinstalldir="Lcobucci/ActionMapper2" md5sum="e28286af8ddd9f94d70b1ef29786ef7f" name="Routing/Annotation/Route.php" role="php" />
+   <file baseinstalldir="Lcobucci/ActionMapper2" md5sum="72649581e8ba50afb4822065cc164497" name="Routing/Annotation/Route.php" role="php" />
    <file baseinstalldir="Lcobucci/ActionMapper2" md5sum="d921d30afe5ec81f80a1491671f77764" name="Application.php" role="php" />
   </dir>
  </contents>
@@ -95,14 +95,14 @@ Initial release
  <changelog>
   <release>
    <version>
-    <release>1.0.0</release>
-    <api>1.0.0</api>
+    <release>1.0.0alpha1</release>
+    <api>1.0.0alpha1</api>
    </version>
    <stability>
     <release>alpha</release>
     <api>alpha</api>
    </stability>
-   <date>2012-06-24</date>
+   <date>2012-06-25</date>
    <license uri="http://www.opensource.org/licenses/bsd-license.php">BSD Style</license>
    <notes>
 Initial release
