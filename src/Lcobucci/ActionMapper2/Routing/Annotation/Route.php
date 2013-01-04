@@ -138,19 +138,12 @@ class Route
      */
     public function match(RouteDefinition $route, Request $request)
     {
-        if (!$this->validatePattern($route, $request)) {
+        if (!$this->validatePattern($route, $request)
+            || !$this->validateMethod($request)
+            || !$this->validateContentType($request)
+            || !$this->validateRequirements($request)) {
             return false;
         }
-
-        if (!$this->validateMethod($request)) {
-            return false;
-        }
-
-        if (!$this->validateContentType($request)) {
-            return false;
-        }
-
-        $this->validateRequirements();
 
         return true;
     }
@@ -242,36 +235,29 @@ class Route
     protected function validateRequirements()
     {
         if (!isset($this->requirements[0]) || !is_array($this->matchedArgs)) {
-            return ;
+            return true;
         }
 
         foreach ($this->matchedArgs as $index => $value) {
-            if (isset($this->requirements[$index])) {
-                $this->validateRequirement(
-                    $this->requirements[$index],
-                    $value
-                );
+            if (isset($this->requirements[$index])
+                && !$this->validateRequirement($this->requirements[$index], $value)) {
+                return false;
             }
         }
+
+        return true;
     }
 
     /**
      * @param string $expression
      * @param string $value
-     * @throws \Lcobucci\ActionMapper2\Errors\BadRequestException
      */
     protected function validateRequirement($expression, $value)
     {
         if (strlen($expression) == 0) {
-            return ;
+            return true;
         }
 
-        if (!preg_match('/^' . $expression . '$/', $value)) {
-            throw new BadRequestException(
-                'The value "' . $value . '" is not compatible'
-                . ' with the required expression "'
-                . $expression . '"'
-            );
-        }
+        return preg_match('/^' . $expression . '$/', $value);
     }
 }

@@ -11,10 +11,10 @@
   <active>yes</active>
  </lead>
  <date>2013-01-04</date>
- <time>13:34:13</time>
+ <time>17:38:25</time>
  <version>
-  <release>1.0.0alpha3</release>
-  <api>1.0.0alpha3</api>
+  <release>1.0.0alpha4</release>
+  <api>1.0.0alpha4</api>
  </version>
  <stability>
   <release>alpha</release>
@@ -22,7 +22,7 @@
  </stability>
  <license uri="http://www.opensource.org/licenses/bsd-license.php">BSD Style</license>
  <notes>
-Added support for content type negotiation on annotations
+Added support for multiple routes of the same pattern with different requirements
  </notes>
  <contents>
   <dir baseinstalldir="Lcobucci/ActionMapper2" name="/">
@@ -51,7 +51,7 @@ Added support for content type negotiation on annotations
    <file baseinstalldir="Lcobucci/ActionMapper2" md5sum="0903296cc557ec21dec10c4c87833d30" name="Routing/RouteDefinition.php" role="php" />
    <file baseinstalldir="Lcobucci/ActionMapper2" md5sum="920f056f8118d25ae7af42295a9fe6b9" name="Routing/RouteDefinitionCreator.php" role="php" />
    <file baseinstalldir="Lcobucci/ActionMapper2" md5sum="16c04c052e41dea9ce9f445c77b34e87" name="Routing/RouteManager.php" role="php" />
-   <file baseinstalldir="Lcobucci/ActionMapper2" md5sum="c84ebc3b1c81770266a225b23ecc2e99" name="Routing/Annotation/Route.php" role="php" />
+   <file baseinstalldir="Lcobucci/ActionMapper2" md5sum="30c2414e36cc9f30cf27e9a71ab4581f" name="Routing/Annotation/Route.php" role="php" />
    <file baseinstalldir="Lcobucci/ActionMapper2" md5sum="1267054ed9d8f753e6fede96ca3fe768" name="Application.php" role="php" />
   </dir>
  </contents>
@@ -135,6 +135,21 @@ Allow the use of any valid HTTP method
    <license uri="http://www.opensource.org/licenses/bsd-license.php">BSD Style</license>
    <notes>
 Added support for content type negotiation on annotations
+   </notes>
+  </release>
+  <release>
+   <version>
+    <release>1.0.0alpha4</release>
+    <api>1.0.0alpha4</api>
+   </version>
+   <stability>
+    <release>alpha</release>
+    <api>alpha</api>
+   </stability>
+   <date>2013-01-04</date>
+   <license uri="http://www.opensource.org/licenses/bsd-license.php">BSD Style</license>
+   <notes>
+Added support for multiple routes of the same pattern with different requirements
    </notes>
   </release>
  </changelog>
