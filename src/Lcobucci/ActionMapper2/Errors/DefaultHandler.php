@@ -1,8 +1,8 @@
 <?php
 namespace Lcobucci\ActionMapper2\Errors;
 
-use \Lcobucci\ActionMapper2\Http\Request;
 use \Lcobucci\ActionMapper2\Http\Response;
+use \Lcobucci\ActionMapper2\Http\Request;
 
 class DefaultHandler extends ErrorHandler
 {
@@ -20,14 +20,15 @@ class DefaultHandler extends ErrorHandler
     {
         parent::__construct();
 
-        $this->content = file_get_contents(
-                $templateFile !== null && file_exists($templateFile)
-                ? $templateFile
-                : __DIR__ . '/ErrorPage.phtml'
-        );
+        if ($templateFile === null || !file_exists($templateFile)) {
+            $templateFile = __DIR__ . '/ErrorPage.phtml';
+        }
+
+        $this->content = file_get_contents($templateFile);
     }
 
     /**
+     *
      * @see \Lcobucci\ActionMapper2\Errors\ErrorHandler::getErrorContent()
      */
     protected function getErrorContent(
@@ -36,7 +37,12 @@ class DefaultHandler extends ErrorHandler
         HttpException $error
     ) {
         return str_replace(
-            array('{title}', '{statusCode}', '{message}', '{trace}'),
+            array(
+                '{title}',
+                '{statusCode}',
+                '{message}',
+                '{trace}'
+            ),
             array(
                 'An error has occurred...',
                 $error->getStatusCode(),

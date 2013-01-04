@@ -49,5 +49,5 @@ abstract class Filter
     /**
      * Process the filter's job
      */
-    public abstract function process();
+    abstract public function process();
 }

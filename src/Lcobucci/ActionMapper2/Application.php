@@ -181,7 +181,9 @@ class Application
             $request->setRequestedPath($previousPath);
         } catch (\Exception $error) {
             $this->errorHandler->handle(
-                $this->getRequest(), $this->getResponse(), $error
+                $this->getRequest(),
+                $this->getResponse(),
+                $error
             );
         }
 
@@ -201,7 +203,9 @@ class Application
             ob_end_clean();
         } catch (\Exception $error) {
             $this->errorHandler->handle(
-                $this->getRequest(), $this->getResponse(), $error
+                $this->getRequest(),
+                $this->getResponse(),
+                $error
             );
         }
 

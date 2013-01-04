@@ -55,7 +55,9 @@ class XmlRoutesLoader
         $valid = $dom->schemaValidate($this->getXsdPath());
 
         if (!$valid) {
-            throw new InvalidArgumentException(implode("\n", $this->getXmlErrors()));
+            throw new InvalidArgumentException(
+                implode("\n", $this->getXmlErrors())
+            );
         }
 
         libxml_use_internal_errors($current);
@@ -71,13 +73,14 @@ class XmlRoutesLoader
         $errors = array();
 
         foreach (libxml_get_errors() as $error) {
-            $errors[] = sprintf('[%s %s] %s (in %s - line %d, column %d)',
-                    LIBXML_ERR_WARNING == $error->level ? 'WARNING' : 'ERROR',
-                    $error->code,
-                    trim($error->message),
-                    $error->file ? $error->file : 'n/a',
-                    $error->line,
-                    $error->column
+            $errors[] = sprintf(
+                '[%s %s] %s (in %s - line %d, column %d)',
+                LIBXML_ERR_WARNING == $error->level ? 'WARNING' : 'ERROR',
+                $error->code,
+                trim($error->message),
+                $error->file ? $error->file : 'n/a',
+                $error->line,
+                $error->column
             );
         }
 
@@ -96,7 +99,7 @@ class XmlRoutesLoader
 
     /**
      * @return array
-    */
+     */
     protected function getNamespaces()
     {
         return array(
@@ -107,7 +110,7 @@ class XmlRoutesLoader
     /**
      * @param \SimpleXMLElement $config
      * @return \stdClass
-    */
+     */
     protected function createMetadata(SimpleXMLElement $config)
     {
         $metadata = new stdClass();
@@ -144,13 +147,14 @@ class XmlRoutesLoader
     }
 
     /**
+     *
      * @param \SimpleXMLElement $config
      * @param \stdClass $metadata
      */
     protected function parseFilters(SimpleXMLElement $config, stdClass $metadata)
     {
         if (!isset($config->filters)) {
-            return ;
+            return;
         }
 
         $metadata->filters = array();

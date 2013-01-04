@@ -55,8 +55,7 @@ class RouteCollection
     {
         uksort(
             $this->routes,
-            function ($one, $other)
-            {
+            function ($one, $other) {
                 $oneLength = strlen($one);
                 $otherLength = strlen($other);
 

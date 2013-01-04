@@ -2,9 +2,7 @@
 namespace Lcobucci\ActionMapper2\Config;
 
 use Lcobucci\ActionMapper2\Routing\RouteDefinitionCreator;
-
 use Lcobucci\ActionMapper2\Routing\RouteManager;
-
 use \stdClass;
 
 class RoutesBuilder
@@ -21,7 +19,7 @@ class RoutesBuilder
     {
         if ($cacheDirectory !== null) {
             $this->cacheDirectory = rtrim($cacheDirectory, '/');
-            return ;
+            return;
         }
 
         $this->cacheDirectory = sys_get_temp_dir();
@@ -33,9 +31,7 @@ class RoutesBuilder
      */
     public function build($fileName)
     {
-        $cacheFile = $this->getCachePath(
-            $this->createCacheName($fileName)
-        );
+        $cacheFile = $this->getCachePath($this->createCacheName($fileName));
 
         if ($this->hasToCreateCache($fileName, $cacheFile)) {
             $metadata = $this->createMetadata($fileName, $cacheFile);
@@ -53,9 +49,7 @@ class RoutesBuilder
     protected function createManager(stdClass $metadata)
     {
         if (isset($metadata->definitionBaseClass)) {
-            RouteDefinitionCreator::setBaseClass(
-                $metadata->definitionBaseClass
-            );
+            RouteDefinitionCreator::setBaseClass($metadata->definitionBaseClass);
         }
 
         $manager = new RouteManager();
@@ -77,72 +71,70 @@ class RoutesBuilder
         return $manager;
     }
 
-	/**
-	 * @param string $fileName
-	 * @return string
-	 */
-	protected function createCacheName($fileName)
-	{
-		return 'Project' . md5($fileName) . 'Routes';
-	}
+    /**
+     * @param string $fileName
+     * @return string
+     */
+    protected function createCacheName($fileName)
+    {
+        return 'Project' . md5($fileName) . 'Routes';
+    }
 
-	/**
-	 * @param string $cacheName
-	 * @return string
-	 */
-	protected function getCachePath($cacheName)
-	{
-		return $this->cacheDirectory . '/' . $cacheName . '.json';
-	}
+    /**
+     * @param string $cacheName
+     * @return string
+     */
+    protected function getCachePath($cacheName)
+    {
+        return $this->cacheDirectory . '/' . $cacheName . '.json';
+    }
 
-	/**
-	 * @param string $fileName
-	 * @param string $cacheFile
-	 * @return boolean
-	 */
-	protected function hasToCreateCache($fileName, $cacheFile)
-	{
-		if (file_exists($cacheFile) && filemtime($cacheFile) >= filemtime($fileName)) {
-			return false;
-		}
+    /**
+     * @param string $fileName
+     * @param string $cacheFile
+     * @return boolean
+     */
+    protected function hasToCreateCache($fileName, $cacheFile)
+    {
+        if (file_exists($cacheFile) &&
+             filemtime($cacheFile) >= filemtime($fileName)) {
+            return false;
+        }
 
-		return true;
-	}
+        return true;
+    }
 
-	/**
-	 * @param string $fileName
-	 * @param string $cacheFile
-	 * @return \stdClass
-	 */
-	protected function createMetadata($fileName, $cacheFile)
-	{
+    /**
+     * @param string $fileName
+     * @param string $cacheFile
+     * @return \stdClass
+     */
+    protected function createMetadata($fileName, $cacheFile)
+    {
         $loader = new XmlRoutesLoader();
         $metadata = $loader->load($fileName);
 
         $this->saveMetadata($cacheFile, $metadata);
 
         return $metadata;
-	}
+    }
 
-	/**
-	 * @param string $cacheName
-	 */
-	protected function saveMetadata($cacheFile, stdClass $metadata)
-	{
-		file_put_contents(
-			$cacheFile,
-			json_encode($metadata)
-		);
+    /**
+     * @param string $cacheName
+     */
+    protected function saveMetadata($cacheFile, stdClass $metadata)
+    {
+        file_put_contents($cacheFile, json_encode($metadata));
 
-		chmod($cacheFile, 0777);
-	}
+        chmod($cacheFile, 0777);
+    }
 
-	/**
-	 * @param string $cacheFile
-	 * @return \stdClass
-	 */
-	protected function loadMetadata($cacheFile)
-	{
-	    return json_decode(file_get_contents($cacheFile));
-	}
+    /**
+     * @param string $cacheFile
+     * @return \stdClass
+     */
+    protected function loadMetadata($cacheFile)
+    {
+        return json_decode(file_get_contents($cacheFile));
+    }
 }
