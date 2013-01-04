@@ -83,11 +83,22 @@ class Route
             );
         }
 
+        $validMethods = array(
+            'GET',
+            'POST',
+            'PUT',
+            'DELETE',
+            'OPTIONS',
+            'HEAD',
+            'TRACE',
+            'CONNECT'
+        );
+
         foreach ($methods as $method) {
-            if (!in_array($method, array('GET', 'POST', 'PUT', 'DELETE'))) {
+            if (!in_array($method, $validMethods)) {
                 throw new InvalidArgumentException(
                     '"' . $method . '" is not a valid route method '
-                    . '(only GET, POST, PUT, DELETE are allowed)'
+                    . '(only ' . implode(',', $validMethods) . ' are allowed)'
                 );
             }
         }
