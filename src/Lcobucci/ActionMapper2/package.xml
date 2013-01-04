@@ -10,11 +10,11 @@
   <email>lcobucci@gmail.com</email>
   <active>yes</active>
  </lead>
- <date>2012-06-25</date>
- <time>13:14:01</time>
+ <date>2013-01-04</date>
+ <time>10:08:29</time>
  <version>
-  <release>1.0.0alpha1</release>
-  <api>1.0.0alpha1</api>
+  <release>1.0.0alpha2</release>
+  <api>1.0.0alpha2</api>
  </version>
  <stability>
   <release>alpha</release>
@@ -22,38 +22,37 @@
  </stability>
  <license uri="http://www.opensource.org/licenses/bsd-license.php">BSD Style</license>
  <notes>
-Initial release
+Allow the use of any valid HTTP method
  </notes>
  <contents>
   <dir baseinstalldir="Lcobucci/ActionMapper2" name="/">
-   <file baseinstalldir="Lcobucci/ActionMapper2" md5sum="0bc8e09ce931aaa7b05527e18e5060c2" name="ClassLoader/SplClassLoader.php" role="php" />
-   <file baseinstalldir="Lcobucci/ActionMapper2" md5sum="3dc1034611ddedd864c7617a92edcad1" name="Config/ApplicationBuilder.php" role="php" />
-   <file baseinstalldir="Lcobucci/ActionMapper2" md5sum="eb0013872c63162b6813fe0416beba43" name="Config/RoutesBuilder.php" role="php" />
-   <file baseinstalldir="Lcobucci/ActionMapper2" md5sum="54b1696050ea1767ee7067a20b7ec146" name="Config/XmlRoutesLoader.php" role="php" />
-   <file baseinstalldir="Lcobucci/ActionMapper2" md5sum="1a413187f6846b941e854ed497158ef9" name="Config/schema/routing.xsd" role="php" />
-   <file baseinstalldir="Lcobucci/ActionMapper2" md5sum="69e532450d2c9bb154b91ce6809fe4c9" name="DependencyInjection/Container.php" role="php" />
-   <file baseinstalldir="Lcobucci/ActionMapper2" md5sum="010292bc5d2c9182e55452df141b2839" name="Errors/BadRequestException.php" role="php" />
-   <file baseinstalldir="Lcobucci/ActionMapper2" md5sum="169c52e605f2a7d6bdf0dd6566b23dd9" name="Errors/DefaultHandler.php" role="php" />
-   <file baseinstalldir="Lcobucci/ActionMapper2" md5sum="84319265e0ceb4522dfc445747e8dd1b" name="Errors/ErrorHandler.php" role="php" />
+   <file baseinstalldir="Lcobucci/ActionMapper2" md5sum="26f165c50188491c9bde49bdff8a6676" name="Config/ApplicationBuilder.php" role="php" />
+   <file baseinstalldir="Lcobucci/ActionMapper2" md5sum="c1da1a6f6483ff0adb1c2ce1d3b732ab" name="Config/RoutesBuilder.php" role="php" />
+   <file baseinstalldir="Lcobucci/ActionMapper2" md5sum="f4c36961e9da7786c67b63c6a14190b9" name="Config/XmlRoutesLoader.php" role="php" />
+   <file baseinstalldir="Lcobucci/ActionMapper2" md5sum="cabaed17ed680d7b844d8107ed7d736c" name="Config/schema/routing.xsd" role="php" />
+   <file baseinstalldir="Lcobucci/ActionMapper2" md5sum="bfc172980772986287e057b1da9cb761" name="DependencyInjection/Container.php" role="php" />
+   <file baseinstalldir="Lcobucci/ActionMapper2" md5sum="fb6baec48e3754a6491706c2134268ab" name="Errors/BadRequestException.php" role="php" />
+   <file baseinstalldir="Lcobucci/ActionMapper2" md5sum="57a89e4973dd83cf6789557edb6683a0" name="Errors/DefaultHandler.php" role="php" />
+   <file baseinstalldir="Lcobucci/ActionMapper2" md5sum="847590b084393a9060d4a60b56bb9558" name="Errors/ErrorHandler.php" role="php" />
    <file baseinstalldir="Lcobucci/ActionMapper2" md5sum="5a3379bf1337082ab92c24a30391e280" name="Errors/ErrorPage.phtml" role="php" />
-   <file baseinstalldir="Lcobucci/ActionMapper2" md5sum="7570372fbae9782cd60ccb1b4f6b6ebd" name="Errors/ForbiddenException.php" role="php" />
-   <file baseinstalldir="Lcobucci/ActionMapper2" md5sum="4546800312b4a1358b77d339754b5fe1" name="Errors/HttpException.php" role="php" />
-   <file baseinstalldir="Lcobucci/ActionMapper2" md5sum="5cff9b9d605f03ac503f72a6c0b98834" name="Errors/InternalServerError.php" role="php" />
-   <file baseinstalldir="Lcobucci/ActionMapper2" md5sum="195a5b4f4df252b82a4e42241e994679" name="Errors/MethodNotAllowedException.php" role="php" />
-   <file baseinstalldir="Lcobucci/ActionMapper2" md5sum="17b9a807db32f3c45684a50f206e31a4" name="Errors/PageNotFoundException.php" role="php" />
-   <file baseinstalldir="Lcobucci/ActionMapper2" md5sum="9ec3b68529a6fca4a2b37ae0c59ca224" name="Errors/UnauthorizedException.php" role="php" />
-   <file baseinstalldir="Lcobucci/ActionMapper2" md5sum="dfe334d4fc5ae42c33043c229d4e71dc" name="Http/Request.php" role="php" />
-   <file baseinstalldir="Lcobucci/ActionMapper2" md5sum="f331e906b070903ac6e028689621c7f1" name="Http/Response.php" role="php" />
-   <file baseinstalldir="Lcobucci/ActionMapper2" md5sum="22d861b8ced71782d1c4e0d9e756d3ee" name="Routing/Controller.php" role="php" />
-   <file baseinstalldir="Lcobucci/ActionMapper2" md5sum="1e278050774459875f07fe46d0bb548c" name="Routing/Filter.php" role="php" />
-   <file baseinstalldir="Lcobucci/ActionMapper2" md5sum="6c341ebcb965a4355413ec34c514aac8" name="Routing/FilterCollection.php" role="php" />
-   <file baseinstalldir="Lcobucci/ActionMapper2" md5sum="bb6788974359dd4111f57b00d51926a9" name="Routing/Route.php" role="php" />
-   <file baseinstalldir="Lcobucci/ActionMapper2" md5sum="10083537d5345afb878c983bc8d96c13" name="Routing/RouteCollection.php" role="php" />
-   <file baseinstalldir="Lcobucci/ActionMapper2" md5sum="27c0b3bbff4c994102b15a6f71f02aae" name="Routing/RouteDefinition.php" role="php" />
-   <file baseinstalldir="Lcobucci/ActionMapper2" md5sum="ded58f527a3fdb4c2173c1c33b8ea8f6" name="Routing/RouteDefinitionCreator.php" role="php" />
-   <file baseinstalldir="Lcobucci/ActionMapper2" md5sum="f7d0a8d922ae07d4f8557e87e9e29346" name="Routing/RouteManager.php" role="php" />
-   <file baseinstalldir="Lcobucci/ActionMapper2" md5sum="72649581e8ba50afb4822065cc164497" name="Routing/Annotation/Route.php" role="php" />
-   <file baseinstalldir="Lcobucci/ActionMapper2" md5sum="d921d30afe5ec81f80a1491671f77764" name="Application.php" role="php" />
+   <file baseinstalldir="Lcobucci/ActionMapper2" md5sum="93dc901dc46659ef1bde564377c2d758" name="Errors/ForbiddenException.php" role="php" />
+   <file baseinstalldir="Lcobucci/ActionMapper2" md5sum="4a8fb64d00f0c7fb6d5672d49ed69509" name="Errors/HttpException.php" role="php" />
+   <file baseinstalldir="Lcobucci/ActionMapper2" md5sum="a0c682f57d882ddc044075094f720e99" name="Errors/InternalServerError.php" role="php" />
+   <file baseinstalldir="Lcobucci/ActionMapper2" md5sum="2be7a087bf4bbdfec9499640119fab72" name="Errors/MethodNotAllowedException.php" role="php" />
+   <file baseinstalldir="Lcobucci/ActionMapper2" md5sum="103f2e184dafa2bd94d85901f8c3bc6e" name="Errors/PageNotFoundException.php" role="php" />
+   <file baseinstalldir="Lcobucci/ActionMapper2" md5sum="b42824334d18a0d66762b8bdd97af8dc" name="Errors/UnauthorizedException.php" role="php" />
+   <file baseinstalldir="Lcobucci/ActionMapper2" md5sum="232be0d6127ccc464a53b8d6aa6af2c0" name="Http/Request.php" role="php" />
+   <file baseinstalldir="Lcobucci/ActionMapper2" md5sum="85593405924fd3a6ef145e82caf87ff8" name="Http/Response.php" role="php" />
+   <file baseinstalldir="Lcobucci/ActionMapper2" md5sum="57b89ada34b2cae4604b4224d032e013" name="Routing/Controller.php" role="php" />
+   <file baseinstalldir="Lcobucci/ActionMapper2" md5sum="f90356f7d5aa8fd2f334c71bc49cf260" name="Routing/Filter.php" role="php" />
+   <file baseinstalldir="Lcobucci/ActionMapper2" md5sum="03b352a61331dedbd794454444fd6cec" name="Routing/FilterCollection.php" role="php" />
+   <file baseinstalldir="Lcobucci/ActionMapper2" md5sum="c59907fce00e701490720fff065b96c7" name="Routing/Route.php" role="php" />
+   <file baseinstalldir="Lcobucci/ActionMapper2" md5sum="fe418ba8c9a352541670c00fdaa3f271" name="Routing/RouteCollection.php" role="php" />
+   <file baseinstalldir="Lcobucci/ActionMapper2" md5sum="0903296cc557ec21dec10c4c87833d30" name="Routing/RouteDefinition.php" role="php" />
+   <file baseinstalldir="Lcobucci/ActionMapper2" md5sum="920f056f8118d25ae7af42295a9fe6b9" name="Routing/RouteDefinitionCreator.php" role="php" />
+   <file baseinstalldir="Lcobucci/ActionMapper2" md5sum="16c04c052e41dea9ce9f445c77b34e87" name="Routing/RouteManager.php" role="php" />
+   <file baseinstalldir="Lcobucci/ActionMapper2" md5sum="fb20528c5873a142d8e6961df1a439b0" name="Routing/Annotation/Route.php" role="php" />
+   <file baseinstalldir="Lcobucci/ActionMapper2" md5sum="1267054ed9d8f753e6fede96ca3fe768" name="Application.php" role="php" />
   </dir>
  </contents>
  <dependencies>
@@ -106,6 +105,21 @@ Initial release
    <license uri="http://www.opensource.org/licenses/bsd-license.php">BSD Style</license>
    <notes>
 Initial release
+   </notes>
+  </release>
+  <release>
+   <version>
+    <release>1.0.0alpha2</release>
+    <api>1.0.0alpha2</api>
+   </version>
+   <stability>
+    <release>alpha</release>
+    <api>alpha</api>
+   </stability>
+   <date>2013-01-04</date>
+   <license uri="http://www.opensource.org/licenses/bsd-license.php">BSD Style</license>
+   <notes>
+Allow the use of any valid HTTP method
    </notes>
   </release>
  </changelog>
