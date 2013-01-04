@@ -20,8 +20,8 @@ class RequestTest extends \PHPUnit_Framework_TestCase
         );
 
         $request->expects($this->any())
-                ->method('getPathInfo')
-                ->will($this->returnValue('/test'));
+            ->method('getPathInfo')
+            ->will($this->returnValue('/test'));
 
         $this->assertEquals('/test', $request->getRequestedPath());
     }
@@ -32,16 +32,16 @@ class RequestTest extends \PHPUnit_Framework_TestCase
     public function requestedPathCanBeChanged()
     {
         $request = $this->getMock(
-                '\Lcobucci\ActionMapper2\Http\Request',
-                array('getPathInfo'),
-                array(),
-                '',
-                false
+            '\Lcobucci\ActionMapper2\Http\Request',
+            array('getPathInfo'),
+            array(),
+            '',
+            false
         );
 
         $request->expects($this->any())
-                ->method('getPathInfo')
-                ->will($this->returnValue('/test'));
+            ->method('getPathInfo')
+            ->will($this->returnValue('/test'));
 
         $request->setRequestedPath('/news/2012');
 
@@ -54,16 +54,16 @@ class RequestTest extends \PHPUnit_Framework_TestCase
     public function trailingBarMustBeRemoved()
     {
         $request = $this->getMock(
-                '\Lcobucci\ActionMapper2\Http\Request',
-                array('getPathInfo'),
-                array(),
-                '',
-                false
+            '\Lcobucci\ActionMapper2\Http\Request',
+            array('getPathInfo'),
+            array(),
+            '',
+            false
         );
 
         $request->expects($this->any())
-                ->method('getPathInfo')
-                ->will($this->returnValue('/test/'));
+            ->method('getPathInfo')
+            ->will($this->returnValue('/test/'));
 
         $this->assertEquals('/test', $request->getRequestedPath());
     }
@@ -74,16 +74,16 @@ class RequestTest extends \PHPUnit_Framework_TestCase
     public function trailingBarCannotBeRemovedIfPathIsBar()
     {
         $request = $this->getMock(
-                '\Lcobucci\ActionMapper2\Http\Request',
-                array('getPathInfo'),
-                array(),
-                '',
-                false
+            '\Lcobucci\ActionMapper2\Http\Request',
+            array('getPathInfo'),
+            array(),
+            '',
+            false
         );
 
         $request->expects($this->any())
-                ->method('getPathInfo')
-                ->will($this->returnValue('/'));
+            ->method('getPathInfo')
+            ->will($this->returnValue('/'));
 
         $this->assertEquals('/', $request->getRequestedPath());
     }
