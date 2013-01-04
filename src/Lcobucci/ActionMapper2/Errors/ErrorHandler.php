@@ -38,19 +38,19 @@ abstract class ErrorHandler
      *
      * @param \Lcobucci\ActionMapper2\Http\Request $request
      * @param \Lcobucci\ActionMapper2\Http\Response $response
-     * @param \Exception $e
+     * @param \Exception $error
      */
     final public function handle(
         Request $request,
         Response $response,
-        Exception $e
+        Exception $error
     ) {
-        if (!$e instanceof HttpException) {
-            $e = new InternalServerError('Internal error occurred', null, $e);
+        if (!$error instanceof HttpException) {
+            $error = new InternalServerError('Internal error occurred', null, $error);
         }
 
-        $response->setStatusCode($e->getStatusCode());
-        $response->setContent($this->getErrorContent($request, $response, $e));
+        $response->setStatusCode($error->getStatusCode());
+        $response->setContent($this->getErrorContent($request, $response, $error));
     }
 
     /**
@@ -58,11 +58,11 @@ abstract class ErrorHandler
      *
      * @param \Lcobucci\ActionMapper2\Http\Request $request
      * @param \Lcobucci\ActionMapper2\Http\Response $response
-     * @param \Lcobucci\ActionMapper2\Errors\HttpException $e
+     * @param \Lcobucci\ActionMapper2\Errors\HttpException $error
      */
     abstract protected function getErrorContent(
         Request $request,
         Response $response,
-        HttpException $e
+        HttpException $error
     );
 }

@@ -188,8 +188,10 @@ class RouteDefinition
      * @param \Lcobucci\ActionMapper2\Application $application
      * @param \ReflectionMethod $method
      */
-    protected function validateCustomAnnotations(Application $application, ReflectionMethod $method)
-    {
+    protected function validateCustomAnnotations(
+        Application $application,
+        ReflectionMethod $method
+    ) {
         // Override if needed
     }
 }
