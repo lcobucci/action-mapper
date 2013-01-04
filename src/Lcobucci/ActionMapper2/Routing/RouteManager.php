@@ -1,10 +1,7 @@
 <?php
 namespace Lcobucci\ActionMapper2\Routing;
 
-use \Lcobucci\ActionMapper2\Errors\PageNotFoundException;
-use \Doctrine\Common\Annotations\AnnotationReader;
 use \Lcobucci\ActionMapper2\Application;
-use \RuntimeException;
 
 class RouteManager
 {

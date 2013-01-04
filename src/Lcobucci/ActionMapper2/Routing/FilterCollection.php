@@ -2,7 +2,6 @@
 namespace Lcobucci\ActionMapper2\Routing;
 
 use \InvalidArgumentException;
-use \ReflectionClass;
 
 class FilterCollection
 {
