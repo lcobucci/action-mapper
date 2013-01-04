@@ -32,6 +32,11 @@ class Route
     /**
      * @var array
      */
+    public $contentType = array();
+
+    /**
+     * @var array
+     */
     private $matchedArgs;
 
     /**
@@ -54,13 +59,17 @@ class Route
         if (isset($options['methods'])) {
             $this->setMethods($options['methods']);
         }
+
+        if (isset($options['contentType'])) {
+            $this->setContentType($options['contentType']);
+        }
     }
 
     /**
      * @param array $requirements
      * @throws InvalidArgumentException
      */
-    protected function setRequirements($requirements)
+    protected function setRequirements(array $requirements)
     {
         if (!is_array($requirements)) {
             throw new InvalidArgumentException(
@@ -75,7 +84,7 @@ class Route
      * @param array $methods
      * @throws InvalidArgumentException
      */
-    protected function setMethods($methods)
+    protected function setMethods(array $methods)
     {
         if (!is_array($methods)) {
             throw new InvalidArgumentException(
@@ -115,6 +124,14 @@ class Route
     }
 
     /**
+     * @param array $contentType
+     */
+    protected function setContentType(array $contentType)
+    {
+        $this->contentType = $contentType;
+    }
+
+    /**
      * @param \Lcobucci\ActionMapper2\Routing\RouteDefinition $route
      * @param \Lcobucci\ActionMapper2\Http\Request $request
      * @return boolean
@@ -126,6 +143,10 @@ class Route
         }
 
         if (!$this->validateMethod($request)) {
+            return false;
+        }
+
+        if (!$this->validateContentType($request)) {
             return false;
         }
 
@@ -193,18 +214,43 @@ class Route
     }
 
     /**
+     * @param \Lcobucci\ActionMapper2\Http\Request $request
+     * @return boolean
+     */
+    protected function validateContentType(Request $request)
+    {
+        if (!isset($this->contentType[0])) {
+            return true;
+        }
+
+        $acceptableTypes = $request->getAcceptableContentTypes();
+
+        if (!isset($acceptableTypes[1]) && $acceptableTypes[0] == '*/*') {
+            return true;
+        }
+
+        foreach ($acceptableTypes as $contentType) {
+            if (in_array($contentType, $this->contentType)) {
+                return true;
+            }
+        }
+    }
+
+    /**
      * Validates the requirements
      */
     protected function validateRequirements()
     {
-        if (isset($this->requirements[0]) && is_array($this->matchedArgs)) {
-            foreach ($this->matchedArgs as $index => $value) {
-                if (isset($this->requirements[$index])) {
-                    $this->validateRequirement(
-                        $this->requirements[$index],
-                        $value
-                    );
-                }
+        if (!isset($this->requirements[0]) || !is_array($this->matchedArgs)) {
+            return ;
+        }
+
+        foreach ($this->matchedArgs as $index => $value) {
+            if (isset($this->requirements[$index])) {
+                $this->validateRequirement(
+                    $this->requirements[$index],
+                    $value
+                );
             }
         }
     }
