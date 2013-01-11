@@ -218,6 +218,10 @@ class Route
 
         $acceptableTypes = $request->getAcceptableContentTypes();
 
+        if (!isset($acceptableTypes[0])) {
+            return true;
+        }
+
         if (!isset($acceptableTypes[1]) && $acceptableTypes[0] == '*/*') {
             return true;
         }
