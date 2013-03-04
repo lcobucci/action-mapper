@@ -36,20 +36,47 @@ class DefaultHandler extends ErrorHandler
         Response $response,
         HttpException $error
     ) {
-        return str_replace(
+        $acceptableContent = $request->getAcceptableContentTypes();
+
+        if (in_array('text/html', $acceptableContent)) {
+            return str_replace(
+                array(
+                    '{title}',
+                    '{statusCode}',
+                    '{message}',
+                    '{trace}'
+                ),
+                array(
+                    'An error has occurred...',
+                    $error->getStatusCode(),
+                    $error->getMessage(),
+                    $error
+                ),
+                $this->content
+            );
+        }
+
+        if (in_array('application/xml', $acceptableContent)
+            || in_array('application/x-xml', $acceptableContent)
+            || in_array('text/xml', $acceptableContent)) {
+            $response->setContentType('application/xml', 'UTF-8');
+
+            return '<?xml version="1.0" encoding="UTF-8"?>
+                    <error>
+                        <code>' . $error->getStatusCode() . '</code>
+                        <message><![CDATA[' . $error->getMessage() . ']]></message>
+                        <trace><![CDATA[' . $error . ']]></trace>
+                    </error>';
+        }
+
+        $response->setContentType('application/json', 'UTF-8');
+
+        return json_encode(
             array(
-                '{title}',
-                '{statusCode}',
-                '{message}',
-                '{trace}'
-            ),
-            array(
-                'An error has occurred...',
-                $error->getStatusCode(),
-                $error->getMessage(),
-                $error
-            ),
-            $this->content
+                'code' => $error->getStatusCode(),
+                'message' => $error->getMessage(),
+                'trace' => $error->__toString()
+            )
         );
     }
 }
