@@ -10,11 +10,11 @@
   <email>lcobucci@gmail.com</email>
   <active>yes</active>
  </lead>
- <date>2013-03-04</date>
- <time>15:25:42</time>
+ <date>2013-03-25</date>
+ <time>15:21:05</time>
  <version>
-  <release>1.0.0alpha5</release>
-  <api>1.0.0alpha5</api>
+  <release>1.0.0alpha6</release>
+  <api>1.0.0alpha6</api>
  </version>
  <stability>
   <release>alpha</release>
@@ -22,7 +22,7 @@
  </stability>
  <license uri="http://www.opensource.org/licenses/bsd-license.php">BSD Style</license>
  <notes>
-The default error handler now gives the response for text/html, application/xml and application/json
+Added option to don&apos;t display stack trace
  </notes>
  <contents>
   <dir baseinstalldir="Lcobucci/ActionMapper2" name="/">
@@ -32,7 +32,7 @@ The default error handler now gives the response for text/html, application/xml 
    <file baseinstalldir="Lcobucci/ActionMapper2" md5sum="cabaed17ed680d7b844d8107ed7d736c" name="Config/schema/routing.xsd" role="php" />
    <file baseinstalldir="Lcobucci/ActionMapper2" md5sum="bfc172980772986287e057b1da9cb761" name="DependencyInjection/Container.php" role="php" />
    <file baseinstalldir="Lcobucci/ActionMapper2" md5sum="fb6baec48e3754a6491706c2134268ab" name="Errors/BadRequestException.php" role="php" />
-   <file baseinstalldir="Lcobucci/ActionMapper2" md5sum="a49e32fb4227986d31338d0cc8006ea2" name="Errors/DefaultHandler.php" role="php" />
+   <file baseinstalldir="Lcobucci/ActionMapper2" md5sum="75e9efdf74a00bb13956aeaadf2500fb" name="Errors/DefaultHandler.php" role="php" />
    <file baseinstalldir="Lcobucci/ActionMapper2" md5sum="847590b084393a9060d4a60b56bb9558" name="Errors/ErrorHandler.php" role="php" />
    <file baseinstalldir="Lcobucci/ActionMapper2" md5sum="5a3379bf1337082ab92c24a30391e280" name="Errors/ErrorPage.phtml" role="php" />
    <file baseinstalldir="Lcobucci/ActionMapper2" md5sum="93dc901dc46659ef1bde564377c2d758" name="Errors/ForbiddenException.php" role="php" />
@@ -165,6 +165,21 @@ Added support for multiple routes of the same pattern with different requirement
    <license uri="http://www.opensource.org/licenses/bsd-license.php">BSD Style</license>
    <notes>
 The default error handler now gives the response for text/html, application/xml and application/json
+   </notes>
+  </release>
+  <release>
+   <version>
+    <release>1.0.0alpha6</release>
+    <api>1.0.0alpha6</api>
+   </version>
+   <stability>
+    <release>alpha</release>
+    <api>alpha</api>
+   </stability>
+   <date>2013-03-25</date>
+   <license uri="http://www.opensource.org/licenses/bsd-license.php">BSD Style</license>
+   <notes>
+Added option to don&apos;t display stack trace
    </notes>
   </release>
  </changelog>

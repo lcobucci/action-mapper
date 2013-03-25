@@ -12,11 +12,17 @@ class DefaultHandler extends ErrorHandler
     private $content;
 
     /**
+     * @var boolean
+     */
+    private $displayTrace;
+
+    /**
      * Class constructor
      *
      * @param string $templateFile
+     * @param boolean $displayTrace
      */
-    public function __construct($templateFile = null)
+    public function __construct($templateFile = null, $displayTrace = true)
     {
         parent::__construct();
 
@@ -25,6 +31,7 @@ class DefaultHandler extends ErrorHandler
         }
 
         $this->content = file_get_contents($templateFile);
+        $this->displayTrace = $displayTrace;
     }
 
     /**
@@ -38,6 +45,15 @@ class DefaultHandler extends ErrorHandler
     ) {
         $acceptableContent = $request->getAcceptableContentTypes();
 
+        $data = array(
+            'code' => $error->getStatusCode(),
+            'message' => $error->getMessage()
+        );
+
+        if ($this->displayTrace) {
+            $data['trace'] = $error->__toString();
+        }
+
         if (in_array('text/html', $acceptableContent)) {
             return str_replace(
                 array(
@@ -48,9 +64,9 @@ class DefaultHandler extends ErrorHandler
                 ),
                 array(
                     'An error has occurred...',
-                    $error->getStatusCode(),
-                    $error->getMessage(),
-                    $error
+                    $data['code'],
+                    $data['message'],
+                    $this->displayTrace ? $data['trace'] : ''
                 ),
                 $this->content
             );
@@ -63,20 +79,14 @@ class DefaultHandler extends ErrorHandler
 
             return '<?xml version="1.0" encoding="UTF-8"?>
                     <error>
-                        <code>' . $error->getStatusCode() . '</code>
-                        <message><![CDATA[' . $error->getMessage() . ']]></message>
-                        <trace><![CDATA[' . $error . ']]></trace>
-                    </error>';
+                        <code>' . $data['code'] . '</code>
+                        <message><![CDATA[' . $data['message'] . ']]></message>'
+                        . ($this->displayTrace ? '<trace><![CDATA[' . $data['trace'] . ']]></trace>' : '')
+                    . '</error>';
         }
 
         $response->setContentType('application/json', 'UTF-8');
 
-        return json_encode(
-            array(
-                'code' => $error->getStatusCode(),
-                'message' => $error->getMessage(),
-                'trace' => $error->__toString()
-            )
-        );
+        return json_encode($data);
     }
 }
