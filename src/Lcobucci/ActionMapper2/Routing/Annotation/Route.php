@@ -1,9 +1,8 @@
 <?php
 namespace Lcobucci\ActionMapper2\Routing\Annotation;
 
-use \Lcobucci\ActionMapper2\Routing\RouteDefinition;
 use \Lcobucci\ActionMapper2\Routing\RouteDefinitionCreator;
-use \Lcobucci\ActionMapper2\Errors\BadRequestException;
+use \Lcobucci\ActionMapper2\Routing\RouteDefinition;
 use \Lcobucci\ActionMapper2\Http\Request;
 use \InvalidArgumentException;
 

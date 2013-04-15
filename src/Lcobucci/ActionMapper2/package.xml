@@ -10,11 +10,11 @@
   <email>lcobucci@gmail.com</email>
   <active>yes</active>
  </lead>
- <date>2013-03-25</date>
- <time>15:21:05</time>
+ <date>2013-04-15</date>
+ <time>02:49:34</time>
  <version>
-  <release>1.0.0alpha6</release>
-  <api>1.0.0alpha6</api>
+  <release>1.0.0alpha7</release>
+  <api>1.0.0alpha7</api>
  </version>
  <stability>
   <release>alpha</release>
@@ -22,19 +22,19 @@
  </stability>
  <license uri="http://www.opensource.org/licenses/bsd-license.php">BSD Style</license>
  <notes>
-Added option to don&apos;t display stack trace
+Added support for composer and changed the dependencies
  </notes>
  <contents>
   <dir baseinstalldir="Lcobucci/ActionMapper2" name="/">
-   <file baseinstalldir="Lcobucci/ActionMapper2" md5sum="26f165c50188491c9bde49bdff8a6676" name="Config/ApplicationBuilder.php" role="php" />
+   <file baseinstalldir="Lcobucci/ActionMapper2" md5sum="c3f1791becc6417d362d01eaa294ee69" name="Config/ApplicationBuilder.php" role="php" />
    <file baseinstalldir="Lcobucci/ActionMapper2" md5sum="c1da1a6f6483ff0adb1c2ce1d3b732ab" name="Config/RoutesBuilder.php" role="php" />
    <file baseinstalldir="Lcobucci/ActionMapper2" md5sum="f4c36961e9da7786c67b63c6a14190b9" name="Config/XmlRoutesLoader.php" role="php" />
    <file baseinstalldir="Lcobucci/ActionMapper2" md5sum="cabaed17ed680d7b844d8107ed7d736c" name="Config/schema/routing.xsd" role="php" />
    <file baseinstalldir="Lcobucci/ActionMapper2" md5sum="bfc172980772986287e057b1da9cb761" name="DependencyInjection/Container.php" role="php" />
    <file baseinstalldir="Lcobucci/ActionMapper2" md5sum="fb6baec48e3754a6491706c2134268ab" name="Errors/BadRequestException.php" role="php" />
-   <file baseinstalldir="Lcobucci/ActionMapper2" md5sum="75e9efdf74a00bb13956aeaadf2500fb" name="Errors/DefaultHandler.php" role="php" />
+   <file baseinstalldir="Lcobucci/ActionMapper2" md5sum="75d01062d7acc275bd2103ca2b002c4f" name="Errors/DefaultHandler.php" role="php" />
    <file baseinstalldir="Lcobucci/ActionMapper2" md5sum="847590b084393a9060d4a60b56bb9558" name="Errors/ErrorHandler.php" role="php" />
-   <file baseinstalldir="Lcobucci/ActionMapper2" md5sum="5a3379bf1337082ab92c24a30391e280" name="Errors/ErrorPage.phtml" role="php" />
+   <file baseinstalldir="Lcobucci/ActionMapper2" md5sum="541dc85d861e7ff3a50975982c525b90" name="Errors/ErrorPage.phtml" role="php" />
    <file baseinstalldir="Lcobucci/ActionMapper2" md5sum="93dc901dc46659ef1bde564377c2d758" name="Errors/ForbiddenException.php" role="php" />
    <file baseinstalldir="Lcobucci/ActionMapper2" md5sum="4a8fb64d00f0c7fb6d5672d49ed69509" name="Errors/HttpException.php" role="php" />
    <file baseinstalldir="Lcobucci/ActionMapper2" md5sum="a0c682f57d882ddc044075094f720e99" name="Errors/InternalServerError.php" role="php" />
@@ -51,7 +51,7 @@ Added option to don&apos;t display stack trace
    <file baseinstalldir="Lcobucci/ActionMapper2" md5sum="0903296cc557ec21dec10c4c87833d30" name="Routing/RouteDefinition.php" role="php" />
    <file baseinstalldir="Lcobucci/ActionMapper2" md5sum="920f056f8118d25ae7af42295a9fe6b9" name="Routing/RouteDefinitionCreator.php" role="php" />
    <file baseinstalldir="Lcobucci/ActionMapper2" md5sum="16c04c052e41dea9ce9f445c77b34e87" name="Routing/RouteManager.php" role="php" />
-   <file baseinstalldir="Lcobucci/ActionMapper2" md5sum="59c036fbc302a7cbbbd691f225709473" name="Routing/Annotation/Route.php" role="php" />
+   <file baseinstalldir="Lcobucci/ActionMapper2" md5sum="5f1a31b1fdf83adc74426fc8db7475b1" name="Routing/Annotation/Route.php" role="php" />
    <file baseinstalldir="Lcobucci/ActionMapper2" md5sum="1267054ed9d8f753e6fede96ca3fe768" name="Application.php" role="php" />
   </dir>
  </contents>
@@ -64,29 +64,19 @@ Added option to don&apos;t display stack trace
     <min>1.5.6</min>
    </pearinstaller>
    <package>
-    <name>Common</name>
+    <name>DIBuilder</name>
     <channel>lcobucci.github.com</channel>
-    <min>0.3.1</min>
+    <min>1.0.0</min>
    </package>
    <package>
     <name>DoctrineCommon</name>
     <channel>pear.doctrine-project.org</channel>
-    <min>2.2.2</min>
-   </package>
-   <package>
-    <name>Config</name>
-    <channel>pear.symfony.com</channel>
-    <min>2.1.0BETA1</min>
-   </package>
-   <package>
-    <name>DependencyInjection</name>
-    <channel>pear.symfony.com</channel>
-    <min>2.1.0BETA1</min>
+    <min>2.3.0</min>
    </package>
    <package>
     <name>HttpFoundation</name>
     <channel>pear.symfony.com</channel>
-    <min>2.1.0BETA1</min>
+    <min>2.2.1</min>
    </package>
   </required>
  </dependencies>
@@ -176,10 +166,25 @@ The default error handler now gives the response for text/html, application/xml 
     <release>alpha</release>
     <api>alpha</api>
    </stability>
-   <date>2013-03-25</date>
+   <date>2013-04-15</date>
    <license uri="http://www.opensource.org/licenses/bsd-license.php">BSD Style</license>
    <notes>
 Added option to don&apos;t display stack trace
+   </notes>
+  </release>
+  <release>
+   <version>
+    <release>1.0.0alpha7</release>
+    <api>1.0.0alpha7</api>
+   </version>
+   <stability>
+    <release>alpha</release>
+    <api>alpha</api>
+   </stability>
+   <date>2013-04-15</date>
+   <license uri="http://www.opensource.org/licenses/bsd-license.php">BSD Style</license>
+   <notes>
+Added support for composer and changed the dependencies
    </notes>
   </release>
  </changelog>
