@@ -3,12 +3,4 @@ php:
   - 5.3
   - 5.4
 before_script:
-  - pyrus channel-discover pear.symfony.com
-  - pyrus channel-discover pear.doctrine-project.org
-  - pyrus channel-discover lcobucci.github.com
-  - pyrus install symfony2/Config
-  - pyrus install symfony2/DependencyInjection
-  - pyrus install symfony2/HttpFoundation
-  - pyrus install doctrine/DoctrineCommon
-  - pyrus install lcobucci/Common-alpha
-  - phpenv rehash
+  - composer install --dev

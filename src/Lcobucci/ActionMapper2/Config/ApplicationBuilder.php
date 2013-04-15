@@ -1,10 +1,11 @@
 <?php
 namespace Lcobucci\ActionMapper2\Config;
 
+use Lcobucci\DependencyInjection\XmlContainerBuilder;
+use \Lcobucci\DependencyInjection\ContainerBuilder;
 use \Lcobucci\ActionMapper2\Errors\DefaultHandler;
-use \Lcobucci\ActionMapper2\Application;
-use \Lcobucci\Common\DependencyInjection\ContainerBuilder;
 use \Lcobucci\ActionMapper2\Errors\ErrorHandler;
+use \Lcobucci\ActionMapper2\Application;
 
 class ApplicationBuilder
 {
@@ -19,7 +20,7 @@ class ApplicationBuilder
     protected $routesBuilder;
 
     /**
-     * @var \Lcobucci\Common\DependencyInjection\ContainerBuilder
+     * @var \Lcobucci\DependencyInjection\ContainerBuilder
      */
     protected $containerBuilder;
 
@@ -80,7 +81,7 @@ class ApplicationBuilder
         }
 
         if ($containerBuilder === null) {
-            $containerBuilder = new ContainerBuilder(
+            $containerBuilder = new XmlContainerBuilder(
                 static::$containerBaseClass,
                 static::$cacheDir
             );
