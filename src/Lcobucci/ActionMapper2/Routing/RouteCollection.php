@@ -2,8 +2,8 @@
 namespace Lcobucci\ActionMapper2\Routing;
 
 use Lcobucci\ActionMapper2\Errors\PageNotFoundException;
-use \InvalidArgumentException;
-use \ReflectionClass;
+use InvalidArgumentException;
+use ReflectionClass;
 
 class RouteCollection
 {
@@ -13,7 +13,7 @@ class RouteCollection
     private $routes;
 
     /**
-     * Class contructor
+     * Class constructor
      */
     public function __construct()
     {
@@ -22,7 +22,8 @@ class RouteCollection
 
     /**
      * @param string $pattern
-     * @param \Lcobucci\ActionMapper2\Routing\Route|\Closure|string $handler
+     * @param Route|\Closure|string $handler
+     * @throws InvalidArgumentException
      */
     public function append($pattern, $handler)
     {
@@ -49,7 +50,7 @@ class RouteCollection
     }
 
     /**
-     * Sorts the collection by the patterns legth
+     * Sorts the collection by the patterns length
      */
     protected function sortByKeyLength()
     {
@@ -92,7 +93,8 @@ class RouteCollection
 
     /**
      * @param string $path
-     * @return \Otto\Component\Routing\CompiledRoute
+     * @return RouteDefinition
+     * @throws PageNotFoundException
      */
     public function findRouteFor($path)
     {

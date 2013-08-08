@@ -2,10 +2,10 @@
 namespace Lcobucci\ActionMapper2\Config;
 
 use Lcobucci\DependencyInjection\XmlContainerBuilder;
-use \Lcobucci\DependencyInjection\ContainerBuilder;
-use \Lcobucci\ActionMapper2\Errors\DefaultHandler;
-use \Lcobucci\ActionMapper2\Errors\ErrorHandler;
-use \Lcobucci\ActionMapper2\Application;
+use Lcobucci\DependencyInjection\ContainerBuilder;
+use Lcobucci\ActionMapper2\Errors\DefaultHandler;
+use Lcobucci\ActionMapper2\Errors\ErrorHandler;
+use Lcobucci\ActionMapper2\Application;
 
 class ApplicationBuilder
 {
@@ -15,12 +15,12 @@ class ApplicationBuilder
     const DEFAULT_BASE_CONTAINER = '\Lcobucci\ActionMapper2\DependencyInjection\Container';
 
     /**
-     * @var \Lcobucci\ActionMapper2\Config\RoutesBuilder
+     * @var RoutesBuilder
      */
     protected $routesBuilder;
 
     /**
-     * @var \Lcobucci\DependencyInjection\ContainerBuilder
+     * @var ContainerBuilder
      */
     protected $containerBuilder;
 
@@ -37,9 +37,10 @@ class ApplicationBuilder
     /**
      * @param string $routesConfig
      * @param string $containerConfig
+     * @param ErrorHandler $errorHandler
      * @param string $cacheDir
-     * @param \Lcobucci\ActionMapper2\Errors\ErrorHandler $errorHandler
-     * @return \Lcobucci\ActionMapper2\Application
+     * @param string $containerBaseClass
+     * @return Application
      */
     public static function build(
         $routesConfig,
@@ -69,8 +70,8 @@ class ApplicationBuilder
     }
 
     /**
-     * @param \Lcobucci\ActionMapper2\Config\RoutesBuilder $routesBuilder
-     * @param \Lcobucci\Common\DependencyInjection\ContainerBuilder $containerBuilder
+     * @param RoutesBuilder $routesBuilder
+     * @param ContainerBuilder $containerBuilder
      */
     public function __construct(
         RoutesBuilder $routesBuilder = null,

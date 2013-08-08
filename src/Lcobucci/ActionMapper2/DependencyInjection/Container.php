@@ -1,17 +1,18 @@
 <?php
 namespace Lcobucci\ActionMapper2\DependencyInjection;
 
-use \Lcobucci\ActionMapper2\Application;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
+use Lcobucci\ActionMapper2\Application;
 
 class Container extends \Symfony\Component\DependencyInjection\Container
 {
     /**
-     * @var \Lcobucci\ActionMapper2\Application
+     * @var Application
      */
     protected $application;
 
     /**
-     * @param \Lcobucci\ActionMapper2\Application $application
+     * @param Application $application
      */
     public function setApplication(Application $application)
     {
@@ -21,7 +22,7 @@ class Container extends \Symfony\Component\DependencyInjection\Container
     /**
      * Gets the 'session' service.
      *
-     * @return \Symfony\Component\HttpFoundation\Session
+     * @return SessionInterface
      */
     protected function getSessionService()
     {

@@ -1,7 +1,7 @@
 <?php
 namespace Lcobucci\ActionMapper2\Routing;
 
-use \InvalidArgumentException;
+use InvalidArgumentException;
 
 class FilterCollection
 {
@@ -16,7 +16,7 @@ class FilterCollection
     private $filters;
 
     /**
-     * Class contructor
+     * Class constructor
      */
     public function __construct()
     {
@@ -26,7 +26,8 @@ class FilterCollection
     /**
      * @param string $pattern
      * @param boolean $before
-     * @param \Lcobucci\ActionMapper2\Routing\Filter|\Closure|string $handler
+     * @param Filter|\Closure|string $handler
+     * @throws InvalidArgumentException
      */
     public function append($pattern, $before, $handler)
     {
@@ -60,7 +61,8 @@ class FilterCollection
 
     /**
      * @param string $path
-     * @return \Lcobucci\ActionMapper2\Routing\RouteDefinition[]
+     * @param bool $before
+     * @return RouteDefinition
      */
     public function findFiltersFor($path, $before = true)
     {

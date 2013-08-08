@@ -1,10 +1,10 @@
 <?php
 namespace Lcobucci\ActionMapper2\Errors;
 
-use \Lcobucci\ActionMapper2\Http\Response;
-use \Lcobucci\ActionMapper2\Http\Request;
-use \ErrorException;
-use \Exception;
+use Lcobucci\ActionMapper2\Http\Response;
+use Lcobucci\ActionMapper2\Http\Request;
+use ErrorException;
+use Exception;
 
 abstract class ErrorHandler
 {
@@ -36,9 +36,9 @@ abstract class ErrorHandler
 
     /**
      *
-     * @param \Lcobucci\ActionMapper2\Http\Request $request
-     * @param \Lcobucci\ActionMapper2\Http\Response $response
-     * @param \Exception $error
+     * @param Request $request
+     * @param Response $response
+     * @param Exception $error
      */
     final public function handle(
         Request $request,
@@ -56,9 +56,9 @@ abstract class ErrorHandler
     /**
      * Renders the error page according with the exception
      *
-     * @param \Lcobucci\ActionMapper2\Http\Request $request
-     * @param \Lcobucci\ActionMapper2\Http\Response $response
-     * @param \Lcobucci\ActionMapper2\Errors\HttpException $error
+     * @param Request $request
+     * @param Response $response
+     * @param HttpException $error
      */
     abstract protected function getErrorContent(
         Request $request,

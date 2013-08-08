@@ -3,7 +3,7 @@ namespace Lcobucci\ActionMapper2\Config;
 
 use Lcobucci\ActionMapper2\Routing\RouteDefinitionCreator;
 use Lcobucci\ActionMapper2\Routing\RouteManager;
-use \stdClass;
+use stdClass;
 
 class RoutesBuilder
 {
@@ -27,7 +27,7 @@ class RoutesBuilder
 
     /**
      * @param string $fileName
-     * @return \Lcobucci\ActionMapper2\Routing\RouteManager
+     * @return RouteManager
      */
     public function build($fileName)
     {
@@ -43,8 +43,8 @@ class RoutesBuilder
     }
 
     /**
-     * @param \stdClass $metadata
-     * @return \Lcobucci\ActionMapper2\Routing\RouteManager
+     * @param stdClass $metadata
+     * @return RouteManager
      */
     protected function createManager(stdClass $metadata)
     {
@@ -107,7 +107,7 @@ class RoutesBuilder
     /**
      * @param string $fileName
      * @param string $cacheFile
-     * @return \stdClass
+     * @return stdClass
      */
     protected function createMetadata($fileName, $cacheFile)
     {
@@ -120,7 +120,8 @@ class RoutesBuilder
     }
 
     /**
-     * @param string $cacheName
+     * @param string $cacheFile
+     * @param stdClass $metadata
      */
     protected function saveMetadata($cacheFile, stdClass $metadata)
     {
@@ -131,7 +132,7 @@ class RoutesBuilder
 
     /**
      * @param string $cacheFile
-     * @return \stdClass
+     * @return stdClass
      */
     protected function loadMetadata($cacheFile)
     {

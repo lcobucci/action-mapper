@@ -5,6 +5,7 @@ class Response extends \Symfony\Component\HttpFoundation\Response
 {
     /**
      * @param string $content
+     * @return Response
      */
     public function appendContent($content)
     {
@@ -16,7 +17,7 @@ class Response extends \Symfony\Component\HttpFoundation\Response
     /**
      * @param string $contentType
      * @param string $charset
-     * @return \Lcobucci\ActionMapper2\Http\Response
+     * @return Response
      */
     public function setContentType($contentType, $charset = null)
     {

@@ -1,25 +1,25 @@
 <?php
 namespace Lcobucci\ActionMapper2\Routing;
 
-use \Lcobucci\ActionMapper2\Http\Response;
-use \Lcobucci\ActionMapper2\Http\Request;
-use \Lcobucci\ActionMapper2\Application;
-use \BadMethodCallException;
+use Lcobucci\ActionMapper2\Http\Response;
+use Lcobucci\ActionMapper2\Http\Request;
+use Lcobucci\ActionMapper2\Application;
+use BadMethodCallException;
 
 class Controller implements Route
 {
     /**
-     * @var \Lcobucci\ActionMapper2\Http\Request
+     * @var Request
      */
     protected $request;
 
     /**
-     * @var \Lcobucci\ActionMapper2\Http\Response
+     * @var Response
      */
     protected $response;
 
     /**
-     * @var \Lcobucci\ActionMapper2\Application
+     * @var Application
      */
     protected $application;
 
@@ -50,7 +50,7 @@ class Controller implements Route
     /**
      * @param string $serviceId
      * @return mixed
-     * @throws \BadMethodCallException
+     * @throws BadMethodCallException
      */
     public function get($serviceId)
     {

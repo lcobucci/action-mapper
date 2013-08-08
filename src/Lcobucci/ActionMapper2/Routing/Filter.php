@@ -1,29 +1,29 @@
 <?php
 namespace Lcobucci\ActionMapper2\Routing;
 
-use \Lcobucci\ActionMapper2\Http\Response;
-use \Lcobucci\ActionMapper2\Http\Request;
-use \Lcobucci\ActionMapper2\Application;
+use Lcobucci\ActionMapper2\Http\Response;
+use Lcobucci\ActionMapper2\Http\Request;
+use Lcobucci\ActionMapper2\Application;
 
 abstract class Filter
 {
     /**
-     * @var \Lcobucci\ActionMapper2\Application
+     * @var Application
      */
     protected $application;
 
     /**
-     * @var \Lcobucci\ActionMapper2\Http\Request
+     * @var Request
      */
     protected $request;
 
     /**
-     * @var \Lcobucci\ActionMapper2\Http\Response
+     * @var Response
      */
     protected $response;
 
     /**
-     * @param \Lcobucci\ActionMapper2\Application $application
+     * @param Application $application
      */
     public function setApplication(Application $application)
     {
@@ -31,7 +31,7 @@ abstract class Filter
     }
 
     /**
-     * @param \Lcobucci\ActionMapper2\Http\Request $request
+     * @param Request $request
      */
     public function setRequest(Request $request)
     {
@@ -39,7 +39,7 @@ abstract class Filter
     }
 
     /**
-     * @param \Lcobucci\ActionMapper2\Http\Response $response
+     * @param Response $response
      */
     public function setResponse(Response $response)
     {

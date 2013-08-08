@@ -1,10 +1,10 @@
 <?php
 namespace Lcobucci\ActionMapper2\Routing\Annotation;
 
-use \Lcobucci\ActionMapper2\Routing\RouteDefinitionCreator;
-use \Lcobucci\ActionMapper2\Routing\RouteDefinition;
-use \Lcobucci\ActionMapper2\Http\Request;
-use \InvalidArgumentException;
+use Lcobucci\ActionMapper2\Routing\RouteDefinitionCreator;
+use Lcobucci\ActionMapper2\Routing\RouteDefinition;
+use Lcobucci\ActionMapper2\Http\Request;
+use InvalidArgumentException;
 
 /**
  * @Annotation
@@ -131,8 +131,8 @@ class Route
     }
 
     /**
-     * @param \Lcobucci\ActionMapper2\Routing\RouteDefinition $route
-     * @param \Lcobucci\ActionMapper2\Http\Request $request
+     * @param RouteDefinition $route
+     * @param Request $request
      * @return boolean
      */
     public function match(RouteDefinition $route, Request $request)
@@ -156,8 +156,8 @@ class Route
     }
 
     /**
-     * @param \Lcobucci\ActionMapper2\Routing\RouteDefinition $route
-     * @param \Lcobucci\ActionMapper2\Http\Request $request
+     * @param RouteDefinition $route
+     * @param Request $request
      * @return boolean
      */
     protected function validatePattern(RouteDefinition $route, Request $request)
@@ -175,8 +175,8 @@ class Route
     }
 
     /**
-     * @param \Lcobucci\ActionMapper2\Routing\RouteDefinition $route
-     * @param \Lcobucci\ActionMapper2\Http\Request $request
+     * @param RouteDefinition $route
+     * @param Request $request
      * @return string
      */
     protected function getRequestedPath(RouteDefinition $route, Request $request)
@@ -197,7 +197,7 @@ class Route
     }
 
     /**
-     * @param \Lcobucci\ActionMapper2\Http\Request $request
+     * @param Request $request
      * @return boolean
      */
     protected function validateMethod(Request $request)
@@ -206,7 +206,7 @@ class Route
     }
 
     /**
-     * @param \Lcobucci\ActionMapper2\Http\Request $request
+     * @param Request $request
      * @return boolean
      */
     protected function validateContentType(Request $request)
@@ -254,6 +254,7 @@ class Route
     /**
      * @param string $expression
      * @param string $value
+     * @return bool
      */
     protected function validateRequirement($expression, $value)
     {

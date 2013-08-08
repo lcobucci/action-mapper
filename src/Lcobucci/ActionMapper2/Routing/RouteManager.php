@@ -1,23 +1,23 @@
 <?php
 namespace Lcobucci\ActionMapper2\Routing;
 
-use \Lcobucci\ActionMapper2\Application;
+use Lcobucci\ActionMapper2\Application;
 
 class RouteManager
 {
     /**
-     * @var \Lcobucci\ActionMapper2\Routing\RouteCollection
+     * @var RouteCollection
      */
     private $routes;
 
     /**
-     * @var \Lcobucci\ActionMapper2\Routing\FilterCollection
+     * @var FilterCollection
      */
     private $filters;
 
     /**
-     * @param \Lcobucci\ActionMapper2\Routing\RouteCollection $routes
-     * @param \Lcobucci\ActionMapper2\Routing\FilterCollection $filters
+     * @param RouteCollection $routes
+     * @param FilterCollection $filters
      */
     public function __construct(
         RouteCollection $routes = null,
@@ -47,7 +47,7 @@ class RouteManager
     }
 
     /**
-     * @param \Lcobucci\ActionMapper2\Application $application
+     * @param Application $application
      */
     public function process(Application $application)
     {
@@ -57,7 +57,7 @@ class RouteManager
     }
 
     /**
-     * @param \Lcobucci\ActionMapper2\Application $application
+     * @param Application $application
      * @param boolean $before
      */
     protected function processFilters(Application $application, $before = true)
@@ -73,7 +73,7 @@ class RouteManager
     }
 
     /**
-     * @param \Lcobucci\ActionMapper2\Application $application
+     * @param Application $application
      */
     protected function processRoute(Application $application)
     {

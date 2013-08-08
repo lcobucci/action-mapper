@@ -1,12 +1,12 @@
 <?php
 namespace Lcobucci\ActionMapper2\Routing;
 
-use \Lcobucci\ActionMapper2\Errors\PageNotFoundException;
-use \Doctrine\Common\Annotations\AnnotationReader;
-use \Lcobucci\ActionMapper2\Application;
-use \ReflectionClass;
-use \ReflectionMethod;
-use \RuntimeException;
+use Lcobucci\ActionMapper2\Errors\PageNotFoundException;
+use Doctrine\Common\Annotations\AnnotationReader;
+use Lcobucci\ActionMapper2\Application;
+use ReflectionClass;
+use ReflectionMethod;
+use RuntimeException;
 
 class RouteDefinition
 {
@@ -21,7 +21,7 @@ class RouteDefinition
     protected $regex;
 
     /**
-     * @var \Lcobucci\ActionMapper2\Routing\Route|\Lcobucci\ActionMapper2\Routing\Filter|\Closure|string
+     * @var Route|Filter|\Closure|string
      */
     protected $handler;
 
@@ -38,7 +38,7 @@ class RouteDefinition
     /**
      * @param string $pattern
      * @param string $regex
-     * @param \Lcobucci\ActionMapper2\Routing\Route|\Lcobucci\ActionMapper2\Routing\Filter|\Closure|string $handler
+     * @param Route|Filter|\Closure|string $handler
      */
     public function __construct($pattern, $regex, $handler)
     {
@@ -48,7 +48,7 @@ class RouteDefinition
     }
 
     /**
-     * @param \Doctrine\Common\Annotations\AnnotationReader $annotationParser
+     * @param AnnotationReader $annotationParser
      */
     public function setAnnotationParser(AnnotationReader $annotationParser)
     {
@@ -79,7 +79,7 @@ class RouteDefinition
     }
 
     /**
-     * @param \Lcobucci\ActionMapper2\Application $application
+     * @param Application $application
      */
     public function process(Application $application)
     {
@@ -91,7 +91,7 @@ class RouteDefinition
     }
 
     /**
-     * @param \Lcobucci\ActionMapper2\Application $application
+     * @param Application $application
      * @return string
      */
     protected function getContent(Application $application)
@@ -131,7 +131,7 @@ class RouteDefinition
 
     /**
      * @param string $method
-     * @return \Lcobucci\ActionMapper2\Routing\Route|\Lcobucci\ActionMapper2\Routing\Filter
+     * @return Route|Filter
      */
     protected function getHandler(&$method)
     {
@@ -149,10 +149,11 @@ class RouteDefinition
     }
 
     /**
-     * @param \Lcobucci\ActionMapper2\Routing\Route $handler
-     * @param \Lcobucci\ActionMapper2\Application $application
-     * @throws \RuntimeException
-     * @throws \PageNotFoundException
+     * @param Route $handler
+     * @param Application $application
+     * @return mixed
+     * @throws RuntimeException
+     * @throws PageNotFoundException
      */
     protected function parseAnnotation(Route $handler, Application $application)
     {
@@ -185,8 +186,8 @@ class RouteDefinition
     /**
      * Validate custom annotations
      *
-     * @param \Lcobucci\ActionMapper2\Application $application
-     * @param \ReflectionMethod $method
+     * @param Application $application
+     * @param ReflectionMethod $method
      */
     protected function validateCustomAnnotations(
         Application $application,

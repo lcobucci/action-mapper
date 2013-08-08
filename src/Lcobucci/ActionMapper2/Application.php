@@ -1,47 +1,47 @@
 <?php
 namespace Lcobucci\ActionMapper2;
 
-use \Lcobucci\ActionMapper2\DependencyInjection\Container as ActionMapperContainer;
-use \Symfony\Component\HttpFoundation\Session\Storage\NativeSessionStorage;
-use \Symfony\Component\HttpFoundation\Session\SessionInterface;
-use \Symfony\Component\HttpFoundation\Session\Session;
-use \Symfony\Component\DependencyInjection\ContainerInterface;
-use \Lcobucci\ActionMapper2\Routing\RouteManager;
-use \Lcobucci\ActionMapper2\Errors\ErrorHandler;
-use \Lcobucci\ActionMapper2\Http\Response;
-use \Lcobucci\ActionMapper2\Http\Request;
+use Lcobucci\ActionMapper2\DependencyInjection\Container as ActionMapperContainer;
+use Symfony\Component\HttpFoundation\Session\Storage\NativeSessionStorage;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
+use Symfony\Component\HttpFoundation\Session\Session;
+use Symfony\Component\DependencyInjection\ContainerInterface;
+use Lcobucci\ActionMapper2\Routing\RouteManager;
+use Lcobucci\ActionMapper2\Errors\ErrorHandler;
+use Lcobucci\ActionMapper2\Http\Response;
+use Lcobucci\ActionMapper2\Http\Request;
 
 class Application
 {
     /**
-     * @var \Lcobucci\ActionMapper2\Routing\RouteManager
+     * @var RouteManager
      */
     protected $routeManager;
 
     /**
-     * @var \Lcobucci\ActionMapper2\Errors\ErrorHandler
+     * @var ErrorHandler
      */
     protected $errorHandler;
 
     /**
-     * @var \Symfony\Component\DependencyInjection\ContainerInterface
+     * @var ContainerInterface
      */
     private $dependencyContainer;
 
     /**
-     * @var \Lcobucci\ActionMapper2\Http\Request
+     * @var Request
      */
     protected $request;
 
     /**
-     * @var \Symfony\Component\HttpFoundation\Response
+     * @var Response
      */
     protected $response;
 
     /**
-     * @param \Lcobucci\ActionMapper2\Routing\RouteManager $routeManager
-     * @param \Lcobucci\ActionMapper2\Errors\ErrorHandler $errorHandler
-     * @param \Symfony\Component\DependencyInjection\ContainerInterface $dependencyContainer
+     * @param RouteManager $routeManager
+     * @param ErrorHandler $errorHandler
+     * @param ContainerInterface $dependencyContainer
      */
     public function __construct(
         RouteManager $routeManager,
@@ -57,7 +57,7 @@ class Application
     }
 
     /**
-     * @param \Symfony\Component\DependencyInjection\ContainerInterface $dependencyContainer
+     * @param ContainerInterface $dependencyContainer
      */
     public function setDependencyContainer(ContainerInterface $dependencyContainer)
     {
@@ -69,7 +69,7 @@ class Application
     }
 
     /**
-     * @return \Symfony\Component\DependencyInjection\ContainerInterface
+     * @return ContainerInterface
      */
     public function getDependencyContainer()
     {
@@ -77,7 +77,7 @@ class Application
     }
 
     /**
-     * @return \Lcobucci\ActionMapper2\Routing\RouteManager
+     * @return RouteManager
      */
     public function getRouteManager()
     {
@@ -85,7 +85,7 @@ class Application
     }
 
     /**
-     * @return \Lcobucci\ActionMapper2\Http\Request
+     * @return Request
      */
     public function getRequest()
     {
@@ -97,7 +97,7 @@ class Application
     }
 
     /**
-     * @return \Lcobucci\ActionMapper2\Http\Response
+     * @return Response
      */
     public function getResponse()
     {
@@ -136,7 +136,7 @@ class Application
     }
 
     /**
-     * @param \Symfony\Component\HttpFoundation\Session\SessionInterface $session
+     * @param SessionInterface $session
      */
     public function setSession(SessionInterface $session)
     {
@@ -146,7 +146,7 @@ class Application
     }
 
     /**
-     * @return \Symfony\Component\HttpFoundation\Session\SessionInterface
+     * @return SessionInterface
      */
     public function getSession()
     {

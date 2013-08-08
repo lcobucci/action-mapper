@@ -1,16 +1,16 @@
 <?php
 namespace Lcobucci\ActionMapper2\Config;
 
-use \InvalidArgumentException;
-use \SimpleXMLElement;
-use \DOMDocument;
-use \stdClass;
+use InvalidArgumentException;
+use SimpleXMLElement;
+use DOMDocument;
+use stdClass;
 
 class XmlRoutesLoader
 {
     /**
      * @param string $file
-     * @return \stdClass
+     * @return stdClass
      */
     public function load($file)
     {
@@ -22,8 +22,8 @@ class XmlRoutesLoader
 
     /**
      * @param string $file
-     * @throws \InvalidArgumentException
-     * @return \SimpleXMLElement
+     * @return SimpleXMLElement
+     * @throws InvalidArgumentException
      */
     protected function loadFile($file)
     {
@@ -43,8 +43,8 @@ class XmlRoutesLoader
     }
 
     /**
-     * @param \SimpleXMLElement $config
-     * @throws \InvalidArgumentException
+     * @param SimpleXMLElement $config
+     * @throws InvalidArgumentException
      */
     protected function validate(SimpleXMLElement $config)
     {
@@ -108,8 +108,8 @@ class XmlRoutesLoader
     }
 
     /**
-     * @param \SimpleXMLElement $config
-     * @return \stdClass
+     * @param SimpleXMLElement $config
+     * @return stdClass
      */
     protected function createMetadata(SimpleXMLElement $config)
     {
@@ -127,8 +127,8 @@ class XmlRoutesLoader
     }
 
     /**
-     * @param \SimpleXMLElement $config
-     * @param \stdClass $metadata
+     * @param SimpleXMLElement $config
+     * @param stdClass $metadata
      */
     protected function parseRoutes(SimpleXMLElement $config, stdClass $metadata)
     {
@@ -148,8 +148,8 @@ class XmlRoutesLoader
 
     /**
      *
-     * @param \SimpleXMLElement $config
-     * @param \stdClass $metadata
+     * @param SimpleXMLElement $config
+     * @param stdClass $metadata
      */
     protected function parseFilters(SimpleXMLElement $config, stdClass $metadata)
     {

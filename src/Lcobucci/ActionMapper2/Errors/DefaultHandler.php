@@ -1,8 +1,8 @@
 <?php
 namespace Lcobucci\ActionMapper2\Errors;
 
-use \Lcobucci\ActionMapper2\Http\Response;
-use \Lcobucci\ActionMapper2\Http\Request;
+use Lcobucci\ActionMapper2\Http\Response;
+use Lcobucci\ActionMapper2\Http\Request;
 
 class DefaultHandler extends ErrorHandler
 {
@@ -35,8 +35,7 @@ class DefaultHandler extends ErrorHandler
     }
 
     /**
-     *
-     * @see \Lcobucci\ActionMapper2\Errors\ErrorHandler::getErrorContent()
+     * @see ErrorHandler::getErrorContent()
      */
     protected function getErrorContent(
         Request $request,

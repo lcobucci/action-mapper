@@ -1,8 +1,8 @@
 <?php
 namespace Lcobucci\ActionMapper2\Routing;
 
-use \Doctrine\Common\Annotations\AnnotationReader;
-use \InvalidArgumentException;
+use Doctrine\Common\Annotations\AnnotationReader;
+use InvalidArgumentException;
 
 class RouteDefinitionCreator
 {
@@ -42,7 +42,7 @@ class RouteDefinitionCreator
     const DEFINITION_CLASS = '\Lcobucci\ActionMapper2\Routing\RouteDefinition';
 
     /**
-     * @var \Doctrine\Common\Annotations\AnnotationReader
+     * @var AnnotationReader
      */
     protected static $annotationParser;
 
@@ -72,8 +72,8 @@ class RouteDefinitionCreator
 
     /**
      * @param string $pattern
-     * @param \Lcobucci\ActionMapper2\Routing\Route|\Lcobucci\ActionMapper2\Routing\Filter|\Closure|string $handler
-     * @return \Lcobucci\ActionMapper2\Routing\RouteDefinition
+     * @param Route|Filter|\Closure|string $handler
+     * @return RouteDefinition
      */
     public static function create($pattern, $handler)
     {
@@ -93,6 +93,7 @@ class RouteDefinitionCreator
 
     /**
      * @param string $pattern
+     * @param bool $addEnd
      * @return string
      */
     public static function createRegex($pattern, $addEnd = true)
@@ -119,6 +120,7 @@ class RouteDefinitionCreator
     /**
      * @param string $pattern
      * @return boolean
+     * @throws InvalidArgumentException
      */
     public static function preparePattern($pattern)
     {
@@ -140,7 +142,7 @@ class RouteDefinitionCreator
     }
 
     /**
-     * @return \Doctrine\Common\Annotations\AnnotationReader
+     * @return AnnotationReader
      */
     protected static function getAnnotationParser()
     {
