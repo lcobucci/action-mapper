@@ -1,7 +1,7 @@
 <?php
 namespace Lcobucci\ActionMapper2\Routing;
 
-use Doctrine\Common\Annotations\AnnotationReader;
+use Doctrine\Common\Annotations\Reader;
 use InvalidArgumentException;
 
 class RouteDefinitionCreator
@@ -42,11 +42,6 @@ class RouteDefinitionCreator
     const DEFINITION_CLASS = '\Lcobucci\ActionMapper2\Routing\RouteDefinition';
 
     /**
-     * @var AnnotationReader
-     */
-    protected static $annotationParser;
-
-    /**
      * @var string
      */
     protected static $baseClass;
@@ -73,9 +68,10 @@ class RouteDefinitionCreator
     /**
      * @param string $pattern
      * @param Route|Filter|\Closure|string $handler
+     * @param Reader $annotationReader
      * @return RouteDefinition
      */
-    public static function create($pattern, $handler)
+    public static function create($pattern, $handler, Reader $annotationReader)
     {
         $baseClass = static::$baseClass ?: static::DEFINITION_CLASS;
         $pattern = static::preparePattern($pattern);
@@ -86,7 +82,7 @@ class RouteDefinitionCreator
             $handler
         );
 
-        $route->setAnnotationParser(static::getAnnotationParser());
+        $route->setAnnotationReader($annotationReader);
 
         return $route;
     }
@@ -139,17 +135,5 @@ class RouteDefinitionCreator
             '(x)',
             $pattern
         );
-    }
-
-    /**
-     * @return AnnotationReader
-     */
-    protected static function getAnnotationParser()
-    {
-        if (static::$annotationParser === null) {
-            static::$annotationParser = new AnnotationReader();
-        }
-
-        return static::$annotationParser;
     }
 }

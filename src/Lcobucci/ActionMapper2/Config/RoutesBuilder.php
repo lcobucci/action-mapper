@@ -1,28 +1,40 @@
 <?php
 namespace Lcobucci\ActionMapper2\Config;
 
+use Doctrine\Common\Annotations\AnnotationReader;
+use Doctrine\Common\Annotations\CachedReader;
+use Lcobucci\ActionMapper2\Routing\RouteCollection;
 use Lcobucci\ActionMapper2\Routing\RouteDefinitionCreator;
 use Lcobucci\ActionMapper2\Routing\RouteManager;
+use Doctrine\Common\Cache\Cache;
 use stdClass;
 
 class RoutesBuilder
 {
     /**
-     * @var string
+     * @var Cache
      */
-    protected $cacheDirectory;
+    protected $cache;
 
     /**
-     * @param string $cacheDirectory
+     * @var RouteLoader
      */
-    public function __construct($cacheDirectory = null)
-    {
-        if ($cacheDirectory !== null) {
-            $this->cacheDirectory = rtrim($cacheDirectory, '/');
-            return;
-        }
+    protected $routeLoader;
 
-        $this->cacheDirectory = sys_get_temp_dir();
+    /**
+     * @param RouteLoader $routeLoader
+     */
+    public function __construct(RouteLoader $routeLoader = null)
+    {
+        $this->routeLoader = $routeLoader ?: new XmlRoutesLoader();
+    }
+
+    /**
+     * @param Cache $cache
+     */
+    public function setCache(Cache $cache)
+    {
+        $this->cache = $cache;
     }
 
     /**
@@ -31,15 +43,7 @@ class RoutesBuilder
      */
     public function build($fileName)
     {
-        $cacheFile = $this->getCachePath($this->createCacheName($fileName));
-
-        if ($this->hasToCreateCache($fileName, $cacheFile)) {
-            $metadata = $this->createMetadata($fileName, $cacheFile);
-        } else {
-            $metadata = $this->loadMetadata($cacheFile);
-        }
-
-        return $this->createManager($metadata);
+        return $this->createManager($this->getMetadata($fileName));
     }
 
     /**
@@ -52,8 +56,20 @@ class RoutesBuilder
             RouteDefinitionCreator::setBaseClass($metadata->definitionBaseClass);
         }
 
-        $manager = new RouteManager();
+        $routes = new RouteCollection(
+            $this->cache ? new CachedReader(new AnnotationReader(), $this->cache) : null
+        );
 
+        return $this->configureManager(new RouteManager($routes), $metadata);
+    }
+
+    /**
+     * @param RouteManager $manager
+     * @param stdClass $metadata
+     * @return RouteManager
+     */
+    protected function configureManager(RouteManager $manager, stdClass $metadata)
+    {
         foreach ($metadata->routes as $route) {
             $manager->addRoute($route->pattern, $route->handler);
         }
@@ -71,71 +87,55 @@ class RoutesBuilder
         return $manager;
     }
 
-    /**
-     * @param string $fileName
-     * @return string
-     */
-    protected function createCacheName($fileName)
+    protected function getMetadata($fileName)
     {
-        return 'Project' . md5($fileName) . 'Routes';
-    }
+        $key = md5($fileName);
 
-    /**
-     * @param string $cacheName
-     * @return string
-     */
-    protected function getCachePath($cacheName)
-    {
-        return $this->cacheDirectory . '/' . $cacheName . '.json';
-    }
+        $cachedData = $this->loadFromCache($key, $fileName);
+        $metadata = $cachedData ?: $this->createMetadata($fileName);
 
-    /**
-     * @param string $fileName
-     * @param string $cacheFile
-     * @return boolean
-     */
-    protected function hasToCreateCache($fileName, $cacheFile)
-    {
-        if (file_exists($cacheFile) &&
-             filemtime($cacheFile) >= filemtime($fileName)) {
-            return false;
+        if ($this->cache && !$cachedData) {
+            $this->saveToCache($key, $metadata);
         }
-
-        return true;
-    }
-
-    /**
-     * @param string $fileName
-     * @param string $cacheFile
-     * @return stdClass
-     */
-    protected function createMetadata($fileName, $cacheFile)
-    {
-        $loader = new XmlRoutesLoader();
-        $metadata = $loader->load($fileName);
-
-        $this->saveMetadata($cacheFile, $metadata);
 
         return $metadata;
     }
 
     /**
-     * @param string $cacheFile
+     * @param string $key
      * @param stdClass $metadata
      */
-    protected function saveMetadata($cacheFile, stdClass $metadata)
+    protected function saveToCache($key, stdClass $metadata)
     {
-        file_put_contents($cacheFile, json_encode($metadata));
-
-        chmod($cacheFile, 0777);
+        $this->cache->save($key, $metadata);
+        $this->cache->save($key . '.time', time());
     }
 
     /**
-     * @param string $cacheFile
+     * @param string $key
+     * @param string $fileName
      * @return stdClass
      */
-    protected function loadMetadata($cacheFile)
+    protected function loadFromCache($key, $fileName)
     {
-        return json_decode(file_get_contents($cacheFile));
+        if (!$this->cache) {
+            return null;
+        }
+
+        if (($metadata = $this->cache->fetch($key))
+            && $this->cache->fetch($key . '.time') > filemtime($fileName)) {
+            return $metadata;
+        }
+
+        return null;
+    }
+
+    /**
+     * @param string $fileName
+     * @return stdClass
+     */
+    protected function createMetadata($fileName)
+    {
+        return $this->routeLoader->load($fileName);
     }
 }

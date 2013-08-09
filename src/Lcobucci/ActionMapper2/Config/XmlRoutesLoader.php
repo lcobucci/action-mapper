@@ -6,7 +6,7 @@ use SimpleXMLElement;
 use DOMDocument;
 use stdClass;
 
-class XmlRoutesLoader
+class XmlRoutesLoader implements RouteLoader
 {
     /**
      * @param string $file

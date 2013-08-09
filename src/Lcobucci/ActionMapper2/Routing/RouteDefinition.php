@@ -2,8 +2,8 @@
 namespace Lcobucci\ActionMapper2\Routing;
 
 use Lcobucci\ActionMapper2\Errors\PageNotFoundException;
-use Doctrine\Common\Annotations\AnnotationReader;
 use Lcobucci\ActionMapper2\Application;
+use Doctrine\Common\Annotations\Reader;
 use ReflectionClass;
 use ReflectionMethod;
 use RuntimeException;
@@ -31,9 +31,9 @@ class RouteDefinition
     protected $matchedArgs;
 
     /**
-     * @var \Doctrine\Common\Annotations\AnnotationReader
+     * @var Reader
      */
-    protected $annotationParser;
+    protected $annotationReader;
 
     /**
      * @param string $pattern
@@ -48,11 +48,11 @@ class RouteDefinition
     }
 
     /**
-     * @param AnnotationReader $annotationParser
+     * @param Reader $annotationReader
      */
-    public function setAnnotationParser(AnnotationReader $annotationParser)
+    public function setAnnotationReader(Reader $annotationReader)
     {
-        $this->annotationParser = $annotationParser;
+        $this->annotationReader = $annotationReader;
     }
 
     /**
@@ -157,14 +157,14 @@ class RouteDefinition
      */
     protected function parseAnnotation(Route $handler, Application $application)
     {
-        if ($this->annotationParser === null) {
+        if ($this->annotationReader === null) {
             throw new RuntimeException('Annotation parser is not setted');
         }
 
         $class = new ReflectionClass($handler);
 
         foreach ($class->getMethods(ReflectionMethod::IS_PUBLIC) as $method) {
-            $annotation = $this->annotationParser->getMethodAnnotation(
+            $annotation = $this->annotationReader->getMethodAnnotation(
                 $method,
                 '\Lcobucci\ActionMapper2\Routing\Annotation\Route'
             );

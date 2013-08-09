@@ -2,6 +2,8 @@
 namespace Lcobucci\ActionMapper2\Routing;
 
 use Lcobucci\ActionMapper2\Errors\PageNotFoundException;
+use Doctrine\Common\Annotations\AnnotationReader;
+use Doctrine\Common\Annotations\Reader;
 use InvalidArgumentException;
 use ReflectionClass;
 
@@ -13,10 +15,18 @@ class RouteCollection
     private $routes;
 
     /**
-     * Class constructor
+     * @var Reader
      */
-    public function __construct()
+    private $annotationReader;
+
+    /**
+     * Class constructor
+     *
+     * @param Reader $annotationReader
+     */
+    public function __construct(Reader $annotationReader = null)
     {
+        $this->annotationReader = $annotationReader ?: new AnnotationReader();
         $this->routes = array();
     }
 
@@ -43,7 +53,8 @@ class RouteCollection
 
         $this->routes[$pattern] = RouteDefinitionCreator::create(
             $pattern,
-            $handler
+            $handler,
+            $this->annotationReader
         );
 
         $this->sortByKeyLength();
