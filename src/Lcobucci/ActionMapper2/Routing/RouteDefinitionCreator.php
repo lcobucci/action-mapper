@@ -71,8 +71,11 @@ class RouteDefinitionCreator
      * @param Reader $annotationReader
      * @return RouteDefinition
      */
-    public static function create($pattern, $handler, Reader $annotationReader)
-    {
+    public static function create(
+        $pattern,
+        $handler,
+        Reader $annotationReader = null
+    ) {
         $baseClass = static::$baseClass ?: static::DEFINITION_CLASS;
         $pattern = static::preparePattern($pattern);
 
@@ -82,7 +85,9 @@ class RouteDefinitionCreator
             $handler
         );
 
-        $route->setAnnotationReader($annotationReader);
+        if ($annotationReader) {
+            $route->setAnnotationReader($annotationReader);
+        }
 
         return $route;
     }
