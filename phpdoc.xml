@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<phpdoc>
+    <title>ActionMapper 2</title>
+    <parser>
+        <target>build/api</target>
+        <markers>
+            <item>todo</item>
+            <item>TODO</item>
+            <item>fixme</item>
+            <item>FIXME</item>
+        </markers>
+    </parser>
+    <transformer>
+        <target>build/api</target>
+    </transformer>
+    <transformations>
+        <template name="responsive-twig" />
+    </transformations>
+    <files>
+        <directory>src/*</directory>
+    </files>
+</phpdoc>
