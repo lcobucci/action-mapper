@@ -47,6 +47,22 @@ abstract class Filter
     }
 
     /**
+     * @param string $serviceId
+     * @return mixed
+     * @throws BadMethodCallException
+     */
+    public function get($serviceId)
+    {
+        if ($this->application->getDependencyContainer() === null) {
+            throw new BadMethodCallException(
+                'The dependency container must be defined'
+            );
+        }
+
+        return $this->application->getDependencyContainer()->get($serviceId);
+    }
+
+    /**
      * Process the filter's job
      */
     abstract public function process();
