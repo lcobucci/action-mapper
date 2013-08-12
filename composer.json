@@ -21,6 +21,9 @@
 		"doctrine/cache": "*@dev",
 		"doctrine/common": ">=2.3.0@dev"
 	},
+	"require-dev": {
+		"phpunit/phpunit": "*"
+	},
 	"autoload": {
 		"psr-0": {
 			"Lcobucci\\ActionMapper2": "src/"
