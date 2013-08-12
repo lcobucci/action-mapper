@@ -4,6 +4,7 @@ namespace Lcobucci\ActionMapper2\Routing;
 use Lcobucci\ActionMapper2\Http\Response;
 use Lcobucci\ActionMapper2\Http\Request;
 use Lcobucci\ActionMapper2\Application;
+use BadMethodCallException;
 
 abstract class Filter
 {
