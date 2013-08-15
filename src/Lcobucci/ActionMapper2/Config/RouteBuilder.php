@@ -12,6 +12,7 @@ use Lcobucci\ActionMapper2\Routing\RouteDefinitionCreator;
 use Lcobucci\ActionMapper2\Routing\RouteCollection;
 use Doctrine\Common\Annotations\AnnotationReader;
 use Lcobucci\ActionMapper2\Routing\RouteManager;
+use Lcobucci\ActionMapper2\Config\Loader\Xml;
 use Doctrine\Common\Annotations\CachedReader;
 use Doctrine\Common\Cache\Cache;
 use stdClass;
@@ -44,7 +45,7 @@ class RouteBuilder
      */
     public function __construct(RouteLoader $routeLoader = null)
     {
-        $this->routeLoader = $routeLoader ?: new XmlRoutesLoader();
+        $this->routeLoader = $routeLoader ?: new Xml();
     }
 
     /**

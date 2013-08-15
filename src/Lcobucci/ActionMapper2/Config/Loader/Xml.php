@@ -6,8 +6,9 @@
  * @license http://opensource.org/licenses/BSD-3-Clause BSD-3-Clause
  */
 
-namespace Lcobucci\ActionMapper2\Config;
+namespace Lcobucci\ActionMapper2\Config\Loader;
 
+use Lcobucci\ActionMapper2\Config\RouteLoader;
 use InvalidArgumentException;
 use SimpleXMLElement;
 use DOMDocument;
@@ -18,8 +19,15 @@ use stdClass;
  *
  * @author Luís Otávio Cobucci Oblonczyk <lcobucci@gmail.com>
  */
-class XmlRoutesLoader implements RouteLoader
+class Xml implements RouteLoader
 {
+    /**
+     * The default namespace to be used
+     *
+     * @var string
+     */
+    const XML_NAMESPACE = 'http://lcobucci.com/action-mapper/schema';
+
     /**
      * Load the file and returns the configuration data
      *
@@ -31,7 +39,7 @@ class XmlRoutesLoader implements RouteLoader
         $config = $this->loadFile($file);
         $this->validate($config);
 
-        return $this->createMetadata($config);
+        return $this->createMetadata($config->children(static::XML_NAMESPACE));
     }
 
     /**
@@ -49,15 +57,7 @@ class XmlRoutesLoader implements RouteLoader
             );
         }
 
-        $config = new SimpleXMLElement($file, null, true);
-
-        //FIXME if XML file already has a prefix the loader don't work
-
-        foreach ($this->getNamespaces() as $prefix => $uri) {
-            $config->registerXPathNamespace($prefix, $uri);
-        }
-
-        return $config;
+        return new SimpleXMLElement($file, null, true);
     }
 
     /**
@@ -116,19 +116,7 @@ class XmlRoutesLoader implements RouteLoader
      */
     protected function getXsdPath()
     {
-        return __DIR__ . '/schema/routing.xsd';
-    }
-
-    /**
-     * Return the list of namespaces that must be registered before validation
-     *
-     * @return array
-     */
-    protected function getNamespaces()
-    {
-        return array(
-            'routing' => 'http://lcobucci.com/action-mapper/schema'
-        );
+        return __DIR__ . '/../schema/routing.xsd';
     }
 
     /**
@@ -161,14 +149,15 @@ class XmlRoutesLoader implements RouteLoader
     protected function parseRoutes(SimpleXMLElement $config, stdClass $metadata)
     {
         foreach ($config->routes->route as $route) {
-            $handler = (string) $route['class'];
+            $attributes = $route->attributes();
+            $handler = (string) $attributes->class;
 
-            if (isset($route['method'])) {
-                $handler .= '::' . $route['method'];
+            if (isset($attributes->method)) {
+                $handler .= '::' . $attributes->method;
             }
 
             $metadata->routes[] = (object) array(
-                'pattern' => (string) $route['pattern'],
+                'pattern' => (string) $attributes->pattern,
                 'handler' => $handler
             );
         }
@@ -189,10 +178,12 @@ class XmlRoutesLoader implements RouteLoader
         $metadata->filters = array();
 
         foreach ($config->filters->filter as $filter) {
+            $attributes = $filter->attributes();
+
             $metadata->filters[] = (object) array(
-                'pattern' => (string) $filter['pattern'],
-                'handler' => (string) $filter['class'],
-                'before' => !isset($filter['before']) || $filter['before'] == 'true'
+                'pattern' => (string) $attributes->pattern,
+                'handler' => (string) $attributes->class,
+                'before' => !isset($attributes->before) || $attributes->before == 'true'
             );
         }
     }
