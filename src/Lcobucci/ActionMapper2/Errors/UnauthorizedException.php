@@ -9,11 +9,15 @@
 namespace Lcobucci\ActionMapper2\Errors;
 
 /**
+ * Unauthorized response happens when the request requires user authentication
+ *
  * @author Luís Otávio Cobucci Oblonczyk <lcobucci@gmail.com>
  */
 class UnauthorizedException extends HttpException
 {
     /**
+     * Returns the HTTP status code
+     *
      * @return int
      */
     public function getStatusCode()

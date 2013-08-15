@@ -12,16 +12,22 @@ use Lcobucci\ActionMapper2\Http\Response;
 use Lcobucci\ActionMapper2\Http\Request;
 
 /**
+ * Basic error handler
+ *
  * @author Luís Otávio Cobucci Oblonczyk <lcobucci@gmail.com>
  */
 class DefaultHandler extends ErrorHandler
 {
     /**
+     * The template content
+     *
      * @var string
      */
     private $content;
 
     /**
+     * Show the exception trace
+     *
      * @var boolean
      */
     private $displayTrace;
@@ -45,7 +51,12 @@ class DefaultHandler extends ErrorHandler
     }
 
     /**
-     * @see ErrorHandler::getErrorContent()
+     * Renders the error page according with the exception
+     *
+     * @param Request $request
+     * @param Response $response
+     * @param HttpException $error
+     * @return string
      */
     protected function getErrorContent(
         Request $request,

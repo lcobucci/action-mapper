@@ -9,11 +9,16 @@
 namespace Lcobucci\ActionMapper2\Errors;
 
 /**
+ * Page not found happens when the server has not found anything matching the
+ * Request-URI
+ *
  * @author Luís Otávio Cobucci Oblonczyk <lcobucci@gmail.com>
  */
 class PageNotFoundException extends HttpException
 {
     /**
+     * Returns the HTTP status code
+     *
      * @return int
      */
     public function getStatusCode()

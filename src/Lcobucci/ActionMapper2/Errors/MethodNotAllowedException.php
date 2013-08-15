@@ -9,11 +9,16 @@
 namespace Lcobucci\ActionMapper2\Errors;
 
 /**
+ * The method specified in the Request-Line is not allowed for the resource
+ * identified by the Request-URI.
+ *
  * @author Luís Otávio Cobucci Oblonczyk <lcobucci@gmail.com>
  */
 class MethodNotAllowedException extends HttpException
 {
     /**
+     * Returns the HTTP status code
+     *
      * @return int
      */
     public function getStatusCode()

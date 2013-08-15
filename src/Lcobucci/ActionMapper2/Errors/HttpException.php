@@ -9,11 +9,14 @@
 namespace Lcobucci\ActionMapper2\Errors;
 
 /**
+ * Base class for HTTP error responses
+ *
  * @author Luís Otávio Cobucci Oblonczyk <lcobucci@gmail.com>
  */
-abstract class HttpException extends \Exception
+abstract class HttpException extends \RuntimeException
 {
     /**
+     * Returns the HTTP status code
      *
      * @return int
      */

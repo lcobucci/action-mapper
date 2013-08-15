@@ -14,6 +14,8 @@ use ErrorException;
 use Exception;
 
 /**
+ * Base class to handle errors
+ *
  * @author Luís Otávio Cobucci Oblonczyk <lcobucci@gmail.com>
  */
 abstract class ErrorHandler
@@ -45,6 +47,8 @@ abstract class ErrorHandler
     }
 
     /**
+     * Handle the exception (converting to internal server error if needed) and
+     * showing a the error content
      *
      * @param Request $request
      * @param Response $response
@@ -69,6 +73,7 @@ abstract class ErrorHandler
      * @param Request $request
      * @param Response $response
      * @param HttpException $error
+     * @return string
      */
     abstract protected function getErrorContent(
         Request $request,
