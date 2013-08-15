@@ -9,11 +9,15 @@
 namespace Lcobucci\ActionMapper2\Http;
 
 /**
+ * Abstraction for HTTP response
+ *
  * @author Luís Otávio Cobucci Oblonczyk <lcobucci@gmail.com>
  */
 class Response extends \Symfony\Component\HttpFoundation\Response
 {
     /**
+     * Append a content to the current response body
+     *
      * @param string $content
      * @return Response
      */
@@ -25,6 +29,8 @@ class Response extends \Symfony\Component\HttpFoundation\Response
     }
 
     /**
+     * Configures the content type (and charset)
+     *
      * @param string $contentType
      * @param string $charset
      * @return Response
@@ -44,6 +50,8 @@ class Response extends \Symfony\Component\HttpFoundation\Response
     }
 
     /**
+     * Redirect to given URI
+     *
      * @param string $url
      */
     public function redirect($url)
@@ -52,6 +60,8 @@ class Response extends \Symfony\Component\HttpFoundation\Response
     }
 
     /**
+     * Send the response to client
+     *
      * @see \Symfony\Component\HttpFoundation\Response::send()
      */
     public function send()

@@ -9,16 +9,22 @@
 namespace Lcobucci\ActionMapper2\Http;
 
 /**
+ * Abstraction for HTTP request
+ *
  * @author Luís Otávio Cobucci Oblonczyk <lcobucci@gmail.com>
  */
 class Request extends \Symfony\Component\HttpFoundation\Request
 {
     /**
+     * The requested path
+     *
      * @var string
      */
     protected $requestedPath;
 
     /**
+     * Configures the requested path
+     *
      * @param string $requestedPath
      */
     public function setRequestedPath($requestedPath)
@@ -27,6 +33,8 @@ class Request extends \Symfony\Component\HttpFoundation\Request
     }
 
     /**
+     * Returns the requested path
+     *
      * @return string
      */
     public function getRequestedPath()
