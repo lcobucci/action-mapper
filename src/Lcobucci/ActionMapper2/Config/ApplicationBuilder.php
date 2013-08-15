@@ -1,33 +1,54 @@
 <?php
+/**
+ * This file is part of Action Mapper 2, a PHP 5.3+ front-controller
+ * microframework
+ *
+ * @license http://opensource.org/licenses/BSD-3-Clause BSD-3-Clause
+ */
+
 namespace Lcobucci\ActionMapper2\Config;
 
-use Doctrine\Common\Cache\Cache;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 use Lcobucci\DependencyInjection\XmlContainerBuilder;
 use Lcobucci\DependencyInjection\ContainerBuilder;
 use Lcobucci\ActionMapper2\Errors\DefaultHandler;
 use Lcobucci\ActionMapper2\Errors\ErrorHandler;
 use Lcobucci\ActionMapper2\Application;
-use Symfony\Component\DependencyInjection\ContainerInterface;
+use Doctrine\Common\Cache\Cache;
 use InvalidArgumentException;
 
+/**
+ * The application builder is a factory to create applications using
+ * configuration files
+ *
+ * @author Luís Otávio Cobucci Oblonczyk <lcobucci@gmail.com>
+ */
 class ApplicationBuilder
 {
     /**
+     * The default dependency container
+     *
      * @var string
      */
     const DEFAULT_BASE_CONTAINER = '\Lcobucci\ActionMapper2\DependencyInjection\Container';
 
     /**
-     * @var RoutesBuilder
+     * The route builder
+     *
+     * @var RouteBuilder
      */
-    protected $routesBuilder;
+    protected $routeBuilder;
 
     /**
+     * The dependency injection builder
+     *
      * @var ContainerBuilder
      */
     protected $containerBuilder;
 
     /**
+     * Builds a ready-to-use application with given application
+     *
      * @param string $routesConfig
      * @param string $containerConfig
      * @param ErrorHandler $errorHandler
@@ -45,7 +66,7 @@ class ApplicationBuilder
         $applicationCache = null
     ) {
         $builder = new static(
-            new RoutesBuilder(),
+            new RouteBuilder(),
             new XmlContainerBuilder(
                 $containerBaseClass ?: static::DEFAULT_BASE_CONTAINER,
                 $cacheDir
@@ -60,7 +81,7 @@ class ApplicationBuilder
 
         $builder->configureCache($dependencyContainer, $applicationCache);
 
-        $routeManager = $builder->routesBuilder
+        $routeManager = $builder->routeBuilder
                                 ->build(realpath($routesConfig));
 
         return new Application(
@@ -71,18 +92,22 @@ class ApplicationBuilder
     }
 
     /**
-     * @param RoutesBuilder $routesBuilder
+     * Class constructor
+     *
+     * @param RouteBuilder $routeBuilder
      * @param ContainerBuilder $containerBuilder
      */
     public function __construct(
-        RoutesBuilder $routesBuilder,
+        RouteBuilder $routeBuilder,
         ContainerBuilder $containerBuilder
     ) {
-        $this->routesBuilder = $routesBuilder;
+        $this->routeBuilder = $routeBuilder;
         $this->containerBuilder = $containerBuilder;
     }
 
     /**
+     * Configure the cache provider for route builder
+     *
      * @param ContainerInterface $container
      * @param string $applicationCache
      * @throws InvalidArgumentException
@@ -96,13 +121,13 @@ class ApplicationBuilder
         }
 
         if ($applicationCache instanceof Cache) {
-            $this->routesBuilder->setCache($applicationCache);
+            $this->routeBuilder->setCache($applicationCache);
 
             return ;
         }
 
         if ($container && is_string($applicationCache)) {
-            $this->routesBuilder->setCache($container->get($applicationCache));
+            $this->routeBuilder->setCache($container->get($applicationCache));
 
             return ;
         }

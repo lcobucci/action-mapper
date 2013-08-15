@@ -1,44 +1,69 @@
 <?php
+/**
+ * This file is part of Action Mapper 2, a PHP 5.3+ front-controller
+ * microframework
+ *
+ * @license http://opensource.org/licenses/BSD-3-Clause BSD-3-Clause
+ */
+
 namespace Lcobucci\ActionMapper2;
 
 use Lcobucci\ActionMapper2\DependencyInjection\Container as ActionMapperContainer;
 use Symfony\Component\HttpFoundation\Session\Storage\NativeSessionStorage;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
-use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\HttpFoundation\Session\Session;
 use Lcobucci\ActionMapper2\Routing\RouteManager;
 use Lcobucci\ActionMapper2\Errors\ErrorHandler;
 use Lcobucci\ActionMapper2\Http\Response;
 use Lcobucci\ActionMapper2\Http\Request;
 
+/**
+ * The application is main resource of this library, it is capable of handling
+ * and dispatching requests
+ *
+ * @author Luís Otávio Cobucci Oblonczyk <lcobucci@gmail.com>
+ */
 class Application
 {
     /**
+     * The route manager
+     *
      * @var RouteManager
      */
     protected $routeManager;
 
     /**
+     * The error handler
+     *
      * @var ErrorHandler
      */
     protected $errorHandler;
 
     /**
+     * The dependency container
+     *
      * @var ContainerInterface
      */
     private $dependencyContainer;
 
     /**
+     * The HTTP Request
+     *
      * @var Request
      */
     protected $request;
 
     /**
+     * The HTTP Response
+     *
      * @var Response
      */
     protected $response;
 
     /**
+     * Class constructor
+     *
      * @param RouteManager $routeManager
      * @param ErrorHandler $errorHandler
      * @param ContainerInterface $dependencyContainer
@@ -57,6 +82,8 @@ class Application
     }
 
     /**
+     * Configures the dependency container, injecting the application if need
+     *
      * @param ContainerInterface $dependencyContainer
      */
     public function setDependencyContainer(ContainerInterface $dependencyContainer)
@@ -69,6 +96,8 @@ class Application
     }
 
     /**
+     * Returns the dependency container
+     *
      * @return ContainerInterface
      */
     public function getDependencyContainer()
@@ -77,6 +106,8 @@ class Application
     }
 
     /**
+     * Returns the route manager
+     *
      * @return RouteManager
      */
     public function getRouteManager()
@@ -85,6 +116,8 @@ class Application
     }
 
     /**
+     * Returns the HTTP request (creating if not configured)
+     *
      * @return Request
      */
     public function getRequest()
@@ -97,6 +130,8 @@ class Application
     }
 
     /**
+     * Returns the HTTP response (creating if not configured)
+     *
      * @return Response
      */
     public function getResponse()
@@ -109,6 +144,8 @@ class Application
     }
 
     /**
+     * Starts the session using the given name
+     *
      * @param string $name
      */
     public function startSession($name = null)
@@ -118,6 +155,9 @@ class Application
     }
 
     /**
+     * Configure the session handler with the native session (only when not
+     * configured)
+     *
      * @param string $name
      */
     protected function setDefaultSession($name = null)
@@ -136,6 +176,8 @@ class Application
     }
 
     /**
+     * Configure the session handler (only when not configured)
+     *
      * @param SessionInterface $session
      */
     public function setSession(SessionInterface $session)
@@ -146,6 +188,8 @@ class Application
     }
 
     /**
+     * Returns the session handler
+     *
      * @return SessionInterface
      */
     public function getSession()
@@ -154,6 +198,8 @@ class Application
     }
 
     /**
+     * Redirect to given URI (using HTTP headers)
+     *
      * @param string $url
      */
     public function redirect($url)
@@ -167,6 +213,8 @@ class Application
     }
 
     /**
+     * Forward the engine to given path
+     *
      * @param string $path
      * @param boolean $interrupt
      */

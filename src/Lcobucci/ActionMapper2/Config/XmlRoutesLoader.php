@@ -1,4 +1,11 @@
 <?php
+/**
+ * This file is part of Action Mapper 2, a PHP 5.3+ front-controller
+ * microframework
+ *
+ * @license http://opensource.org/licenses/BSD-3-Clause BSD-3-Clause
+ */
+
 namespace Lcobucci\ActionMapper2\Config;
 
 use InvalidArgumentException;
@@ -6,9 +13,16 @@ use SimpleXMLElement;
 use DOMDocument;
 use stdClass;
 
+/**
+ * Configuration loader for XML files
+ *
+ * @author Luís Otávio Cobucci Oblonczyk <lcobucci@gmail.com>
+ */
 class XmlRoutesLoader implements RouteLoader
 {
     /**
+     * Load the file and returns the configuration data
+     *
      * @param string $file
      * @return stdClass
      */
@@ -21,6 +35,8 @@ class XmlRoutesLoader implements RouteLoader
     }
 
     /**
+     * Creates an object to be parsed from the given file
+     *
      * @param string $file
      * @return SimpleXMLElement
      * @throws InvalidArgumentException
@@ -35,6 +51,8 @@ class XmlRoutesLoader implements RouteLoader
 
         $config = new SimpleXMLElement($file, null, true);
 
+        //FIXME if XML file already has a prefix the loader don't work
+
         foreach ($this->getNamespaces() as $prefix => $uri) {
             $config->registerXPathNamespace($prefix, $uri);
         }
@@ -43,6 +61,8 @@ class XmlRoutesLoader implements RouteLoader
     }
 
     /**
+     * Validate the configuration file using the XSD
+     *
      * @param SimpleXMLElement $config
      * @throws InvalidArgumentException
      */
@@ -90,6 +110,8 @@ class XmlRoutesLoader implements RouteLoader
     }
 
     /**
+     * Returns the path of schema file
+     *
      * @return string
      */
     protected function getXsdPath()
@@ -98,6 +120,8 @@ class XmlRoutesLoader implements RouteLoader
     }
 
     /**
+     * Return the list of namespaces that must be registered before validation
+     *
      * @return array
      */
     protected function getNamespaces()
@@ -108,6 +132,8 @@ class XmlRoutesLoader implements RouteLoader
     }
 
     /**
+     * Creates the configuration data from the XML element
+     *
      * @param SimpleXMLElement $config
      * @return stdClass
      */
@@ -127,6 +153,8 @@ class XmlRoutesLoader implements RouteLoader
     }
 
     /**
+     * Parses the routes from the XML object
+     *
      * @param SimpleXMLElement $config
      * @param stdClass $metadata
      */
@@ -147,6 +175,7 @@ class XmlRoutesLoader implements RouteLoader
     }
 
     /**
+     * Parses the filters from the XML object
      *
      * @param SimpleXMLElement $config
      * @param stdClass $metadata

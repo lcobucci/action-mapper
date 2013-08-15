@@ -1,27 +1,45 @@
 <?php
+/**
+ * This file is part of Action Mapper 2, a PHP 5.3+ front-controller
+ * microframework
+ *
+ * @license http://opensource.org/licenses/BSD-3-Clause BSD-3-Clause
+ */
+
 namespace Lcobucci\ActionMapper2\Config;
 
-use Doctrine\Common\Annotations\AnnotationReader;
-use Doctrine\Common\Annotations\CachedReader;
-use Lcobucci\ActionMapper2\Routing\RouteCollection;
 use Lcobucci\ActionMapper2\Routing\RouteDefinitionCreator;
+use Lcobucci\ActionMapper2\Routing\RouteCollection;
+use Doctrine\Common\Annotations\AnnotationReader;
 use Lcobucci\ActionMapper2\Routing\RouteManager;
+use Doctrine\Common\Annotations\CachedReader;
 use Doctrine\Common\Cache\Cache;
 use stdClass;
 
-class RoutesBuilder
+/**
+ * The route builder create routes from the parsed configuration
+ *
+ * @author Luís Otávio Cobucci Oblonczyk <lcobucci@gmail.com>
+ */
+class RouteBuilder
 {
     /**
+     * The cache provider to be used by annotation reader
+     *
      * @var Cache
      */
     protected $cache;
 
     /**
+     * The configuration loader
+     *
      * @var RouteLoader
      */
     protected $routeLoader;
 
     /**
+     * Class constructor
+     *
      * @param RouteLoader $routeLoader
      */
     public function __construct(RouteLoader $routeLoader = null)
@@ -30,6 +48,8 @@ class RoutesBuilder
     }
 
     /**
+     * Configures the cache provider
+     *
      * @param Cache $cache
      */
     public function setCache(Cache $cache)
@@ -38,6 +58,8 @@ class RoutesBuilder
     }
 
     /**
+     * Build the route manager from the configuration file
+     *
      * @param string $fileName
      * @return RouteManager
      */
@@ -47,6 +69,8 @@ class RoutesBuilder
     }
 
     /**
+     * Create the route manager from configuration data
+     *
      * @param stdClass $metadata
      * @return RouteManager
      */
@@ -64,6 +88,8 @@ class RoutesBuilder
     }
 
     /**
+     * Appends the routes and filters to route manager
+     *
      * @param RouteManager $manager
      * @param stdClass $metadata
      * @return RouteManager
@@ -87,6 +113,12 @@ class RoutesBuilder
         return $manager;
     }
 
+    /**
+     * Retrieve the configuration data
+     *
+     * @param string $fileName
+     * @return stdClass
+     */
     protected function getMetadata($fileName)
     {
         $key = md5($fileName);
@@ -102,6 +134,8 @@ class RoutesBuilder
     }
 
     /**
+     * Save the configuration data into the cache provider
+     *
      * @param string $key
      * @param stdClass $metadata
      */
@@ -112,6 +146,8 @@ class RoutesBuilder
     }
 
     /**
+     * Load the configuration data from cache (when cache provider is configured)
+     *
      * @param string $key
      * @param string $fileName
      * @return stdClass
@@ -131,6 +167,8 @@ class RoutesBuilder
     }
 
     /**
+     * Retrieve the configuration data using the loader
+     *
      * @param string $fileName
      * @return stdClass
      */
