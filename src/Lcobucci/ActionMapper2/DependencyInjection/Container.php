@@ -12,16 +12,22 @@ use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Lcobucci\ActionMapper2\Application;
 
 /**
+ * This container provides the application session service
+ *
  * @author Luís Otávio Cobucci Oblonczyk <lcobucci@gmail.com>
  */
 class Container extends \Symfony\Component\DependencyInjection\Container
 {
     /**
+     * The application
+     *
      * @var Application
      */
     protected $application;
 
     /**
+     * Configures the application
+     *
      * @param Application $application
      */
     public function setApplication(Application $application)
