@@ -141,7 +141,7 @@ class Xml implements RouteLoader
     }
 
     /**
-     * Parses the routes from the XML object
+     * Parses the routes from the XML element
      *
      * @param SimpleXMLElement $config
      * @param stdClass $metadata
@@ -164,7 +164,7 @@ class Xml implements RouteLoader
     }
 
     /**
-     * Parses the filters from the XML object
+     * Parses the filters from the XML element
      *
      * @param SimpleXMLElement $config
      * @param stdClass $metadata
