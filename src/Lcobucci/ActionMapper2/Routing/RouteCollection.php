@@ -15,16 +15,22 @@ use InvalidArgumentException;
 use ReflectionClass;
 
 /**
+ * A collection of all application routes
+ *
  * @author Luís Otávio Cobucci Oblonczyk <lcobucci@gmail.com>
  */
 class RouteCollection
 {
     /**
+     * The list of routes
+     *
      * @var array
      */
     private $routes;
 
     /**
+     * The annotation reader
+     *
      * @var Reader
      */
     private $annotationReader;
@@ -41,6 +47,8 @@ class RouteCollection
     }
 
     /**
+     * Append a route for given pattern
+     *
      * @param string $pattern
      * @param Route|\Closure|string $handler
      * @throws InvalidArgumentException
@@ -91,6 +99,8 @@ class RouteCollection
     }
 
     /**
+     * Verifies if handler is valid
+     *
      * @param object|string $handler
      * @return boolean
      */
@@ -113,6 +123,8 @@ class RouteCollection
     }
 
     /**
+     * Locates a route for given path
+     *
      * @param string $path
      * @return RouteDefinition
      * @throws PageNotFoundException

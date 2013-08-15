@@ -12,51 +12,71 @@ use Doctrine\Common\Annotations\Reader;
 use InvalidArgumentException;
 
 /**
+ * The creator of route metadata
+ *
  * @author Luís Otávio Cobucci Oblonczyk <lcobucci@gmail.com>
  */
 class RouteDefinitionCreator
 {
     /**
+     * A regex to a parameter
+     *
      * @var string
      */
     const PARAM = '/\([a-zA-Z0-9\_]{1,}\)/';
 
     /**
+     * A regex to a URI
+     *
      * @var string
      */
     const URI_PATTERN = '/^\/(\(?[a-zA-Z0-9-_\*\.%]{1,}\)?\/?)*$/';
 
     /**
+     * A regex to a slash
+     *
      * @var string
      */
     const BAR = '/\//';
 
     /**
+     * A regex to a dot
+     *
      * @var string
      */
     const DOT = '/\./';
 
     /**
+     * A regex to a wildcard
+     *
      * @var string
      */
     const WILDCARD1 = '/%/';
 
     /**
+     * A regex to another wildcard
+     *
      * @var string
      */
     const WILDCARD2 = '/\*/';
 
     /**
+     * The defaul definition class
+     *
      * @var string
      */
     const DEFINITION_CLASS = '\Lcobucci\ActionMapper2\Routing\RouteDefinition';
 
     /**
+     * The base definition class to be used
+     *
      * @var string
      */
     protected static $baseClass;
 
     /**
+     * Configures the base definition class
+     *
      * @param string $baseClass
      * @throws InvalidArgumentException
      */
@@ -76,6 +96,8 @@ class RouteDefinitionCreator
     }
 
     /**
+     * Creates a new route definition
+     *
      * @param string $pattern
      * @param Route|Filter|\Closure|string $handler
      * @param Reader $annotationReader
@@ -103,6 +125,8 @@ class RouteDefinitionCreator
     }
 
     /**
+     * Creates a regex based on pattern
+     *
      * @param string $pattern
      * @param bool $addEnd
      * @return string
@@ -129,6 +153,8 @@ class RouteDefinitionCreator
     }
 
     /**
+     * Removes the trailling slash and simplifies the params on the pattern
+     *
      * @param string $pattern
      * @return boolean
      * @throws InvalidArgumentException

@@ -16,36 +16,50 @@ use ReflectionMethod;
 use RuntimeException;
 
 /**
+ * Metadata of a route
+ *
  * @author Luís Otávio Cobucci Oblonczyk <lcobucci@gmail.com>
  */
 class RouteDefinition
 {
     /**
+     * The configured pattern
+     *
      * @var string
      */
     protected $pattern;
 
     /**
+     * The created regex based on pattern
+     *
      * @var string
      */
     protected $regex;
 
     /**
+     * The handler to be called
+     *
      * @var Route|Filter|\Closure|string
      */
     protected $handler;
 
     /**
+     * The matched arguments
+     *
      * @var array
      */
     protected $matchedArgs;
 
     /**
+     * The annotation reader
+     *
      * @var Reader
      */
     protected $annotationReader;
 
     /**
+     * Class constructor
+     *
      * @param string $pattern
      * @param string $regex
      * @param Route|Filter|\Closure|string $handler
@@ -58,6 +72,8 @@ class RouteDefinition
     }
 
     /**
+     * Configures the annotation reader
+     *
      * @param Reader $annotationReader
      */
     public function setAnnotationReader(Reader $annotationReader)
@@ -66,6 +82,8 @@ class RouteDefinition
     }
 
     /**
+     * Configures the pattern
+     *
      * @return string
      */
     public function getPattern()
@@ -74,6 +92,8 @@ class RouteDefinition
     }
 
     /**
+     * Returns if given path matches with current regex
+     *
      * @param string $path
      * @return boolean
      */
@@ -89,6 +109,8 @@ class RouteDefinition
     }
 
     /**
+     * Appends the handler return to application response
+     *
      * @param Application $application
      */
     public function process(Application $application)
@@ -101,6 +123,8 @@ class RouteDefinition
     }
 
     /**
+     * Calls the handler returning its content
+     *
      * @param Application $application
      * @return string
      */
@@ -140,6 +164,8 @@ class RouteDefinition
     }
 
     /**
+     * Returns the handler
+     *
      * @param string $method
      * @return Route|Filter
      */
@@ -159,6 +185,8 @@ class RouteDefinition
     }
 
     /**
+     * Parses the class annotations
+     *
      * @param Route $handler
      * @param Application $application
      * @return mixed

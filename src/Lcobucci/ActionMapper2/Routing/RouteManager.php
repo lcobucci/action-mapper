@@ -11,21 +11,29 @@ namespace Lcobucci\ActionMapper2\Routing;
 use Lcobucci\ActionMapper2\Application;
 
 /**
+ * The route manager process filters and routes for a path
+ *
  * @author Luís Otávio Cobucci Oblonczyk <lcobucci@gmail.com>
  */
 class RouteManager
 {
     /**
+     * The route list
+     *
      * @var RouteCollection
      */
     private $routes;
 
     /**
+     * The filter list
+     *
      * @var FilterCollection
      */
     private $filters;
 
     /**
+     * Class constructor
+     *
      * @param RouteCollection $routes
      * @param FilterCollection $filters
      */
@@ -38,6 +46,8 @@ class RouteManager
     }
 
     /**
+     * Appends a new route
+     *
      * @param string $pattern
      * @param string|object $handler
      */
@@ -47,6 +57,8 @@ class RouteManager
     }
 
     /**
+     * Appends a new filter
+     *
      * @param string $pattern
      * @param string|object $hander
      * @param boolean $before
@@ -57,6 +69,8 @@ class RouteManager
     }
 
     /**
+     * Process the current request
+     *
      * @param Application $application
      */
     public function process(Application $application)
@@ -67,6 +81,8 @@ class RouteManager
     }
 
     /**
+     * Process the filters of current request
+     *
      * @param Application $application
      * @param boolean $before
      */
@@ -83,6 +99,8 @@ class RouteManager
     }
 
     /**
+     * Process the route of current request
+     *
      * @param Application $application
      */
     protected function processRoute(Application $application)

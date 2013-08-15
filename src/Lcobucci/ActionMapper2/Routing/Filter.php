@@ -14,26 +14,37 @@ use Lcobucci\ActionMapper2\Application;
 use BadMethodCallException;
 
 /**
+ * Base filter class, it allows to create routines that can be processed before
+ * or after the request
+ *
  * @author Luís Otávio Cobucci Oblonczyk <lcobucci@gmail.com>
  */
 abstract class Filter
 {
     /**
+     * The application
+     *
      * @var Application
      */
     protected $application;
 
     /**
+     * The HTTP request
+     *
      * @var Request
      */
     protected $request;
 
     /**
+     * The HTTP response
+     *
      * @var Response
      */
     protected $response;
 
     /**
+     * Configures the application
+     *
      * @param Application $application
      */
     public function setApplication(Application $application)
@@ -42,6 +53,8 @@ abstract class Filter
     }
 
     /**
+     * Configures the request
+     *
      * @param Request $request
      */
     public function setRequest(Request $request)
@@ -50,6 +63,8 @@ abstract class Filter
     }
 
     /**
+     * Configures the response
+     *
      * @param Response $response
      */
     public function setResponse(Response $response)
@@ -58,6 +73,8 @@ abstract class Filter
     }
 
     /**
+     * Returns a service from the dependency injection container
+     *
      * @param string $serviceId
      * @return mixed
      * @throws BadMethodCallException

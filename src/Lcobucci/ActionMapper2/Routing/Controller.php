@@ -14,26 +14,36 @@ use Lcobucci\ActionMapper2\Application;
 use BadMethodCallException;
 
 /**
+ * Base class of controllers
+ *
  * @author Luís Otávio Cobucci Oblonczyk <lcobucci@gmail.com>
  */
 class Controller implements Route
 {
     /**
+     * The current request
+     *
      * @var Request
      */
     protected $request;
 
     /**
+     * The current response
+     *
      * @var Response
      */
     protected $response;
 
     /**
+     * The application
+     *
      * @var Application
      */
     protected $application;
 
     /**
+     * Configures the request
+     *
      * @see \Lcobucci\ActionMapper2\Routing\Route::setRequest()
      */
     public function setRequest(Request $request)
@@ -42,6 +52,8 @@ class Controller implements Route
     }
 
     /**
+     * Configures the response
+     *
      * @see \Lcobucci\ActionMapper2\Routing\Route::setResponse()
      */
     public function setResponse(Response $response)
@@ -50,6 +62,8 @@ class Controller implements Route
     }
 
     /**
+     * Configures the application
+     *
      * @see \Lcobucci\ActionMapper2\Routing\Route::setApplication()
      */
     public function setApplication(Application $application)
@@ -58,6 +72,8 @@ class Controller implements Route
     }
 
     /**
+     * Get a service from dependency injection container
+     *
      * @param string $serviceId
      * @return mixed
      * @throws BadMethodCallException
@@ -74,6 +90,8 @@ class Controller implements Route
     }
 
     /**
+     * Forward the current request to another path
+     *
      * @param string $path
      * @param boolean $interrupt
      */
@@ -83,6 +101,8 @@ class Controller implements Route
     }
 
     /**
+     * Redirect to another path
+     *
      * @param string $url
      */
     public function redirect($url)
