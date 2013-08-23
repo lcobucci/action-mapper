@@ -8,6 +8,7 @@
 
 namespace Lcobucci\ActionMapper2\Config;
 
+use Lcobucci\ActionMapper2\DependencyInjection\ContainerConfig;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Lcobucci\DependencyInjection\XmlContainerBuilder;
 use Lcobucci\DependencyInjection\ContainerBuilder;
@@ -26,13 +27,6 @@ use InvalidArgumentException;
 class ApplicationBuilder
 {
     /**
-     * The default dependency container
-     *
-     * @var string
-     */
-    const DEFAULT_BASE_CONTAINER = '\Lcobucci\ActionMapper2\DependencyInjection\Container';
-
-    /**
      * The route builder
      *
      * @var RouteBuilder
@@ -50,33 +44,32 @@ class ApplicationBuilder
      * Builds a ready-to-use application with given application
      *
      * @param string $routesConfig
-     * @param string $containerConfig
+     * @param ContainerConfig $containerConfig
      * @param ErrorHandler $errorHandler
-     * @param string $cacheDir
-     * @param string $containerBaseClass
      * @param Cache|string $applicationCache
      * @return Application
      */
     public static function build(
         $routesConfig,
-        $containerConfig = null,
+        ContainerConfig $containerConfig = null,
         ErrorHandler $errorHandler = null,
-        $cacheDir = null,
-        $containerBaseClass = null,
         $applicationCache = null
     ) {
         $builder = new static(
             new RouteBuilder(),
             new XmlContainerBuilder(
-                $containerBaseClass ?: static::DEFAULT_BASE_CONTAINER,
-                $cacheDir
+                ContainerConfig::getBaseClass($containerConfig),
+                ContainerConfig::getDumpDir($containerConfig)
             )
         );
 
         $dependencyContainer = null;
         if ($containerConfig !== null) {
-            $dependencyContainer = $builder->containerBuilder
-                                           ->getContainer(realpath($containerConfig));
+            $dependencyContainer = $builder->containerBuilder->getContainer(
+                $containerConfig->getFile(),
+                array(),
+                $containerConfig->getDefaultParameters()
+            );
         }
 
         $builder->configureCache($dependencyContainer, $applicationCache);
