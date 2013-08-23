@@ -58,7 +58,7 @@ class ApplicationBuilder
         $builder = new static(
             new RouteBuilder(),
             new XmlContainerBuilder(
-                ContainerConfig::getBaseClass($containerConfig),
+                ContainerConfig::getClass($containerConfig),
                 ContainerConfig::getDumpDir($containerConfig)
             )
         );
