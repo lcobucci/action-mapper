@@ -1,11 +1,23 @@
 <?php
+/**
+ * This file is part of Action Mapper 2, a PHP 5.3+ front-controller
+ * microframework
+ *
+ * @license http://opensource.org/licenses/BSD-3-Clause BSD-3-Clause
+ */
+
 namespace Lcobucci\ActionMapper2\Errors;
 
-use \Lcobucci\ActionMapper2\Http\Response;
-use \Lcobucci\ActionMapper2\Http\Request;
-use \ErrorException;
-use \Exception;
+use Lcobucci\ActionMapper2\Http\Response;
+use Lcobucci\ActionMapper2\Http\Request;
+use ErrorException;
+use Exception;
 
+/**
+ * Base class to handle errors
+ *
+ * @author Luís Otávio Cobucci Oblonczyk <lcobucci@gmail.com>
+ */
 abstract class ErrorHandler
 {
     /**
@@ -35,10 +47,12 @@ abstract class ErrorHandler
     }
 
     /**
+     * Handle the exception (converting to internal server error if needed) and
+     * showing a the error content
      *
-     * @param \Lcobucci\ActionMapper2\Http\Request $request
-     * @param \Lcobucci\ActionMapper2\Http\Response $response
-     * @param \Exception $error
+     * @param Request $request
+     * @param Response $response
+     * @param Exception $error
      */
     final public function handle(
         Request $request,
@@ -56,9 +70,10 @@ abstract class ErrorHandler
     /**
      * Renders the error page according with the exception
      *
-     * @param \Lcobucci\ActionMapper2\Http\Request $request
-     * @param \Lcobucci\ActionMapper2\Http\Response $response
-     * @param \Lcobucci\ActionMapper2\Errors\HttpException $error
+     * @param Request $request
+     * @param Response $response
+     * @param HttpException $error
+     * @return string
      */
     abstract protected function getErrorContent(
         Request $request,

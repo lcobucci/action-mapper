@@ -1,29 +1,53 @@
 <?php
-namespace Lcobucci\ActionMapper2\Config;
+/**
+ * This file is part of Action Mapper 2, a PHP 5.3+ front-controller
+ * microframework
+ *
+ * @license http://opensource.org/licenses/BSD-3-Clause BSD-3-Clause
+ */
 
-use \InvalidArgumentException;
-use \SimpleXMLElement;
-use \DOMDocument;
-use \stdClass;
+namespace Lcobucci\ActionMapper2\Config\Loader;
 
-class XmlRoutesLoader
+use Lcobucci\ActionMapper2\Config\RouteLoader;
+use InvalidArgumentException;
+use SimpleXMLElement;
+use DOMDocument;
+use stdClass;
+
+/**
+ * Configuration loader for XML files
+ *
+ * @author Luís Otávio Cobucci Oblonczyk <lcobucci@gmail.com>
+ */
+class Xml implements RouteLoader
 {
     /**
+     * The default namespace to be used
+     *
+     * @var string
+     */
+    const XML_NAMESPACE = 'http://lcobucci.com/action-mapper/schema';
+
+    /**
+     * Load the file and returns the configuration data
+     *
      * @param string $file
-     * @return \stdClass
+     * @return stdClass
      */
     public function load($file)
     {
         $config = $this->loadFile($file);
         $this->validate($config);
 
-        return $this->createMetadata($config);
+        return $this->createMetadata($config->children(static::XML_NAMESPACE));
     }
 
     /**
+     * Creates an object to be parsed from the given file
+     *
      * @param string $file
-     * @throws \InvalidArgumentException
-     * @return \SimpleXMLElement
+     * @return SimpleXMLElement
+     * @throws InvalidArgumentException
      */
     protected function loadFile($file)
     {
@@ -33,18 +57,14 @@ class XmlRoutesLoader
             );
         }
 
-        $config = new SimpleXMLElement($file, null, true);
-
-        foreach ($this->getNamespaces() as $prefix => $uri) {
-            $config->registerXPathNamespace($prefix, $uri);
-        }
-
-        return $config;
+        return new SimpleXMLElement($file, null, true);
     }
 
     /**
-     * @param \SimpleXMLElement $config
-     * @throws \InvalidArgumentException
+     * Validate the configuration file using the XSD
+     *
+     * @param SimpleXMLElement $config
+     * @throws InvalidArgumentException
      */
     protected function validate(SimpleXMLElement $config)
     {
@@ -90,26 +110,20 @@ class XmlRoutesLoader
     }
 
     /**
+     * Returns the path of schema file
+     *
      * @return string
      */
     protected function getXsdPath()
     {
-        return __DIR__ . '/schema/routing.xsd';
+        return __DIR__ . '/../schema/routing.xsd';
     }
 
     /**
-     * @return array
-     */
-    protected function getNamespaces()
-    {
-        return array(
-            'routing' => 'http://lcobucci.com/action-mapper/schema'
-        );
-    }
-
-    /**
-     * @param \SimpleXMLElement $config
-     * @return \stdClass
+     * Creates the configuration data from the XML element
+     *
+     * @param SimpleXMLElement $config
+     * @return stdClass
      */
     protected function createMetadata(SimpleXMLElement $config)
     {
@@ -127,29 +141,33 @@ class XmlRoutesLoader
     }
 
     /**
-     * @param \SimpleXMLElement $config
-     * @param \stdClass $metadata
+     * Parses the routes from the XML element
+     *
+     * @param SimpleXMLElement $config
+     * @param stdClass $metadata
      */
     protected function parseRoutes(SimpleXMLElement $config, stdClass $metadata)
     {
         foreach ($config->routes->route as $route) {
-            $handler = (string) $route['class'];
+            $attributes = $route->attributes();
+            $handler = (string) $attributes->class;
 
-            if (isset($route['method'])) {
-                $handler .= '::' . $route['method'];
+            if (isset($attributes->method)) {
+                $handler .= '::' . $attributes->method;
             }
 
             $metadata->routes[] = (object) array(
-                'pattern' => (string) $route['pattern'],
+                'pattern' => (string) $attributes->pattern,
                 'handler' => $handler
             );
         }
     }
 
     /**
+     * Parses the filters from the XML element
      *
-     * @param \SimpleXMLElement $config
-     * @param \stdClass $metadata
+     * @param SimpleXMLElement $config
+     * @param stdClass $metadata
      */
     protected function parseFilters(SimpleXMLElement $config, stdClass $metadata)
     {
@@ -160,10 +178,12 @@ class XmlRoutesLoader
         $metadata->filters = array();
 
         foreach ($config->filters->filter as $filter) {
+            $attributes = $filter->attributes();
+
             $metadata->filters[] = (object) array(
-                'pattern' => (string) $filter['pattern'],
-                'handler' => (string) $filter['class'],
-                'before' => !isset($filter['before']) || $filter['before'] == 'true'
+                'pattern' => (string) $attributes->pattern,
+                'handler' => (string) $attributes->class,
+                'before' => !isset($attributes->before) || $attributes->before == 'true'
             );
         }
     }

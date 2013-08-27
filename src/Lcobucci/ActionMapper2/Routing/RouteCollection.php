@@ -1,28 +1,57 @@
 <?php
+/**
+ * This file is part of Action Mapper 2, a PHP 5.3+ front-controller
+ * microframework
+ *
+ * @license http://opensource.org/licenses/BSD-3-Clause BSD-3-Clause
+ */
+
 namespace Lcobucci\ActionMapper2\Routing;
 
 use Lcobucci\ActionMapper2\Errors\PageNotFoundException;
-use \InvalidArgumentException;
-use \ReflectionClass;
+use Doctrine\Common\Annotations\AnnotationReader;
+use Doctrine\Common\Annotations\Reader;
+use InvalidArgumentException;
+use ReflectionClass;
 
+/**
+ * A collection of all application routes
+ *
+ * @author Luís Otávio Cobucci Oblonczyk <lcobucci@gmail.com>
+ */
 class RouteCollection
 {
     /**
+     * The list of routes
+     *
      * @var array
      */
     private $routes;
 
     /**
-     * Class contructor
+     * The annotation reader
+     *
+     * @var Reader
      */
-    public function __construct()
+    private $annotationReader;
+
+    /**
+     * Class constructor
+     *
+     * @param Reader $annotationReader
+     */
+    public function __construct(Reader $annotationReader = null)
     {
+        $this->annotationReader = $annotationReader ?: new AnnotationReader();
         $this->routes = array();
     }
 
     /**
+     * Append a route for given pattern
+     *
      * @param string $pattern
-     * @param \Lcobucci\ActionMapper2\Routing\Route|\Closure|string $handler
+     * @param Route|\Closure|string $handler
+     * @throws InvalidArgumentException
      */
     public function append($pattern, $handler)
     {
@@ -42,14 +71,15 @@ class RouteCollection
 
         $this->routes[$pattern] = RouteDefinitionCreator::create(
             $pattern,
-            $handler
+            $handler,
+            $this->annotationReader
         );
 
         $this->sortByKeyLength();
     }
 
     /**
-     * Sorts the collection by the patterns legth
+     * Sorts the collection by the patterns length
      */
     protected function sortByKeyLength()
     {
@@ -69,6 +99,8 @@ class RouteCollection
     }
 
     /**
+     * Verifies if handler is valid
+     *
      * @param object|string $handler
      * @return boolean
      */
@@ -91,8 +123,11 @@ class RouteCollection
     }
 
     /**
+     * Locates a route for given path
+     *
      * @param string $path
-     * @return \Otto\Component\Routing\CompiledRoute
+     * @return RouteDefinition
+     * @throws PageNotFoundException
      */
     public function findRouteFor($path)
     {

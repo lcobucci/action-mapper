@@ -1,47 +1,72 @@
 <?php
+/**
+ * This file is part of Action Mapper 2, a PHP 5.3+ front-controller
+ * microframework
+ *
+ * @license http://opensource.org/licenses/BSD-3-Clause BSD-3-Clause
+ */
+
 namespace Lcobucci\ActionMapper2;
 
-use \Lcobucci\ActionMapper2\DependencyInjection\Container as ActionMapperContainer;
-use \Symfony\Component\HttpFoundation\Session\Storage\NativeSessionStorage;
-use \Symfony\Component\HttpFoundation\Session\SessionInterface;
-use \Symfony\Component\HttpFoundation\Session\Session;
-use \Symfony\Component\DependencyInjection\ContainerInterface;
-use \Lcobucci\ActionMapper2\Routing\RouteManager;
-use \Lcobucci\ActionMapper2\Errors\ErrorHandler;
-use \Lcobucci\ActionMapper2\Http\Response;
-use \Lcobucci\ActionMapper2\Http\Request;
+use Lcobucci\ActionMapper2\DependencyInjection\Container as ActionMapperContainer;
+use Symfony\Component\HttpFoundation\Session\Storage\NativeSessionStorage;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
+use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\HttpFoundation\Session\Session;
+use Lcobucci\ActionMapper2\Routing\RouteManager;
+use Lcobucci\ActionMapper2\Errors\ErrorHandler;
+use Lcobucci\ActionMapper2\Http\Response;
+use Lcobucci\ActionMapper2\Http\Request;
 
+/**
+ * The application is main resource of this library, it is capable of handling
+ * and dispatching requests
+ *
+ * @author Luís Otávio Cobucci Oblonczyk <lcobucci@gmail.com>
+ */
 class Application
 {
     /**
-     * @var \Lcobucci\ActionMapper2\Routing\RouteManager
+     * The route manager
+     *
+     * @var RouteManager
      */
     protected $routeManager;
 
     /**
-     * @var \Lcobucci\ActionMapper2\Errors\ErrorHandler
+     * The error handler
+     *
+     * @var ErrorHandler
      */
     protected $errorHandler;
 
     /**
-     * @var \Symfony\Component\DependencyInjection\ContainerInterface
+     * The dependency container
+     *
+     * @var ContainerInterface
      */
     private $dependencyContainer;
 
     /**
-     * @var \Lcobucci\ActionMapper2\Http\Request
+     * The HTTP Request
+     *
+     * @var Request
      */
     protected $request;
 
     /**
-     * @var \Symfony\Component\HttpFoundation\Response
+     * The HTTP Response
+     *
+     * @var Response
      */
     protected $response;
 
     /**
-     * @param \Lcobucci\ActionMapper2\Routing\RouteManager $routeManager
-     * @param \Lcobucci\ActionMapper2\Errors\ErrorHandler $errorHandler
-     * @param \Symfony\Component\DependencyInjection\ContainerInterface $dependencyContainer
+     * Class constructor
+     *
+     * @param RouteManager $routeManager
+     * @param ErrorHandler $errorHandler
+     * @param ContainerInterface $dependencyContainer
      */
     public function __construct(
         RouteManager $routeManager,
@@ -57,7 +82,9 @@ class Application
     }
 
     /**
-     * @param \Symfony\Component\DependencyInjection\ContainerInterface $dependencyContainer
+     * Configures the dependency container, injecting the application if need
+     *
+     * @param ContainerInterface $dependencyContainer
      */
     public function setDependencyContainer(ContainerInterface $dependencyContainer)
     {
@@ -69,7 +96,9 @@ class Application
     }
 
     /**
-     * @return \Symfony\Component\DependencyInjection\ContainerInterface
+     * Returns the dependency container
+     *
+     * @return ContainerInterface
      */
     public function getDependencyContainer()
     {
@@ -77,7 +106,9 @@ class Application
     }
 
     /**
-     * @return \Lcobucci\ActionMapper2\Routing\RouteManager
+     * Returns the route manager
+     *
+     * @return RouteManager
      */
     public function getRouteManager()
     {
@@ -85,7 +116,9 @@ class Application
     }
 
     /**
-     * @return \Lcobucci\ActionMapper2\Http\Request
+     * Returns the HTTP request (creating if not configured)
+     *
+     * @return Request
      */
     public function getRequest()
     {
@@ -97,7 +130,9 @@ class Application
     }
 
     /**
-     * @return \Lcobucci\ActionMapper2\Http\Response
+     * Returns the HTTP response (creating if not configured)
+     *
+     * @return Response
      */
     public function getResponse()
     {
@@ -109,6 +144,8 @@ class Application
     }
 
     /**
+     * Starts the session using the given name
+     *
      * @param string $name
      */
     public function startSession($name = null)
@@ -118,6 +155,9 @@ class Application
     }
 
     /**
+     * Configure the session handler with the native session (only when not
+     * configured)
+     *
      * @param string $name
      */
     protected function setDefaultSession($name = null)
@@ -136,7 +176,9 @@ class Application
     }
 
     /**
-     * @param \Symfony\Component\HttpFoundation\Session\SessionInterface $session
+     * Configure the session handler (only when not configured)
+     *
+     * @param SessionInterface $session
      */
     public function setSession(SessionInterface $session)
     {
@@ -146,7 +188,9 @@ class Application
     }
 
     /**
-     * @return \Symfony\Component\HttpFoundation\Session\SessionInterface
+     * Returns the session handler
+     *
+     * @return SessionInterface
      */
     public function getSession()
     {
@@ -154,6 +198,8 @@ class Application
     }
 
     /**
+     * Redirect to given URI (using HTTP headers)
+     *
      * @param string $url
      */
     public function redirect($url)
@@ -167,6 +213,8 @@ class Application
     }
 
     /**
+     * Forward the engine to given path
+     *
      * @param string $path
      * @param boolean $interrupt
      */

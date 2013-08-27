@@ -1,10 +1,25 @@
 <?php
+/**
+ * This file is part of Action Mapper 2, a PHP 5.3+ front-controller
+ * microframework
+ *
+ * @license http://opensource.org/licenses/BSD-3-Clause BSD-3-Clause
+ */
+
 namespace Lcobucci\ActionMapper2\Http;
 
+/**
+ * Abstraction for HTTP response
+ *
+ * @author Luís Otávio Cobucci Oblonczyk <lcobucci@gmail.com>
+ */
 class Response extends \Symfony\Component\HttpFoundation\Response
 {
     /**
+     * Append a content to the current response body
+     *
      * @param string $content
+     * @return Response
      */
     public function appendContent($content)
     {
@@ -14,9 +29,11 @@ class Response extends \Symfony\Component\HttpFoundation\Response
     }
 
     /**
+     * Configures the content type (and charset)
+     *
      * @param string $contentType
      * @param string $charset
-     * @return \Lcobucci\ActionMapper2\Http\Response
+     * @return Response
      */
     public function setContentType($contentType, $charset = null)
     {
@@ -33,6 +50,8 @@ class Response extends \Symfony\Component\HttpFoundation\Response
     }
 
     /**
+     * Redirect to given URI
+     *
      * @param string $url
      */
     public function redirect($url)
@@ -41,6 +60,8 @@ class Response extends \Symfony\Component\HttpFoundation\Response
     }
 
     /**
+     * Send the response to client
+     *
      * @see \Symfony\Component\HttpFoundation\Response::send()
      */
     public function send()

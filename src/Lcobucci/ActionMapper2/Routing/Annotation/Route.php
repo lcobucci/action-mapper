@@ -1,12 +1,21 @@
 <?php
+/**
+ * This file is part of Action Mapper 2, a PHP 5.3+ front-controller
+ * microframework
+ *
+ * @license http://opensource.org/licenses/BSD-3-Clause BSD-3-Clause
+ */
+
 namespace Lcobucci\ActionMapper2\Routing\Annotation;
 
-use \Lcobucci\ActionMapper2\Routing\RouteDefinitionCreator;
-use \Lcobucci\ActionMapper2\Routing\RouteDefinition;
-use \Lcobucci\ActionMapper2\Http\Request;
-use \InvalidArgumentException;
+use Lcobucci\ActionMapper2\Routing\RouteDefinitionCreator;
+use Lcobucci\ActionMapper2\Routing\RouteDefinition;
+use Lcobucci\ActionMapper2\Http\Request;
+use InvalidArgumentException;
 
 /**
+ * The annotation to be used on controllers methods and map the routes
+ *
  * @Annotation
  * @Target({"METHOD"})
  * @author Luís Otávio Cobucci Oblonczyk <lcobucci@gmail.com>
@@ -14,31 +23,43 @@ use \InvalidArgumentException;
 class Route
 {
     /**
+     * The URI pattern to handle
+     *
      * @var string
      */
     public $pattern = '/';
 
     /**
+     * The list of requirements that must be applied on each segment
+     *
      * @var array
      */
     public $requirements = array();
 
     /**
+     * The list of HTTP methods to handle
+     *
      * @var array
      */
     public $methods = array('GET', 'POST', 'PUT', 'DELETE');
 
     /**
+     * The list of content types to handle
+     *
      * @var array
      */
     public $contentType = array();
 
     /**
+     * The matched URI segments
+     *
      * @var array
      */
     private $matchedArgs;
 
     /**
+     * Class constructor
+     *
      * @param array $options
      */
     public function __construct(array $options = array())
@@ -65,6 +86,8 @@ class Route
     }
 
     /**
+     * Configures the requirement list
+     *
      * @param array $requirements
      * @throws InvalidArgumentException
      */
@@ -80,6 +103,8 @@ class Route
     }
 
     /**
+     * Configures the HTTP methods
+     *
      * @param array $methods
      * @throws InvalidArgumentException
      */
@@ -115,6 +140,8 @@ class Route
     }
 
     /**
+     * Configures the pattern
+     *
      * @param string $pattern
      */
     protected function setPattern(&$pattern)
@@ -123,6 +150,8 @@ class Route
     }
 
     /**
+     * Configures the list of acceptable content-types
+     *
      * @param array $contentType
      */
     protected function setContentType(array $contentType)
@@ -131,8 +160,10 @@ class Route
     }
 
     /**
-     * @param \Lcobucci\ActionMapper2\Routing\RouteDefinition $route
-     * @param \Lcobucci\ActionMapper2\Http\Request $request
+     * Check if the route matches with request
+     *
+     * @param RouteDefinition $route
+     * @param Request $request
      * @return boolean
      */
     public function match(RouteDefinition $route, Request $request)
@@ -148,6 +179,8 @@ class Route
     }
 
     /**
+     * Return the matched items
+     *
      * @return array
      */
     public function getMatchedArgs()
@@ -156,8 +189,10 @@ class Route
     }
 
     /**
-     * @param \Lcobucci\ActionMapper2\Routing\RouteDefinition $route
-     * @param \Lcobucci\ActionMapper2\Http\Request $request
+     * Validate if request URI matches with pattern
+     *
+     * @param RouteDefinition $route
+     * @param Request $request
      * @return boolean
      */
     protected function validatePattern(RouteDefinition $route, Request $request)
@@ -175,8 +210,10 @@ class Route
     }
 
     /**
-     * @param \Lcobucci\ActionMapper2\Routing\RouteDefinition $route
-     * @param \Lcobucci\ActionMapper2\Http\Request $request
+     * Returns the requested path
+     *
+     * @param RouteDefinition $route
+     * @param Request $request
      * @return string
      */
     protected function getRequestedPath(RouteDefinition $route, Request $request)
@@ -197,7 +234,9 @@ class Route
     }
 
     /**
-     * @param \Lcobucci\ActionMapper2\Http\Request $request
+     * Validates if requested method is handled by annotation
+     *
+     * @param Request $request
      * @return boolean
      */
     protected function validateMethod(Request $request)
@@ -206,7 +245,9 @@ class Route
     }
 
     /**
-     * @param \Lcobucci\ActionMapper2\Http\Request $request
+     * Validates if request content-type is handled by annotation
+     *
+     * @param Request $request
      * @return boolean
      */
     protected function validateContentType(Request $request)
@@ -252,8 +293,11 @@ class Route
     }
 
     /**
+     * Check if value matches with requirement expression
+     *
      * @param string $expression
      * @param string $value
+     * @return bool
      */
     protected function validateRequirement($expression, $value)
     {

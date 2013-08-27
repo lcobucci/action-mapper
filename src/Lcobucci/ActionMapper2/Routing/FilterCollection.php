@@ -1,22 +1,38 @@
 <?php
+/**
+ * This file is part of Action Mapper 2, a PHP 5.3+ front-controller
+ * microframework
+ *
+ * @license http://opensource.org/licenses/BSD-3-Clause BSD-3-Clause
+ */
+
 namespace Lcobucci\ActionMapper2\Routing;
 
-use \InvalidArgumentException;
+use InvalidArgumentException;
 
+/**
+ * A collection of filters waiting to be called
+ *
+ * @author Luís Otávio Cobucci Oblonczyk <lcobucci@gmail.com>
+ */
 class FilterCollection
 {
     /**
+     * The filter base class
+     *
      * @var string
      */
     const FILTER_CLASS = '\Lcobucci\ActionMapper2\Routing\Filter';
 
     /**
+     * The list of filters
+     *
      * @var array
      */
     private $filters;
 
     /**
-     * Class contructor
+     * Class constructor
      */
     public function __construct()
     {
@@ -24,9 +40,12 @@ class FilterCollection
     }
 
     /**
+     * Append a new filter
+     *
      * @param string $pattern
      * @param boolean $before
-     * @param \Lcobucci\ActionMapper2\Routing\Filter|\Closure|string $handler
+     * @param Filter|\Closure|string $handler
+     * @throws InvalidArgumentException
      */
     public function append($pattern, $before, $handler)
     {
@@ -50,6 +69,8 @@ class FilterCollection
     }
 
     /**
+     * Validates if handler is a subclass of the base filter
+     *
      * @param object|string $handler
      * @return boolean
      */
@@ -59,8 +80,11 @@ class FilterCollection
     }
 
     /**
+     * Locates all filters for given path
+     *
      * @param string $path
-     * @return \Lcobucci\ActionMapper2\Routing\RouteDefinition[]
+     * @param bool $before
+     * @return RouteDefinition
      */
     public function findFiltersFor($path, $before = true)
     {

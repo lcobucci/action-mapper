@@ -1,29 +1,49 @@
 <?php
+/**
+ * This file is part of Action Mapper 2, a PHP 5.3+ front-controller
+ * microframework
+ *
+ * @license http://opensource.org/licenses/BSD-3-Clause BSD-3-Clause
+ */
+
 namespace Lcobucci\ActionMapper2\Routing;
 
-use \Lcobucci\ActionMapper2\Http\Response;
-use \Lcobucci\ActionMapper2\Http\Request;
-use \Lcobucci\ActionMapper2\Application;
-use \BadMethodCallException;
+use Lcobucci\ActionMapper2\Http\Response;
+use Lcobucci\ActionMapper2\Http\Request;
+use Lcobucci\ActionMapper2\Application;
+use BadMethodCallException;
 
+/**
+ * Base class of controllers
+ *
+ * @author Luís Otávio Cobucci Oblonczyk <lcobucci@gmail.com>
+ */
 class Controller implements Route
 {
     /**
-     * @var \Lcobucci\ActionMapper2\Http\Request
+     * The current request
+     *
+     * @var Request
      */
     protected $request;
 
     /**
-     * @var \Lcobucci\ActionMapper2\Http\Response
+     * The current response
+     *
+     * @var Response
      */
     protected $response;
 
     /**
-     * @var \Lcobucci\ActionMapper2\Application
+     * The application
+     *
+     * @var Application
      */
     protected $application;
 
     /**
+     * Configures the request
+     *
      * @see \Lcobucci\ActionMapper2\Routing\Route::setRequest()
      */
     public function setRequest(Request $request)
@@ -32,6 +52,8 @@ class Controller implements Route
     }
 
     /**
+     * Configures the response
+     *
      * @see \Lcobucci\ActionMapper2\Routing\Route::setResponse()
      */
     public function setResponse(Response $response)
@@ -40,6 +62,8 @@ class Controller implements Route
     }
 
     /**
+     * Configures the application
+     *
      * @see \Lcobucci\ActionMapper2\Routing\Route::setApplication()
      */
     public function setApplication(Application $application)
@@ -48,9 +72,11 @@ class Controller implements Route
     }
 
     /**
+     * Get a service from dependency injection container
+     *
      * @param string $serviceId
      * @return mixed
-     * @throws \BadMethodCallException
+     * @throws BadMethodCallException
      */
     public function get($serviceId)
     {
@@ -64,6 +90,8 @@ class Controller implements Route
     }
 
     /**
+     * Forward the current request to another path
+     *
      * @param string $path
      * @param boolean $interrupt
      */
@@ -73,6 +101,8 @@ class Controller implements Route
     }
 
     /**
+     * Redirect to another path
+     *
      * @param string $url
      */
     public function redirect($url)

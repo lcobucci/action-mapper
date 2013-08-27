@@ -2,5 +2,7 @@
 /.buildpath
 /.project
 /vendor
-/composer.lock
 /composer.phar
+/.idea
+/build
+/phpdoc-*

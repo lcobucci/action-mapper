@@ -1,57 +1,82 @@
 <?php
+/**
+ * This file is part of Action Mapper 2, a PHP 5.3+ front-controller
+ * microframework
+ *
+ * @license http://opensource.org/licenses/BSD-3-Clause BSD-3-Clause
+ */
+
 namespace Lcobucci\ActionMapper2\Routing;
 
-use \Doctrine\Common\Annotations\AnnotationReader;
-use \InvalidArgumentException;
+use Doctrine\Common\Annotations\Reader;
+use InvalidArgumentException;
 
+/**
+ * The creator of route metadata
+ *
+ * @author Luís Otávio Cobucci Oblonczyk <lcobucci@gmail.com>
+ */
 class RouteDefinitionCreator
 {
     /**
+     * A regex to a parameter
+     *
      * @var string
      */
     const PARAM = '/\([a-zA-Z0-9\_]{1,}\)/';
 
     /**
+     * A regex to a URI
+     *
      * @var string
      */
     const URI_PATTERN = '/^\/(\(?[a-zA-Z0-9-_\*\.%]{1,}\)?\/?)*$/';
 
     /**
+     * A regex to a slash
+     *
      * @var string
      */
     const BAR = '/\//';
 
     /**
+     * A regex to a dot
+     *
      * @var string
      */
     const DOT = '/\./';
 
     /**
+     * A regex to a wildcard
+     *
      * @var string
      */
     const WILDCARD1 = '/%/';
 
     /**
+     * A regex to another wildcard
+     *
      * @var string
      */
     const WILDCARD2 = '/\*/';
 
     /**
+     * The defaul definition class
+     *
      * @var string
      */
     const DEFINITION_CLASS = '\Lcobucci\ActionMapper2\Routing\RouteDefinition';
 
     /**
-     * @var \Doctrine\Common\Annotations\AnnotationReader
-     */
-    protected static $annotationParser;
-
-    /**
+     * The base definition class to be used
+     *
      * @var string
      */
     protected static $baseClass;
 
     /**
+     * Configures the base definition class
+     *
      * @param string $baseClass
      * @throws InvalidArgumentException
      */
@@ -71,12 +96,18 @@ class RouteDefinitionCreator
     }
 
     /**
+     * Creates a new route definition
+     *
      * @param string $pattern
-     * @param \Lcobucci\ActionMapper2\Routing\Route|\Lcobucci\ActionMapper2\Routing\Filter|\Closure|string $handler
-     * @return \Lcobucci\ActionMapper2\Routing\RouteDefinition
+     * @param Route|Filter|\Closure|string $handler
+     * @param Reader $annotationReader
+     * @return RouteDefinition
      */
-    public static function create($pattern, $handler)
-    {
+    public static function create(
+        $pattern,
+        $handler,
+        Reader $annotationReader = null
+    ) {
         $baseClass = static::$baseClass ?: static::DEFINITION_CLASS;
         $pattern = static::preparePattern($pattern);
 
@@ -86,13 +117,18 @@ class RouteDefinitionCreator
             $handler
         );
 
-        $route->setAnnotationParser(static::getAnnotationParser());
+        if ($annotationReader) {
+            $route->setAnnotationReader($annotationReader);
+        }
 
         return $route;
     }
 
     /**
+     * Creates a regex based on pattern
+     *
      * @param string $pattern
+     * @param bool $addEnd
      * @return string
      */
     public static function createRegex($pattern, $addEnd = true)
@@ -117,8 +153,11 @@ class RouteDefinitionCreator
     }
 
     /**
+     * Removes the trailling slash and simplifies the params on the pattern
+     *
      * @param string $pattern
      * @return boolean
+     * @throws InvalidArgumentException
      */
     public static function preparePattern($pattern)
     {
@@ -137,17 +176,5 @@ class RouteDefinitionCreator
             '(x)',
             $pattern
         );
-    }
-
-    /**
-     * @return \Doctrine\Common\Annotations\AnnotationReader
-     */
-    protected static function getAnnotationParser()
-    {
-        if (static::$annotationParser === null) {
-            static::$annotationParser = new AnnotationReader();
-        }
-
-        return static::$annotationParser;
     }
 }

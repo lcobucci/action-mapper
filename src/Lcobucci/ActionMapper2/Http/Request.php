@@ -1,14 +1,30 @@
 <?php
+/**
+ * This file is part of Action Mapper 2, a PHP 5.3+ front-controller
+ * microframework
+ *
+ * @license http://opensource.org/licenses/BSD-3-Clause BSD-3-Clause
+ */
+
 namespace Lcobucci\ActionMapper2\Http;
 
+/**
+ * Abstraction for HTTP request
+ *
+ * @author Luís Otávio Cobucci Oblonczyk <lcobucci@gmail.com>
+ */
 class Request extends \Symfony\Component\HttpFoundation\Request
 {
     /**
+     * The requested path
+     *
      * @var string
      */
     protected $requestedPath;
 
     /**
+     * Configures the requested path
+     *
      * @param string $requestedPath
      */
     public function setRequestedPath($requestedPath)
@@ -17,6 +33,8 @@ class Request extends \Symfony\Component\HttpFoundation\Request
     }
 
     /**
+     * Returns the requested path
+     *
      * @return string
      */
     public function getRequestedPath()

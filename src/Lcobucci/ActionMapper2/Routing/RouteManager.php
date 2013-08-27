@@ -1,23 +1,41 @@
 <?php
+/**
+ * This file is part of Action Mapper 2, a PHP 5.3+ front-controller
+ * microframework
+ *
+ * @license http://opensource.org/licenses/BSD-3-Clause BSD-3-Clause
+ */
+
 namespace Lcobucci\ActionMapper2\Routing;
 
-use \Lcobucci\ActionMapper2\Application;
+use Lcobucci\ActionMapper2\Application;
 
+/**
+ * The route manager process filters and routes for a path
+ *
+ * @author Luís Otávio Cobucci Oblonczyk <lcobucci@gmail.com>
+ */
 class RouteManager
 {
     /**
-     * @var \Lcobucci\ActionMapper2\Routing\RouteCollection
+     * The route list
+     *
+     * @var RouteCollection
      */
     private $routes;
 
     /**
-     * @var \Lcobucci\ActionMapper2\Routing\FilterCollection
+     * The filter list
+     *
+     * @var FilterCollection
      */
     private $filters;
 
     /**
-     * @param \Lcobucci\ActionMapper2\Routing\RouteCollection $routes
-     * @param \Lcobucci\ActionMapper2\Routing\FilterCollection $filters
+     * Class constructor
+     *
+     * @param RouteCollection $routes
+     * @param FilterCollection $filters
      */
     public function __construct(
         RouteCollection $routes = null,
@@ -28,6 +46,8 @@ class RouteManager
     }
 
     /**
+     * Appends a new route
+     *
      * @param string $pattern
      * @param string|object $handler
      */
@@ -37,6 +57,8 @@ class RouteManager
     }
 
     /**
+     * Appends a new filter
+     *
      * @param string $pattern
      * @param string|object $hander
      * @param boolean $before
@@ -47,7 +69,9 @@ class RouteManager
     }
 
     /**
-     * @param \Lcobucci\ActionMapper2\Application $application
+     * Process the current request
+     *
+     * @param Application $application
      */
     public function process(Application $application)
     {
@@ -57,7 +81,9 @@ class RouteManager
     }
 
     /**
-     * @param \Lcobucci\ActionMapper2\Application $application
+     * Process the filters of current request
+     *
+     * @param Application $application
      * @param boolean $before
      */
     protected function processFilters(Application $application, $before = true)
@@ -73,7 +99,9 @@ class RouteManager
     }
 
     /**
-     * @param \Lcobucci\ActionMapper2\Application $application
+     * Process the route of current request
+     *
+     * @param Application $application
      */
     protected function processRoute(Application $application)
     {

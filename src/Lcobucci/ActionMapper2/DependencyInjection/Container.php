@@ -1,17 +1,34 @@
 <?php
+/**
+ * This file is part of Action Mapper 2, a PHP 5.3+ front-controller
+ * microframework
+ *
+ * @license http://opensource.org/licenses/BSD-3-Clause BSD-3-Clause
+ */
+
 namespace Lcobucci\ActionMapper2\DependencyInjection;
 
-use \Lcobucci\ActionMapper2\Application;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
+use Lcobucci\ActionMapper2\Application;
 
+/**
+ * This container provides the application session service
+ *
+ * @author Luís Otávio Cobucci Oblonczyk <lcobucci@gmail.com>
+ */
 class Container extends \Symfony\Component\DependencyInjection\Container
 {
     /**
-     * @var \Lcobucci\ActionMapper2\Application
+     * The application
+     *
+     * @var Application
      */
     protected $application;
 
     /**
-     * @param \Lcobucci\ActionMapper2\Application $application
+     * Configures the application
+     *
+     * @param Application $application
      */
     public function setApplication(Application $application)
     {
@@ -21,7 +38,7 @@ class Container extends \Symfony\Component\DependencyInjection\Container
     /**
      * Gets the 'session' service.
      *
-     * @return \Symfony\Component\HttpFoundation\Session
+     * @return SessionInterface
      */
     protected function getSessionService()
     {
