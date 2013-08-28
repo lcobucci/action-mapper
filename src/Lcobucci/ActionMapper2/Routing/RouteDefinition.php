@@ -99,8 +99,14 @@ class RouteDefinition
      */
     public function match($path)
     {
+        $numParams = substr_count($this->regex, '([^\/]+)');
+
         if (preg_match($this->regex, $path, $this->matchedArgs)) {
             array_shift($this->matchedArgs);
+
+            while (count($this->matchedArgs) > $numParams) {
+                array_pop($this->matchedArgs);
+            }
 
             return true;
         }
@@ -213,7 +219,10 @@ class RouteDefinition
 
                 return $method->invokeArgs(
                     $handler,
-                    (array) $annotation->getMatchedArgs()
+                    array_merge(
+                        $this->matchedArgs,
+                        (array) $annotation->getMatchedArgs()
+                    )
                 );
             }
         }
