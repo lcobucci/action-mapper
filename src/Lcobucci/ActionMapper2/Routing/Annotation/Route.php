@@ -170,7 +170,7 @@ class Route
     {
         if (!$this->validatePattern($route, $request)
             || !$this->validateMethod($request)
-            || !$this->validateContentType($request)
+            || !$this->validateAccept($request)
             || !$this->validateRequirements($request)) {
             return false;
         }
@@ -250,7 +250,7 @@ class Route
      * @param Request $request
      * @return boolean
      */
-    protected function validateContentType(Request $request)
+    protected function validateAccept(Request $request)
     {
         if (!isset($this->contentType[0])) {
             return true;
@@ -258,19 +258,41 @@ class Route
 
         $acceptableTypes = $request->getAcceptableContentTypes();
 
-        if (!isset($acceptableTypes[0])) {
+        if (!isset($acceptableTypes[0])
+            || (!isset($acceptableTypes[1]) && $acceptableTypes[0] == '*/*')) {
             return true;
         }
 
-        if (!isset($acceptableTypes[1]) && $acceptableTypes[0] == '*/*') {
-            return true;
-        }
-
-        foreach ($acceptableTypes as $contentType) {
-            if (in_array($contentType, $this->contentType)) {
+        foreach ($acceptableTypes as $requested) {
+            if ($this->validateContentType($requested)) {
                 return true;
             }
         }
+
+        return false;
+    }
+
+    /**
+     * @param $requested
+     * @return boolean
+     */
+    protected function validateContentType($requested)
+    {
+        foreach ($this->contentType as $required) {
+            if ($requested === $required) {
+                return true;
+            }
+
+            list($requestedType, $requestedContent) = explode('/', $requested);
+            list($requiredType, $requiredContent) = explode('/', $required);
+
+            if ($requestedType == $requiredType
+                && ($requestedContent == '*' || $requiredContent == '*' || $requiredContent == $requestedContent)) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     /**
