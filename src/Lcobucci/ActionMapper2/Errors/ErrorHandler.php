@@ -33,8 +33,14 @@ abstract class ErrorHandler
      */
     protected function changePhpErrorHandler()
     {
+        $instance = $this;
+
         set_error_handler(
-            function ($severity, $message, $fileName, $lineNumber) {
+            function ($severity, $message, $fileName, $lineNumber) use ($instance) {
+                if ($instance->shouldSkipError($severity, $message)) {
+                    return ;
+                }
+
                 throw new ErrorException(
                     $message,
                     0,
@@ -44,6 +50,16 @@ abstract class ErrorHandler
                 );
             }
         );
+    }
+
+    /**
+     * @param int $severity
+     * @param string $message
+     * @return boolean
+     */
+    protected function shouldSkipError($severity, $message)
+    {
+        return false;
     }
 
     /**
