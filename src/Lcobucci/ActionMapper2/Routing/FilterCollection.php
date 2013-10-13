@@ -45,9 +45,10 @@ class FilterCollection
      * @param string $pattern
      * @param boolean $before
      * @param Filter|\Closure|string $handler
+     * @param array $httpMethods
      * @throws InvalidArgumentException
      */
-    public function append($pattern, $before, $handler)
+    public function append($pattern, $before, $handler, array $httpMethods = null)
     {
         if (isset($this->filters[(int) $before])) {
             $filterChain = $this->filters[(int) $before];
@@ -56,7 +57,7 @@ class FilterCollection
         }
 
         if ($handler instanceof \Closure || $this->isValidHandler($handler)) {
-            $filterChain[] = RouteDefinitionCreator::create($pattern, $handler);
+            $filterChain[] = RouteDefinitionCreator::create($pattern, $handler, null, $httpMethods);
             $this->filters[(int) $before] = $filterChain;
 
             return ;
@@ -83,10 +84,11 @@ class FilterCollection
      * Locates all filters for given path
      *
      * @param string $path
+     * @param string $requestedMethod
      * @param bool $before
      * @return RouteDefinition
      */
-    public function findFiltersFor($path, $before = true)
+    public function findFiltersFor($path, $requestedMethod, $before = true)
     {
         if (!isset($this->filters[(int) $before])) {
             return array();
@@ -95,7 +97,7 @@ class FilterCollection
         $filterChain = array();
 
         foreach ($this->filters[(int) $before] as $config) {
-            if ($config->match($path)) {
+            if ($config->match($path, $requestedMethod)) {
                 $filterChain[] = $config;
             }
         }

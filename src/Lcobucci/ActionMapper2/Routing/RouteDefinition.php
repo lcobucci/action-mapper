@@ -51,6 +51,11 @@ class RouteDefinition
     protected $matchedArgs;
 
     /**
+     * @var array
+     */
+    protected $httpMethods;
+
+    /**
      * The annotation reader
      *
      * @var Reader
@@ -63,12 +68,18 @@ class RouteDefinition
      * @param string $pattern
      * @param string $regex
      * @param Route|Filter|\Closure|string $handler
+     * @param array $httpMethods
      */
-    public function __construct($pattern, $regex, $handler)
-    {
+    public function __construct(
+        $pattern,
+        $regex,
+        $handler,
+        array $httpMethods = null
+    ) {
         $this->pattern = $pattern;
         $this->regex = $regex;
         $this->handler = $handler;
+        $this->httpMethods = $httpMethods;
     }
 
     /**
@@ -92,13 +103,18 @@ class RouteDefinition
     }
 
     /**
-     * Returns if given path matches with current regex
+     * Returns if given path matches with current regex and http method (if passed)
      *
      * @param string $path
+     * @param string $requestedMethod
      * @return boolean
      */
-    public function match($path)
+    public function match($path, $requestedMethod = null)
     {
+        if (!$this->methodMatch($requestedMethod)) {
+            return false;
+        }
+
         $numParams = substr_count($this->regex, '([^\/]+)');
 
         if (preg_match($this->regex, $path, $this->matchedArgs)) {
@@ -112,6 +128,19 @@ class RouteDefinition
         }
 
         return false;
+    }
+
+    /**
+     * @param string $requestedMethod
+     * @return boolean
+     */
+    protected function methodMatch($requestedMethod)
+    {
+        if ($requestedMethod === null || $this->httpMethods === null) {
+            return true;
+        }
+
+        return in_array($requestedMethod, $this->httpMethods);
     }
 
     /**

@@ -62,10 +62,15 @@ class RouteManager
      * @param string $pattern
      * @param string|object $hander
      * @param boolean $before
+     * @param array $methods
      */
-    public function addFilter($pattern, $handler, $before = true)
-    {
-        $this->filters->append($pattern, $before, $handler);
+    public function addFilter(
+        $pattern,
+        $handler,
+        $before = true,
+        array $methods = null
+    ) {
+        $this->filters->append($pattern, $before, $handler, $methods);
     }
 
     /**
@@ -90,6 +95,7 @@ class RouteManager
     {
         $filters = $this->filters->findFiltersFor(
             $application->getRequest()->getRequestedPath(),
+            $application->getRequest()->getMethod(),
             $before
         );
 

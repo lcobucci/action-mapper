@@ -106,7 +106,8 @@ class RouteBuilder
                 $manager->addFilter(
                     $filter->pattern,
                     $filter->handler,
-                    $filter->before
+                    $filter->before,
+                    $filter->httpMethods
                 );
             }
         }
