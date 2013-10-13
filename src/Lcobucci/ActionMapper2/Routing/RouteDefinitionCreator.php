@@ -101,12 +101,14 @@ class RouteDefinitionCreator
      * @param string $pattern
      * @param Route|Filter|\Closure|string $handler
      * @param Reader $annotationReader
+     * @param array $httpMethods
      * @return RouteDefinition
      */
     public static function create(
         $pattern,
         $handler,
-        Reader $annotationReader = null
+        Reader $annotationReader = null,
+        array $httpMethods = null
     ) {
         $baseClass = static::$baseClass ?: static::DEFINITION_CLASS;
         $pattern = static::preparePattern($pattern);
@@ -114,7 +116,8 @@ class RouteDefinitionCreator
         $route = new $baseClass(
             $pattern,
             static::createRegex($pattern),
-            $handler
+            $handler,
+            $httpMethods
         );
 
         if ($annotationReader) {

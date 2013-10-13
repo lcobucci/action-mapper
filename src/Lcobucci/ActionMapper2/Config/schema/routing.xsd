@@ -36,6 +36,7 @@
 		<xs:attribute name="pattern" type="patternType" use="required" />
 		<xs:attribute name="class" type="classType" use="required" />
 		<xs:attribute name="before" type="xs:boolean" use="optional" default="true" />
+		<xs:attribute name="httpMethods" type="httpMethodsType" use="optional" />
 	</xs:complexType>
 
 	<xs:simpleType name="patternType">
@@ -55,4 +56,10 @@
 			<xs:pattern value="(_\*)?([a-z][a-zA-Z0-9_]{1,})?" />
 		</xs:restriction>
 	</xs:simpleType>
+
+    <xs:simpleType name="httpMethodsType">
+        <xs:restriction base="xs:string">
+            <xs:pattern value="[(OPTIONS|GET|HEAD|POST|PUT|DELETE|TRACE|CONNECT|PATCH)(,?)]+" />
+        </xs:restriction>
+    </xs:simpleType>
 </xs:schema>

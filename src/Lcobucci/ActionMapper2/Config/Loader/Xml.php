@@ -183,7 +183,8 @@ class Xml implements RouteLoader
             $metadata->filters[] = (object) array(
                 'pattern' => (string) $attributes->pattern,
                 'handler' => (string) $attributes->class,
-                'before' => !isset($attributes->before) || $attributes->before == 'true'
+                'before' => !isset($attributes->before) || $attributes->before == 'true',
+                'httpMethods' => isset($attributes->httpMethods) ? explode(',', $attributes->httpMethods) : null
             );
         }
     }
