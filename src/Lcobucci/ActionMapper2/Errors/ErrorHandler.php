@@ -60,7 +60,7 @@ abstract class ErrorHandler
         Exception $error
     ) {
         if (!$error instanceof HttpException) {
-            $error = new InternalServerError('Internal error occurred', null, $error);
+            $error = new InternalServerError($error->getMessage(), null, $error);
         }
 
         $response->setStatusCode($error->getStatusCode());
