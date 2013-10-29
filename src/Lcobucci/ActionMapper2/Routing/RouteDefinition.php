@@ -63,6 +63,11 @@ class RouteDefinition
     protected $annotationReader;
 
     /**
+     * @var RouteHandlerContainer
+     */
+    protected $handlerContainer;
+
+    /**
      * Class constructor
      *
      * @param string $pattern
@@ -90,6 +95,14 @@ class RouteDefinition
     public function setAnnotationReader(Reader $annotationReader)
     {
         $this->annotationReader = $annotationReader;
+    }
+
+    /**
+     * @param RouteHandlerContainer $handlerContainer
+     */
+    public function setHandlerContainer(RouteHandlerContainer $handlerContainer)
+    {
+        $this->handlerContainer = $handlerContainer;
     }
 
     /**
@@ -213,7 +226,7 @@ class RouteDefinition
                 $class = $this->handler;
             }
 
-            return new $class();
+            return $this->handlerContainer->get($class);
         }
 
         return $this->handler;
