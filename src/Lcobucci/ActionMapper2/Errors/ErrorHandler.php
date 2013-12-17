@@ -22,16 +22,22 @@ use Psr\Log\LoggerInterface;
 abstract class ErrorHandler
 {
     /**
+     * The HTTP request
+     *
      * @var Request
      */
     protected $request;
 
     /**
+     * The HTTP response
+     *
      * @var Response
      */
     protected $response;
 
     /**
+     * The logger
+     *
      * @var LoggerInterface
      */
     protected $logger;
@@ -45,6 +51,8 @@ abstract class ErrorHandler
     }
 
     /**
+     * Configures the HTTP request
+     *
      * @param Request $request
      */
     public function setRequest(Request $request)
@@ -53,6 +61,8 @@ abstract class ErrorHandler
     }
 
     /**
+     * Configures the HTTP response
+     *
      * @param Response $response
      */
     public function setResponse(Response $response)
@@ -61,6 +71,8 @@ abstract class ErrorHandler
     }
 
     /**
+     * Configures the logger
+     *
      * @param LoggerInterface $logger
      */
     public function setLogger(LoggerInterface $logger)
@@ -81,16 +93,53 @@ abstract class ErrorHandler
                     return ;
                 }
 
-                throw new ErrorException(
-                    $message,
-                    0,
-                    $severity,
-                    $fileName,
-                    $lineNumber
-                );
+                throw $this->createErrorException($severity, $message, $fileName, $lineNumber);
+            }
+        );
+
+        register_shutdown_function(
+            function () use ($instance) {
+                if ($error = error_get_last()) {
+                    $this->handle(
+                        $this->createErrorException(
+                            $error['message'],
+                            $error['type'],
+                            $error['file'],
+                            $error['line']
+                        )
+                    );
+
+                    $this->response->prepare($this->request);
+                    $this->response->send();
+                }
             }
         );
     }
+
+    /**
+     * Creates a new error exception
+     *
+     * @param int $severity
+     * @param string $message
+     * @param string $fileName
+     * @param int $lineNumber
+     * @return ErrorException
+     */
+    protected function createErrorException(
+        $severity,
+        $message,
+        $fileName,
+        $lineNumber
+    ) {
+        return new ErrorException(
+            $message,
+            0,
+            $severity,
+            $fileName,
+            $lineNumber
+        );
+    }
+
 
     /**
      * Handle the exception (converting to internal server error if needed) and
@@ -111,6 +160,8 @@ abstract class ErrorHandler
     }
 
     /**
+     * Log the given exception (when logger is configured)
+     *
      * @param Exception $error
      */
     protected function logError(Exception $error)
@@ -140,6 +191,8 @@ abstract class ErrorHandler
     abstract protected function getErrorContent(HttpException $error);
 
     /**
+     * Verifies if the handler should ignore the given error
+     *
      * @param int $severity
      * @param string $message
      * @return boolean
