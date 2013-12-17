@@ -8,10 +8,11 @@
 
 namespace Lcobucci\ActionMapper2\Errors;
 
-use Lcobucci\ActionMapper2\Http\Response;
-use Lcobucci\ActionMapper2\Http\Request;
 use ErrorException;
 use Exception;
+use Lcobucci\ActionMapper2\Http\Response;
+use Lcobucci\ActionMapper2\Http\Request;
+use Psr\Log\LoggerInterface;
 
 /**
  * Base class to handle errors
@@ -21,11 +22,50 @@ use Exception;
 abstract class ErrorHandler
 {
     /**
+     * @var Request
+     */
+    protected $request;
+
+    /**
+     * @var Response
+     */
+    protected $response;
+
+    /**
+     * @var LoggerInterface
+     */
+    protected $logger;
+
+    /**
      * Constructor
      */
     public function __construct()
     {
         $this->changePhpErrorHandler();
+    }
+
+    /**
+     * @param Request $request
+     */
+    public function setRequest(Request $request)
+    {
+        $this->request = $request;
+    }
+
+    /**
+     * @param Response $response
+     */
+    public function setResponse(Response $response)
+    {
+        $this->response = $response;
+    }
+
+    /**
+     * @param LoggerInterface $logger
+     */
+    public function setLogger(LoggerInterface $logger)
+    {
+        $this->logger = $logger;
     }
 
     /**
@@ -53,6 +93,53 @@ abstract class ErrorHandler
     }
 
     /**
+     * Handle the exception (converting to internal server error if needed) and
+     * showing a the error content
+     *
+     * @param Exception $error
+     */
+    public function handle(Exception $error)
+    {
+        if (!$error instanceof HttpException) {
+            $error = new InternalServerError($error->getMessage(), null, $error);
+        }
+
+        $this->response->setStatusCode($error->getStatusCode());
+        $this->response->setContent($this->getErrorContent($error));
+
+        $this->logError($error);
+    }
+
+    /**
+     * @param Exception $error
+     */
+    protected function logError(Exception $error)
+    {
+        if ($this->logger === null) {
+            return ;
+        }
+
+        if ($error instanceof InternalServerError
+            && $error->getPrevious() instanceof ErrorException) {
+            return $this->logger->critical($error->getMessage(), ['exception' => $error->getPrevious()]);
+        }
+
+        if ($error instanceof InternalServerError) {
+            return $this->logger->error($error->getMessage(), ['exception' => $error->getPrevious()]);
+        }
+
+        $this->logger->warning($error->getMessage(), ['exception' => $error]);
+    }
+
+    /**
+     * Renders the error page according with the exception
+     *
+     * @param HttpException $error
+     * @return string
+     */
+    abstract protected function getErrorContent(HttpException $error);
+
+    /**
      * @param int $severity
      * @param string $message
      * @return boolean
@@ -61,39 +148,4 @@ abstract class ErrorHandler
     {
         return false;
     }
-
-    /**
-     * Handle the exception (converting to internal server error if needed) and
-     * showing a the error content
-     *
-     * @param Request $request
-     * @param Response $response
-     * @param Exception $error
-     */
-    final public function handle(
-        Request $request,
-        Response $response,
-        Exception $error
-    ) {
-        if (!$error instanceof HttpException) {
-            $error = new InternalServerError($error->getMessage(), null, $error);
-        }
-
-        $response->setStatusCode($error->getStatusCode());
-        $response->setContent($this->getErrorContent($request, $response, $error));
-    }
-
-    /**
-     * Renders the error page according with the exception
-     *
-     * @param Request $request
-     * @param Response $response
-     * @param HttpException $error
-     * @return string
-     */
-    abstract protected function getErrorContent(
-        Request $request,
-        Response $response,
-        HttpException $error
-    );
 }

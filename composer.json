@@ -19,7 +19,8 @@
 		"lcobucci/di-builder" : ">=1.0.0",
 		"php" : ">=5.3",
 		"doctrine/annotations" : "*@dev",
-		"doctrine/cache" : "*@dev"
+		"doctrine/cache" : "*@dev",
+		"psr/log" : "~1.0"
 	},
 	"require-dev" : {
 		"phpunit/phpunit" : "*",
