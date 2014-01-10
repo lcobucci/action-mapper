@@ -8,3 +8,6 @@ ActionMapper 2 is an open source front-controller micro-framework for PHP 5.3+. 
 ## Installation
 
 You can install ActionMapper 2 using [Composer](https://packagist.org/packages/lcobucci/action-mapper) (preferred) or [PEAR](http://lcobucci.github.com).
+
+[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/lcobucci/action-mapper/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
+
