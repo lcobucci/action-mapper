@@ -36,6 +36,13 @@ class RouteCollection
     private $annotationReader;
 
     /**
+     * Sort controll for route list
+     *
+     * @var boolean
+     */
+    private $sorted;
+
+    /**
      * Class constructor
      *
      * @param Reader $annotationReader
@@ -44,6 +51,7 @@ class RouteCollection
     {
         $this->annotationReader = $annotationReader ?: new AnnotationReader();
         $this->routes = array();
+        $this->sorted = false;
     }
 
     /**
@@ -69,13 +77,13 @@ class RouteCollection
             );
         }
 
+        $this->sorted = false;
+
         $this->routes[$pattern] = RouteDefinitionCreator::create(
             $pattern,
             $handler,
             $this->annotationReader
         );
-
-        $this->sortByKeyLength();
     }
 
     /**
@@ -83,6 +91,10 @@ class RouteCollection
      */
     protected function sortByKeyLength()
     {
+        if ($this->sorted) {
+            return ;
+        }
+
         uksort(
             $this->routes,
             function ($one, $other) {
@@ -96,6 +108,7 @@ class RouteCollection
         );
 
         $this->routes = array_reverse($this->routes, true);
+        $this->sorted = true;
     }
 
     /**
@@ -131,6 +144,8 @@ class RouteCollection
      */
     public function findRouteFor($path)
     {
+        $this->sortByKeyLength();
+
         foreach ($this->routes as $route) {
             if ($route->match($path)) {
                 return $route;
