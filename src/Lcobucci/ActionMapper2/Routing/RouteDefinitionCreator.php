@@ -75,6 +75,31 @@ class RouteDefinitionCreator
     protected static $baseClass;
 
     /**
+     * @var RouteHandlerContainer
+     */
+    protected static $handlerContainer;
+
+    /**
+     * @param RouteHandlerContainer $handlerContainer
+     */
+    public static function setHandlerContainer(RouteHandlerContainer $handlerContainer)
+    {
+        static::$handlerContainer = $handlerContainer;
+    }
+
+    /**
+     * @return RouteHandlerContainer
+     */
+    public static function getHandlerContainer()
+    {
+        if (static::$handlerContainer === null) {
+            static::setHandlerContainer(new RouteHandlerContainer());
+        }
+
+        return static::$handlerContainer;
+    }
+
+    /**
      * Configures the base definition class
      *
      * @param string $baseClass
@@ -123,6 +148,8 @@ class RouteDefinitionCreator
         if ($annotationReader) {
             $route->setAnnotationReader($annotationReader);
         }
+
+        $route->setHandlerContainer(static::getHandlerContainer());
 
         return $route;
     }

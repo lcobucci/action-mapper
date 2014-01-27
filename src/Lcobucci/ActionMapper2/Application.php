@@ -228,11 +228,7 @@ class Application
             $this->routeManager->process($this);
             $request->setRequestedPath($previousPath);
         } catch (\Exception $error) {
-            $this->errorHandler->handle(
-                $this->getRequest(),
-                $this->getResponse(),
-                $error
-            );
+            $this->errorHandler->handle($error);
         }
 
         if (isset($error) || $interrupt) {
@@ -245,16 +241,15 @@ class Application
      */
     public function run()
     {
+        $this->errorHandler->setRequest($this->getRequest());
+        $this->errorHandler->setResponse($this->getResponse());
+
         try {
             ob_start();
             $this->routeManager->process($this);
             ob_end_clean();
         } catch (\Exception $error) {
-            $this->errorHandler->handle(
-                $this->getRequest(),
-                $this->getResponse(),
-                $error
-            );
+            $this->errorHandler->handle($error);
         }
 
         $this->sendResponse();
