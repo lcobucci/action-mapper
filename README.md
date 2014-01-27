@@ -2,6 +2,7 @@
 
 [![Total Downloads](https://poser.pugx.org/lcobucci/action-mapper/downloads.png)](https://packagist.org/packages/lcobucci/action-mapper)
 [![Latest Stable Version](https://poser.pugx.org/lcobucci/action-mapper/v/stable.png)](https://packagist.org/packages/lcobucci/action-mapper)
+[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/lcobucci/action-mapper/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
 
 ActionMapper 2 is an open source front-controller micro-framework for PHP 5.3+. [More information](http://lcobucci.github.com/action-mapper).
 
