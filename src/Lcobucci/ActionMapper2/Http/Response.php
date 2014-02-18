@@ -53,9 +53,11 @@ class Response extends \Symfony\Component\HttpFoundation\Response
      * Redirect to given URI
      *
      * @param string $url
+     * @param int $statusCode
      */
-    public function redirect($url)
+    public function redirect($url, $statusCode = 302)
     {
+        $this->setStatusCode($statusCode);
         $this->headers->set('Location', $url);
     }
 
