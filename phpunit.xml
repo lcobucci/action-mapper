@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<phpunit backupGlobals="false" backupStaticAttributes="false" bootstrap="boot.php">
+<phpunit backupGlobals="false" backupStaticAttributes="false" bootstrap="boot.php" colors="true">
 	<testsuites>
 		<testsuite name="ActionMapper 2 Test Suite">
 			<directory>test/Lcobucci/ActionMapper2</directory>
