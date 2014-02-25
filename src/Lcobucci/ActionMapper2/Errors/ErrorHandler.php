@@ -93,15 +93,15 @@ abstract class ErrorHandler
                     return ;
                 }
 
-                throw $this->createErrorException($severity, $message, $fileName, $lineNumber);
+                throw $instance->createErrorException($severity, $message, $fileName, $lineNumber);
             }
         );
 
         register_shutdown_function(
             function () use ($instance) {
                 if ($error = error_get_last()) {
-                    $this->handle(
-                        $this->createErrorException(
+                    $instance->handle(
+                        $instance->createErrorException(
                             $error['message'],
                             $error['type'],
                             $error['file'],
@@ -109,8 +109,8 @@ abstract class ErrorHandler
                         )
                     );
 
-                    $this->response->prepare($this->request);
-                    $this->response->send();
+                    $instance->response->prepare($this->request);
+                    $instance->response->send();
                 }
             }
         );
