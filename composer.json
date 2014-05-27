@@ -15,9 +15,9 @@
 		"BSD-3-Clause"
 	],
 	"require" : {
-		"symfony/http-foundation" : ">=2.2.0",
-		"lcobucci/di-builder" : ">=1.0.0",
 		"php" : ">=5.3",
+		"symfony/http-foundation" : "~2.4",
+		"lcobucci/di-builder" : ">=1.0.0",
 		"doctrine/annotations" : "*@dev",
 		"doctrine/cache" : "*@dev",
 		"psr/log" : "~1.0"
@@ -25,17 +25,11 @@
 	"require-dev" : {
 		"phpunit/phpunit" : "*",
 		"squizlabs/php_codesniffer" : "*",
-		"phpdocumentor/phpdocumentor" : "*",
 		"phpmd/phpmd" : "*"
 	},
 	"autoload" : {
 		"psr-0" : {
 			"Lcobucci\\ActionMapper2" : "src/"
 		}
-	},
-	"support" : {
-		"source" : "https://github.com/lcobucci/action-mapper",
-		"issues" : "https://github.com/lcobucci/action-mapper/issues?state=open",
-		"wiki" : "https://github.com/lcobucci/action-mapper/wiki"
 	}
 }
