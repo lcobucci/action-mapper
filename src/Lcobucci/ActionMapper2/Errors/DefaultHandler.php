@@ -44,7 +44,17 @@ class DefaultHandler extends ErrorHandler
         }
 
         $this->content = file_get_contents($templateFile);
-        $this->displayTrace = $displayTrace;
+        $this->setDisplayTrace($displayTrace);
+    }
+
+    /**
+     * Configures if trace should be displayed
+     *
+     * @param boolean $displayTrace
+     */
+    public function setDisplayTrace($displayTrace)
+    {
+        $this->displayTrace = (bool) $displayTrace;
     }
 
     /**

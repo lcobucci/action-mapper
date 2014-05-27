@@ -124,7 +124,8 @@ class Route
             'OPTIONS',
             'HEAD',
             'TRACE',
-            'CONNECT'
+            'CONNECT',
+            'PATCH'
         );
 
         foreach ($methods as $method) {

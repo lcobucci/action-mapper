@@ -201,14 +201,15 @@ class Application
      * Redirect to given URI (using HTTP headers)
      *
      * @param string $url
+     * @param int $statusCode
      */
-    public function redirect($url)
+    public function redirect($url, $statusCode = 302)
     {
         if (strpos($url, 'http') !== 0) {
             $url = $this->getRequest()->getBasePath() . $url;
         }
 
-        $this->getResponse()->redirect($url);
+        $this->getResponse()->redirect($url, $statusCode);
         $this->sendResponse();
     }
 
