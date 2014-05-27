@@ -57,19 +57,13 @@ class ApplicationBuilder
     ) {
         $builder = new static(
             new RouteBuilder(),
-            new XmlContainerBuilder(
-                ContainerConfig::getClass($containerConfig),
-                ContainerConfig::getDumpDir($containerConfig)
-            )
+            new XmlContainerBuilder()
         );
 
         $dependencyContainer = null;
+
         if ($containerConfig !== null) {
-            $dependencyContainer = $builder->containerBuilder->getContainer(
-                $containerConfig->getFile(),
-                array(),
-                $containerConfig->getDefaultParameters()
-            );
+            $dependencyContainer = $builder->containerBuilder->getContainer($containerConfig);
         }
 
         $builder->configureCache($dependencyContainer, $applicationCache);

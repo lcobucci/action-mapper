@@ -3,7 +3,7 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "06c7b3200183f4f79ee6466447826b10",
+    "hash": "ea3f77070aef0d5a7d7bb26f06fa8e7e",
     "packages": [
         {
             "name": "doctrine/annotations",
@@ -206,25 +206,26 @@
         },
         {
             "name": "lcobucci/di-builder",
-            "version": "1.1.0",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/lcobucci/di-builder.git",
-                "reference": "1cb484f74451ad9af4360fea94db6b3fde4c87e1"
+                "reference": "731c23401bc4b6b94bf9ee89311df064800b47a6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/lcobucci/di-builder/zipball/1cb484f74451ad9af4360fea94db6b3fde4c87e1",
-                "reference": "1cb484f74451ad9af4360fea94db6b3fde4c87e1",
+                "url": "https://api.github.com/repos/lcobucci/di-builder/zipball/731c23401bc4b6b94bf9ee89311df064800b47a6",
+                "reference": "731c23401bc4b6b94bf9ee89311df064800b47a6",
                 "shasum": ""
             },
             "require": {
                 "php": ">=5.3",
-                "symfony/config": ">=2.2.0@stable",
-                "symfony/dependency-injection": ">=2.2.0@stable"
+                "symfony/config": "~2.4",
+                "symfony/dependency-injection": "~2.4"
             },
             "require-dev": {
-                "mikey179/vfsstream": ">=1.2.0@stable"
+                "mikey179/vfsstream": "~1.2",
+                "phpunit/phpunit": "~4.1"
             },
             "type": "library",
             "autoload": {
@@ -248,7 +249,7 @@
             "keywords": [
                 "dependency-injection"
             ],
-            "time": "2013-08-23 15:04:45"
+            "time": "2014-05-27 16:20:49"
         },
         {
             "name": "psr/log",
@@ -1360,6 +1361,7 @@
     ],
     "minimum-stability": "stable",
     "stability-flags": {
+        "lcobucci/di-builder": 20,
         "doctrine/annotations": 20,
         "doctrine/cache": 20
     },
