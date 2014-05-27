@@ -3,7 +3,7 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "ea3f77070aef0d5a7d7bb26f06fa8e7e",
+    "hash": "eedf5aed09268259f6495b0201ab0881",
     "packages": [
         {
             "name": "doctrine/annotations",
@@ -206,7 +206,7 @@
         },
         {
             "name": "lcobucci/di-builder",
-            "version": "dev-master",
+            "version": "2.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/lcobucci/di-builder.git",
@@ -1361,7 +1361,6 @@
     ],
     "minimum-stability": "stable",
     "stability-flags": {
-        "lcobucci/di-builder": 20,
         "doctrine/annotations": 20,
         "doctrine/cache": 20
     },
