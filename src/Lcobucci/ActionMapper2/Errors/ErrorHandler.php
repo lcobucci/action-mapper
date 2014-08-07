@@ -81,39 +81,49 @@ abstract class ErrorHandler
     }
 
     /**
+     * Handles errors
+     *
+     * @param int $severity
+     * @param string $message
+     * @param string $fileName
+     * @param int $lineNumber
+     */
+    public function handlePhpError($severity, $message, $fileName, $lineNumber)
+    {
+        if ($this->shouldSkipError($severity, $message)) {
+            return ;
+        }
+
+        throw $this->createErrorException($severity, $message, $fileName, $lineNumber);
+    }
+
+    /**
+     * Handles fatal errors
+     */
+    public function handleFatalErrors()
+    {
+        if ($error = error_get_last()) {
+            $this->handle(
+                $this->createErrorException(
+                    $error['type'],
+                    $error['message'],
+                    $error['file'],
+                    $error['line']
+                )
+            );
+
+            $this->response->prepare($this->request);
+            $this->response->send();
+        }
+    }
+
+    /**
      * Changes the default PHP error handler (every error will be an exception)
      */
     protected function changePhpErrorHandler()
     {
-        $instance = $this;
-
-        set_error_handler(
-            function ($severity, $message, $fileName, $lineNumber) use ($instance) {
-                if ($instance->shouldSkipError($severity, $message)) {
-                    return ;
-                }
-
-                throw $instance->createErrorException($severity, $message, $fileName, $lineNumber);
-            }
-        );
-
-        register_shutdown_function(
-            function () use ($instance) {
-                if ($error = error_get_last()) {
-                    $instance->handle(
-                        $instance->createErrorException(
-                            $error['message'],
-                            $error['type'],
-                            $error['file'],
-                            $error['line']
-                        )
-                    );
-
-                    $instance->response->prepare($this->request);
-                    $instance->response->send();
-                }
-            }
-        );
+        set_error_handler(array($this, 'handlePhpError'));
+        register_shutdown_function(array($this, 'handleFatalErrors'));
     }
 
     /**
@@ -172,14 +182,14 @@ abstract class ErrorHandler
 
         if ($error instanceof InternalServerError
             && $error->getPrevious() instanceof ErrorException) {
-            return $this->logger->critical($error->getMessage(), ['exception' => $error->getPrevious()]);
+            return $this->logger->critical($error->getMessage(), array('exception' => $error->getPrevious()));
         }
 
         if ($error instanceof InternalServerError) {
-            return $this->logger->error($error->getMessage(), ['exception' => $error->getPrevious()]);
+            return $this->logger->error($error->getMessage(), array('exception' => $error->getPrevious()));
         }
 
-        $this->logger->warning($error->getMessage(), ['exception' => $error]);
+        $this->logger->warning($error->getMessage(), array('exception' => $error));
     }
 
     /**
