@@ -49,11 +49,15 @@ class Response
 	}
 
 	/**
-	 * @param string $path
+	 * @param string $uri
 	 */
-	public function redirect($path)
+	public function redirect($uri)
 	{
-		$this->headers[] = 'Location: ' . $this->application->getUrl() . $path;
+	    if (preg_match('/^https?\:\/\//i', $uri) === false) {
+	        $uri = $this->application->getUrl() . $uri;
+	    }
+
+		$this->headers[] = 'Location: ' . $uri;
 
 		$this->send();
 	}
