@@ -9,8 +9,8 @@ namespace Lcobucci\ActionMapper\Routing\Annotation;
 
 use Lcobucci\ActionMapper\Routing\RouteDefinitionCreator;
 use Lcobucci\ActionMapper\Routing\RouteDefinition;
-use Lcobucci\ActionMapper\Http\Request;
 use InvalidArgumentException;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * The annotation to be used on controllers methods and map the routes
@@ -218,6 +218,7 @@ class Route
      */
     protected function getRequestedPath(RouteDefinition $route, Request $request)
     {
+        //FIXME
         $pattern = rtrim($route->getPattern(), '/*');
         $regex = RouteDefinitionCreator::createRegex($pattern, false);
         $path = preg_replace($regex, '', $request->getRequestedPath());

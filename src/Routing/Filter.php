@@ -7,10 +7,10 @@
 
 namespace Lcobucci\ActionMapper\Routing;
 
-use Lcobucci\ActionMapper\Http\Response;
-use Lcobucci\ActionMapper\Http\Request;
 use Lcobucci\ActionMapper\Application;
 use BadMethodCallException;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Base filter class, it allows to create routines that can be processed before

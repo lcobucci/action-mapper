@@ -7,10 +7,10 @@
 
 namespace Lcobucci\ActionMapper\Routing;
 
-use Lcobucci\ActionMapper\Http\Response;
-use Lcobucci\ActionMapper\Http\Request;
 use Lcobucci\ActionMapper\Application;
 use BadMethodCallException;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Base class of controllers

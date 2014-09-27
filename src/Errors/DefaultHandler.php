@@ -7,6 +7,8 @@
 
 namespace Lcobucci\ActionMapper\Errors;
 
+use Lcobucci\ActionMapper\Http\Exception;
+
 /**
  * Basic error handler
  *
@@ -59,10 +61,10 @@ class DefaultHandler extends ErrorHandler
     /**
      * Renders the error page according with the exception
      *
-     * @param HttpException $error
+     * @param Exception $error
      * @return string
      */
-    protected function getErrorContent(HttpException $error)
+    protected function getErrorContent(Exception $error)
     {
         $acceptableContent = $this->request->getAcceptableContentTypes();
 
@@ -121,7 +123,7 @@ class DefaultHandler extends ErrorHandler
      */
     protected function getXmlContent(array $data)
     {
-        $this->response->setContentType('application/xml', 'UTF-8');
+        $this->response->headers->set('Content-Type', 'application/xml; charset=UTF-8');
 
         return '<?xml version="1.0" encoding="UTF-8"?>
                 <error>
@@ -139,7 +141,7 @@ class DefaultHandler extends ErrorHandler
      */
     protected function getJsonContent(array $data)
     {
-        $this->response->setContentType('application/json', 'UTF-8');
+        $this->response->headers->set('Content-Type', 'application/json; charset=UTF-8');
 
         return json_encode($data);
     }

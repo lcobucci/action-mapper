@@ -9,9 +9,11 @@ namespace Lcobucci\ActionMapper\Errors;
 
 use ErrorException;
 use Exception;
-use Lcobucci\ActionMapper\Http\Response;
-use Lcobucci\ActionMapper\Http\Request;
 use Psr\Log\LoggerInterface;
+use Lcobucci\ActionMapper\Http\Exception as HttpException;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+use Lcobucci\ActionMapper\Http\Client\InternalServerError;
 
 /**
  * Base class to handle errors

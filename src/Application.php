@@ -14,8 +14,8 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\Session\Session;
 use Lcobucci\ActionMapper\Routing\RouteManager;
 use Lcobucci\ActionMapper\Errors\ErrorHandler;
-use Lcobucci\ActionMapper\Http\Response;
-use Lcobucci\ActionMapper\Http\Request;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * The application is main resource of this library, it is capable of handling
@@ -204,6 +204,7 @@ class Application
      */
     public function redirect($url, $statusCode = 302)
     {
+        //FIXME
         if (strpos($url, 'http') !== 0) {
             $url = $this->getRequest()->getBasePath() . $url;
         }
@@ -220,6 +221,7 @@ class Application
      */
     public function forward($path, $interrupt = false)
     {
+        //FIXME
         try {
             $request = $this->getRequest();
             $previousPath = $request->getRequestedPath();

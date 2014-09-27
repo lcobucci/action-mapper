@@ -7,9 +7,9 @@
 
 namespace Lcobucci\ActionMapper\Routing;
 
-use Lcobucci\ActionMapper\Http\Response;
-use Lcobucci\ActionMapper\Http\Request;
 use Lcobucci\ActionMapper\Application;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Defines the basic methods that a route must have
