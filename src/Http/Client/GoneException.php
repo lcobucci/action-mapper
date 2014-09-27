@@ -5,7 +5,9 @@
  * @license http://opensource.org/licenses/BSD-3-Clause BSD-3-Clause
  */
 
-namespace Lcobucci\ActionMapper\Errors;
+namespace Lcobucci\ActionMapper\Http\Client;
+
+use Lcobucci\ActionMapper\Http\Exception;
 
 /**
  * Forbidden can be use to say that the requested resource is no longer
@@ -13,12 +15,10 @@ namespace Lcobucci\ActionMapper\Errors;
  *
  * @author Luis Henrique Mulinari <mulinari@gmail.com>
  */
-class GoneException extends HttpException
+class GoneException extends Exception
 {
     /**
-     * Returns the HTTP status code
-     *
-     * @return int
+     * {@inheritdoc}
      */
     public function getStatusCode()
     {

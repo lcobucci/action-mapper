@@ -5,23 +5,23 @@
  * @license http://opensource.org/licenses/BSD-3-Clause BSD-3-Clause
  */
 
-namespace Lcobucci\ActionMapper\Errors;
+namespace Lcobucci\ActionMapper\Http\Client;
+
+use Lcobucci\ActionMapper\Http\Exception;
 
 /**
- * An internal server error means that the server encountered an unexpected
- * condition which prevented it from fulfilling the request.
+ * The method specified in the Request-Line is not allowed for the resource
+ * identified by the Request-URI.
  *
  * @author Luís Otávio Cobucci Oblonczyk <lcobucci@gmail.com>
  */
-class InternalServerError extends HttpException
+class MethodNotAllowedException extends Exception
 {
     /**
-     * Returns the HTTP status code
-     *
-     * @return int
+     * {@inheritdoc}
      */
     public function getStatusCode()
     {
-        return 500;
+        return 405;
     }
 }

@@ -5,22 +5,22 @@
  * @license http://opensource.org/licenses/BSD-3-Clause BSD-3-Clause
  */
 
-namespace Lcobucci\ActionMapper\Errors;
+namespace Lcobucci\ActionMapper\Http\Client;
+
+use Lcobucci\ActionMapper\Http\Exception;
 
 /**
- * Unauthorized response happens when the request requires user authentication
+ * The request could not be completed due to a conflict with the current state of the resource.
  *
  * @author Luís Otávio Cobucci Oblonczyk <lcobucci@gmail.com>
  */
-class UnauthorizedException extends HttpException
+class ConflictException extends Exception
 {
     /**
-     * Returns the HTTP status code
-     *
-     * @return int
+     * {@inheritdoc}
      */
     public function getStatusCode()
     {
-        return 401;
+        return 409;
     }
 }

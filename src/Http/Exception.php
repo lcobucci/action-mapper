@@ -5,14 +5,14 @@
  * @license http://opensource.org/licenses/BSD-3-Clause BSD-3-Clause
  */
 
-namespace Lcobucci\ActionMapper\Errors;
+namespace Lcobucci\ActionMapper\Http;
 
 /**
  * Base class for HTTP error responses
  *
  * @author Luís Otávio Cobucci Oblonczyk <lcobucci@gmail.com>
  */
-abstract class HttpException extends \RuntimeException
+abstract class Exception extends \RuntimeException
 {
     /**
      * Returns the HTTP status code
