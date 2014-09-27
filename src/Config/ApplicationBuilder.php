@@ -1,20 +1,19 @@
 <?php
 /**
- * This file is part of Action Mapper 2, a PHP 5.3+ front-controller
- * microframework
+ * This file is part of Action Mapper, a PHP front-controller microframework
  *
  * @license http://opensource.org/licenses/BSD-3-Clause BSD-3-Clause
  */
 
-namespace Lcobucci\ActionMapper2\Config;
+namespace Lcobucci\ActionMapper\Config;
 
-use Lcobucci\ActionMapper2\DependencyInjection\ContainerConfig;
+use Lcobucci\ActionMapper\DependencyInjection\ContainerConfig;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Lcobucci\DependencyInjection\XmlContainerBuilder;
 use Lcobucci\DependencyInjection\ContainerBuilder;
-use Lcobucci\ActionMapper2\Errors\DefaultHandler;
-use Lcobucci\ActionMapper2\Errors\ErrorHandler;
-use Lcobucci\ActionMapper2\Application;
+use Lcobucci\ActionMapper\Errors\DefaultHandler;
+use Lcobucci\ActionMapper\Errors\ErrorHandler;
+use Lcobucci\ActionMapper\Application;
 use Doctrine\Common\Cache\Cache;
 use InvalidArgumentException;
 

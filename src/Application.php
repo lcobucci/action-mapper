@@ -1,22 +1,21 @@
 <?php
 /**
- * This file is part of Action Mapper 2, a PHP 5.3+ front-controller
- * microframework
+ * This file is part of Action Mapper, a PHP front-controller microframework
  *
  * @license http://opensource.org/licenses/BSD-3-Clause BSD-3-Clause
  */
 
-namespace Lcobucci\ActionMapper2;
+namespace Lcobucci\ActionMapper;
 
-use Lcobucci\ActionMapper2\DependencyInjection\Container as ActionMapperContainer;
+use Lcobucci\ActionMapper\DependencyInjection\Container as ActionMapperContainer;
 use Symfony\Component\HttpFoundation\Session\Storage\NativeSessionStorage;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\Session\Session;
-use Lcobucci\ActionMapper2\Routing\RouteManager;
-use Lcobucci\ActionMapper2\Errors\ErrorHandler;
-use Lcobucci\ActionMapper2\Http\Response;
-use Lcobucci\ActionMapper2\Http\Request;
+use Lcobucci\ActionMapper\Routing\RouteManager;
+use Lcobucci\ActionMapper\Errors\ErrorHandler;
+use Lcobucci\ActionMapper\Http\Response;
+use Lcobucci\ActionMapper\Http\Request;
 
 /**
  * The application is main resource of this library, it is capable of handling

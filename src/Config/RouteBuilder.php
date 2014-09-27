@@ -1,18 +1,17 @@
 <?php
 /**
- * This file is part of Action Mapper 2, a PHP 5.3+ front-controller
- * microframework
+ * This file is part of Action Mapper, a PHP front-controller microframework
  *
  * @license http://opensource.org/licenses/BSD-3-Clause BSD-3-Clause
  */
 
-namespace Lcobucci\ActionMapper2\Config;
+namespace Lcobucci\ActionMapper\Config;
 
-use Lcobucci\ActionMapper2\Routing\RouteDefinitionCreator;
-use Lcobucci\ActionMapper2\Routing\RouteCollection;
+use Lcobucci\ActionMapper\Routing\RouteDefinitionCreator;
+use Lcobucci\ActionMapper\Routing\RouteCollection;
 use Doctrine\Common\Annotations\AnnotationReader;
-use Lcobucci\ActionMapper2\Routing\RouteManager;
-use Lcobucci\ActionMapper2\Config\Loader\Xml;
+use Lcobucci\ActionMapper\Routing\RouteManager;
+use Lcobucci\ActionMapper\Config\Loader\Xml;
 use Doctrine\Common\Annotations\CachedReader;
 use Doctrine\Common\Cache\Cache;
 use stdClass;

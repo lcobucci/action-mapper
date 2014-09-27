@@ -1,12 +1,11 @@
 <?php
 /**
- * This file is part of Action Mapper 2, a PHP 5.3+ front-controller
- * microframework
+ * This file is part of Action Mapper, a PHP front-controller microframework
  *
  * @license http://opensource.org/licenses/BSD-3-Clause BSD-3-Clause
  */
 
-namespace Lcobucci\ActionMapper2\Routing;
+namespace Lcobucci\ActionMapper\Routing;
 
 use InvalidArgumentException;
 
@@ -22,7 +21,7 @@ class FilterCollection
      *
      * @var string
      */
-    const FILTER_CLASS = '\Lcobucci\ActionMapper2\Routing\Filter';
+    const FILTER_CLASS = '\Lcobucci\ActionMapper\Routing\Filter';
 
     /**
      * The list of filters

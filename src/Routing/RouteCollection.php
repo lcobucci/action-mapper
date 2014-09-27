@@ -1,14 +1,13 @@
 <?php
 /**
- * This file is part of Action Mapper 2, a PHP 5.3+ front-controller
- * microframework
+ * This file is part of Action Mapper, a PHP front-controller microframework
  *
  * @license http://opensource.org/licenses/BSD-3-Clause BSD-3-Clause
  */
 
-namespace Lcobucci\ActionMapper2\Routing;
+namespace Lcobucci\ActionMapper\Routing;
 
-use Lcobucci\ActionMapper2\Errors\PageNotFoundException;
+use Lcobucci\ActionMapper\Errors\PageNotFoundException;
 use Doctrine\Common\Annotations\AnnotationReader;
 use Doctrine\Common\Annotations\Reader;
 use InvalidArgumentException;
@@ -73,7 +72,7 @@ class RouteCollection
             && !$this->isValidHandler($handler)) {
             throw new InvalidArgumentException(
                 'You must pass a closure or a class that implements'
-                . ' \Lcobucci\ActionMapper2\Routing\Route interface'
+                . ' \Lcobucci\ActionMapper\Routing\Route interface'
             );
         }
 
@@ -128,7 +127,7 @@ class RouteCollection
             $reflection = new ReflectionClass($handler);
 
             return $reflection->implementsInterface(
-                '\Lcobucci\ActionMapper2\Routing\Route'
+                '\Lcobucci\ActionMapper\Routing\Route'
             );
         }
 

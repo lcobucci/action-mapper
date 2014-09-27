@@ -1,5 +1,5 @@
 <?php
-namespace Lcobucci\ActionMapper2\Http;
+namespace Lcobucci\ActionMapper\Http;
 
 /**
  * Request test case.
@@ -12,7 +12,7 @@ class RequestTest extends \PHPUnit_Framework_TestCase
     public function requestedPathMustBeEqualsToPathInfoWhenNotChanged()
     {
         $request = $this->getMock(
-            '\Lcobucci\ActionMapper2\Http\Request',
+            '\Lcobucci\ActionMapper\Http\Request',
             array('getPathInfo'),
             array(),
             '',
@@ -32,7 +32,7 @@ class RequestTest extends \PHPUnit_Framework_TestCase
     public function requestedPathCanBeChanged()
     {
         $request = $this->getMock(
-            '\Lcobucci\ActionMapper2\Http\Request',
+            '\Lcobucci\ActionMapper\Http\Request',
             array('getPathInfo'),
             array(),
             '',
@@ -54,7 +54,7 @@ class RequestTest extends \PHPUnit_Framework_TestCase
     public function trailingBarMustBeRemoved()
     {
         $request = $this->getMock(
-            '\Lcobucci\ActionMapper2\Http\Request',
+            '\Lcobucci\ActionMapper\Http\Request',
             array('getPathInfo'),
             array(),
             '',
@@ -74,7 +74,7 @@ class RequestTest extends \PHPUnit_Framework_TestCase
     public function trailingBarCannotBeRemovedIfPathIsBar()
     {
         $request = $this->getMock(
-            '\Lcobucci\ActionMapper2\Http\Request',
+            '\Lcobucci\ActionMapper\Http\Request',
             array('getPathInfo'),
             array(),
             '',

@@ -1,16 +1,15 @@
 <?php
 /**
- * This file is part of Action Mapper 2, a PHP 5.3+ front-controller
- * microframework
+ * This file is part of Action Mapper, a PHP front-controller microframework
  *
  * @license http://opensource.org/licenses/BSD-3-Clause BSD-3-Clause
  */
 
-namespace Lcobucci\ActionMapper2\Routing;
+namespace Lcobucci\ActionMapper\Routing;
 
-use Lcobucci\ActionMapper2\Http\Response;
-use Lcobucci\ActionMapper2\Http\Request;
-use Lcobucci\ActionMapper2\Application;
+use Lcobucci\ActionMapper\Http\Response;
+use Lcobucci\ActionMapper\Http\Request;
+use Lcobucci\ActionMapper\Application;
 use BadMethodCallException;
 
 /**
@@ -44,7 +43,7 @@ class Controller implements Route
     /**
      * Configures the request
      *
-     * @see \Lcobucci\ActionMapper2\Routing\Route::setRequest()
+     * @see \Lcobucci\ActionMapper\Routing\Route::setRequest()
      */
     public function setRequest(Request $request)
     {
@@ -54,7 +53,7 @@ class Controller implements Route
     /**
      * Configures the response
      *
-     * @see \Lcobucci\ActionMapper2\Routing\Route::setResponse()
+     * @see \Lcobucci\ActionMapper\Routing\Route::setResponse()
      */
     public function setResponse(Response $response)
     {
@@ -64,7 +63,7 @@ class Controller implements Route
     /**
      * Configures the application
      *
-     * @see \Lcobucci\ActionMapper2\Routing\Route::setApplication()
+     * @see \Lcobucci\ActionMapper\Routing\Route::setApplication()
      */
     public function setApplication(Application $application)
     {

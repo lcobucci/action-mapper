@@ -1,12 +1,11 @@
 <?php
 /**
- * This file is part of Action Mapper 2, a PHP 5.3+ front-controller
- * microframework
+ * This file is part of Action Mapper, a PHP front-controller microframework
  *
  * @license http://opensource.org/licenses/BSD-3-Clause BSD-3-Clause
  */
 
-namespace Lcobucci\ActionMapper2\Routing;
+namespace Lcobucci\ActionMapper\Routing;
 
 use Doctrine\Common\Annotations\Reader;
 use InvalidArgumentException;
@@ -65,7 +64,7 @@ class RouteDefinitionCreator
      *
      * @var string
      */
-    const DEFINITION_CLASS = '\Lcobucci\ActionMapper2\Routing\RouteDefinition';
+    const DEFINITION_CLASS = '\Lcobucci\ActionMapper\Routing\RouteDefinition';
 
     /**
      * The base definition class to be used
@@ -116,7 +115,7 @@ class RouteDefinitionCreator
 
         throw new InvalidArgumentException(
             'Route definition must be instance of '
-            . '\Lcobucci\ActionMapper2\Routing\RouteDefinition'
+            . '\Lcobucci\ActionMapper\Routing\RouteDefinition'
         );
     }
 

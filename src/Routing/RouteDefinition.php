@@ -1,15 +1,14 @@
 <?php
 /**
- * This file is part of Action Mapper 2, a PHP 5.3+ front-controller
- * microframework
+ * This file is part of Action Mapper, a PHP front-controller microframework
  *
  * @license http://opensource.org/licenses/BSD-3-Clause BSD-3-Clause
  */
 
-namespace Lcobucci\ActionMapper2\Routing;
+namespace Lcobucci\ActionMapper\Routing;
 
-use Lcobucci\ActionMapper2\Errors\PageNotFoundException;
-use Lcobucci\ActionMapper2\Application;
+use Lcobucci\ActionMapper\Errors\PageNotFoundException;
+use Lcobucci\ActionMapper\Application;
 use Doctrine\Common\Annotations\Reader;
 use ReflectionClass;
 use ReflectionMethod;
@@ -252,7 +251,7 @@ class RouteDefinition
         foreach ($class->getMethods(ReflectionMethod::IS_PUBLIC) as $method) {
             $annotation = $this->annotationReader->getMethodAnnotation(
                 $method,
-                '\Lcobucci\ActionMapper2\Routing\Annotation\Route'
+                '\Lcobucci\ActionMapper\Routing\Annotation\Route'
             );
 
             if ($annotation
