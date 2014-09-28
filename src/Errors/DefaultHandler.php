@@ -8,13 +8,15 @@
 namespace Lcobucci\ActionMapper\Errors;
 
 use Lcobucci\ActionMapper\Http\Exception;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
- * Basic error handler
+ * The default error handler
  *
  * @author Luís Otávio Cobucci Oblonczyk <lcobucci@gmail.com>
  */
-class DefaultHandler extends ErrorHandler
+class DefaultHandler extends BaseHandler
 {
     /**
      * The template content
@@ -38,8 +40,6 @@ class DefaultHandler extends ErrorHandler
      */
     public function __construct($templateFile = null, $displayTrace = true)
     {
-        parent::__construct();
-
         if ($templateFile === null || !file_exists($templateFile)) {
             $templateFile = __DIR__ . '/ErrorPage.phtml';
         }
@@ -59,22 +59,19 @@ class DefaultHandler extends ErrorHandler
     }
 
     /**
-     * Renders the error page according with the exception
-     *
-     * @param Exception $error
-     * @return string
+     * {@inheritdoc}
      */
-    protected function getErrorContent(Exception $error)
+    protected function getErrorContent(Request $request, Response $response, Exception $exception)
     {
-        $acceptableContent = $this->request->getAcceptableContentTypes();
+        $acceptableContent = $request->getAcceptableContentTypes();
 
         $data = array(
-            'code' => $error->getStatusCode(),
-            'message' => $error->getMessage()
+            'code' => $exception->getStatusCode(),
+            'message' => $exception->getMessage()
         );
 
         if ($this->displayTrace) {
-            $data['trace'] = $error->__toString();
+            $data['trace'] = $exception->__toString();
         }
 
         if (in_array('text/html', $acceptableContent)) {
@@ -84,10 +81,10 @@ class DefaultHandler extends ErrorHandler
         if (in_array('application/xml', $acceptableContent)
             || in_array('application/x-xml', $acceptableContent)
             || in_array('text/xml', $acceptableContent)) {
-            return $this->getXmlContent($data);
+            return $this->getXmlContent($response, $data);
         }
 
-        return $this->getJsonContent($data);
+        return $this->getJsonContent($response, $data);
     }
 
     /**
@@ -121,9 +118,9 @@ class DefaultHandler extends ErrorHandler
      * @param array $data
      * @return string
      */
-    protected function getXmlContent(array $data)
+    protected function getXmlContent(Response $response, array $data)
     {
-        $this->response->headers->set('Content-Type', 'application/xml; charset=UTF-8');
+        $response->headers->set('Content-Type', 'application/xml; charset=UTF-8');
 
         return '<?xml version="1.0" encoding="UTF-8"?>
                 <error>
@@ -139,9 +136,9 @@ class DefaultHandler extends ErrorHandler
      * @param array $data
      * @return string
      */
-    protected function getJsonContent(array $data)
+    protected function getJsonContent(Response $response, array $data)
     {
-        $this->response->headers->set('Content-Type', 'application/json; charset=UTF-8');
+        $response->headers->set('Content-Type', 'application/json; charset=UTF-8');
 
         return json_encode($data);
     }

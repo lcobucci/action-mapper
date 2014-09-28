@@ -7,13 +7,16 @@
 
 namespace Lcobucci\ActionMapper;
 
-use Lcobucci\ActionMapper\DependencyInjection\Container as ActionMapperContainer;
-use Symfony\Component\HttpFoundation\Session\Storage\NativeSessionStorage;
+use Exception;
+use Lcobucci\ActionMapper\DependencyInjection\Container;
+use Lcobucci\ActionMapper\Events\ApplicationEvent;
+use Lcobucci\ActionMapper\Events\ExceptionEvent;
+use Lcobucci\ActionMapper\Http\RequestAware;
+use Lcobucci\ActionMapper\Http\ResponseAware;
+use Lcobucci\ActionMapper\Http\RequestInjector;
+use Lcobucci\ActionMapper\Http\ResponseInjector;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
-use Symfony\Component\DependencyInjection\ContainerInterface;
-use Symfony\Component\HttpFoundation\Session\Session;
-use Lcobucci\ActionMapper\Routing\RouteManager;
-use Lcobucci\ActionMapper\Errors\ErrorHandler;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -23,248 +26,112 @@ use Symfony\Component\HttpFoundation\Response;
  *
  * @author Luís Otávio Cobucci Oblonczyk <lcobucci@gmail.com>
  */
-class Application
+class Application implements RequestAware, ResponseAware
 {
-    /**
-     * The route manager
-     *
-     * @var RouteManager
-     */
-    protected $routeManager;
+    use RequestInjector, ResponseInjector;
 
     /**
-     * The error handler
-     *
-     * @var ErrorHandler
+     * @var Container
      */
-    protected $errorHandler;
+    private $container;
 
     /**
-     * The dependency container
-     *
-     * @var ContainerInterface
-     */
-    private $dependencyContainer;
-
-    /**
-     * The HTTP Request
-     *
-     * @var Request
-     */
-    protected $request;
-
-    /**
-     * The HTTP Response
-     *
-     * @var Response
-     */
-    protected $response;
-
-    /**
-     * Class constructor
-     *
-     * @param RouteManager $routeManager
-     * @param ErrorHandler $errorHandler
-     * @param ContainerInterface $dependencyContainer
+     * @param Container $container
+     * @param Request $request
+     * @param Response $response
      */
     public function __construct(
-        RouteManager $routeManager,
-        ErrorHandler $errorHandler,
-        ContainerInterface $dependencyContainer = null
+        Container $container,
+        Request $request = null,
+        Response $response = null
     ) {
-        $this->routeManager = $routeManager;
-        $this->errorHandler = $errorHandler;
+        $this->request = $request ?: $this->createRequest();
+        $this->response = $response ?: $this->createResponse();
 
-        if ($dependencyContainer !== null) {
-            $this->setDependencyContainer($dependencyContainer);
-        }
+        $this->setContainer($container);
     }
 
     /**
-     * Configures the dependency container, injecting the application if need
-     *
-     * @param ContainerInterface $dependencyContainer
+     * @param Container $container
      */
-    public function setDependencyContainer(ContainerInterface $dependencyContainer)
+    private function setContainer(Container $container)
     {
-        if ($dependencyContainer instanceof ActionMapperContainer) {
-            $dependencyContainer->setApplication($this);
-        }
-
-        $this->dependencyContainer = $dependencyContainer;
+        $this->container = $container;
+        $this->container->setRequest($this->request);
+        $this->container->setResponse($this->response);
     }
 
     /**
-     * Returns the dependency container
-     *
-     * @return ContainerInterface
-     */
-    public function getDependencyContainer()
-    {
-        return $this->dependencyContainer;
-    }
-
-    /**
-     * Returns the route manager
-     *
-     * @return RouteManager
-     */
-    public function getRouteManager()
-    {
-        return $this->routeManager;
-    }
-
-    /**
-     * Returns the HTTP request (creating if not configured)
-     *
      * @return Request
      */
-    public function getRequest()
+    protected function createRequest()
     {
-        if ($this->request === null) {
-            $this->request = Request::createFromGlobals();
-        }
-
-        return $this->request;
+        return Request::createFromGlobals();
     }
 
     /**
-     * Returns the HTTP response (creating if not configured)
-     *
      * @return Response
      */
-    public function getResponse()
+    protected function createResponse()
     {
-        if ($this->response === null) {
-            $this->response = new Response();
-        }
-
-        return $this->response;
+        return new Response();
     }
 
     /**
-     * Starts the session using the given name
-     *
-     * @param string $name
-     */
-    public function startSession($name = null)
-    {
-        $this->setDefaultSession($name);
-        $this->getSession()->start();
-    }
-
-    /**
-     * Configure the session handler with the native session (only when not
-     * configured)
-     *
-     * @param string $name
-     */
-    protected function setDefaultSession($name = null)
-    {
-        if ($this->getRequest()->hasSession()) {
-            return ;
-        }
-
-        $options = array();
-
-        if ($name !== null) {
-            $options['name'] = $name;
-        }
-
-        $this->setSession(new Session(new NativeSessionStorage($options)));
-    }
-
-    /**
-     * Configure the session handler (only when not configured)
-     *
      * @param SessionInterface $session
      */
-    public function setSession(SessionInterface $session)
+    public function startSession(SessionInterface $session)
     {
-        if (!$this->getRequest()->hasSession()) {
-            $this->getRequest()->setSession($session);
-        }
+        $this->request->setSession($session);
+
+        $session->start();
     }
 
-    /**
-     * Returns the session handler
-     *
-     * @return SessionInterface
-     */
-    public function getSession()
-    {
-        return $this->getRequest()->getSession();
-    }
-
-    /**
-     * Redirect to given URI (using HTTP headers)
-     *
-     * @param string $url
-     * @param int $statusCode
-     */
-    public function redirect($url, $statusCode = 302)
-    {
-        //FIXME
-        if (strpos($url, 'http') !== 0) {
-            $url = $this->getRequest()->getBasePath() . $url;
-        }
-
-        $this->getResponse()->redirect($url, $statusCode);
-        $this->sendResponse();
-    }
-
-    /**
-     * Forward the engine to given path
-     *
-     * @param string $path
-     * @param boolean $interrupt
-     */
-    public function forward($path, $interrupt = false)
-    {
-        //FIXME
-        try {
-            $request = $this->getRequest();
-            $previousPath = $request->getRequestedPath();
-
-            $request->setRequestedPath($path);
-            $this->routeManager->process($this);
-            $request->setRequestedPath($previousPath);
-        } catch (\Exception $error) {
-            $this->errorHandler->handle($error);
-        }
-
-        if (isset($error) || $interrupt) {
-            $this->sendResponse();
-        }
-    }
-
-    /**
-     * Executes the application
-     */
     public function run()
     {
-        $this->errorHandler->setRequest($this->getRequest());
-        $this->errorHandler->setResponse($this->getResponse());
+        /* @var $dispatcher EventDispatcherInterface */
+        $dispatcher = $this->container->get('app.eventDispatcher');
 
         try {
-            ob_start();
-            $this->routeManager->process($this);
-            ob_end_clean();
-        } catch (\Exception $error) {
-            $this->errorHandler->handle($error);
+            $this->start($dispatcher);
+        } catch (Exception $exception) {
+            $this->handleException($dispatcher, $exception);
+        } finally {
+            $this->terminate($dispatcher);
         }
-
-        $this->sendResponse();
     }
 
     /**
-     * Sends the response to the browser
+     * @param EventDispatcherInterface $dispatcher
      */
-    protected function sendResponse()
+    private function start(EventDispatcherInterface $dispatcher)
     {
-        $response = $this->getResponse();
+        $dispatcher->dispatch(
+            ApplicationEvent::START,
+            new ApplicationEvent($this->request, $this->response)
+        );
+    }
 
-        $response->prepare($this->getRequest());
-        $response->send();
+    /**
+     * @param EventDispatcherInterface $dispatcher
+     * @param Exception $exception
+     */
+    private function handleException(EventDispatcherInterface $dispatcher, Exception $exception)
+    {
+        $dispatcher->dispatch(
+            ExceptionEvent::EXCEPTION,
+            new ExceptionEvent($this->request, $this->response, $exception)
+        );
+    }
+
+    /**
+     * @param EventDispatcherInterface $dispatcher
+     */
+    private function terminate(EventDispatcherInterface $dispatcher)
+    {
+        $dispatcher->dispatch(
+            ApplicationEvent::TERMINATE,
+            new ApplicationEvent($this->request, $this->response)
+        );
     }
 }

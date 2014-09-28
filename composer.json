@@ -1,34 +1,39 @@
 {
-	"name" : "lcobucci/action-mapper",
-	"description" : "Front controller framework for PHP 5.5+ applications",
-	"type" : "library",
-	"authors" : [{
-			"name" : "Luís Otávio Cobucci Oblonczyk",
-			"email" : "lcobucci@gmail.com"
-		}
-	],
-	"keywords" : [
-		"front-controller"
-	],
-	"homepage" : "http://lcobucci.github.io/action-mapper/",
-	"license" : [
-		"BSD-3-Clause"
-	],
-	"require" : {
-		"php" : ">=5.5",
-		"symfony/http-foundation" : "~2.5",
-		"lcobucci/di-builder" : "~3.0",
-		"doctrine/annotations" : "*@dev",
-		"doctrine/cache" : "*@dev",
-		"psr/log" : "~1.0"
-	},
-	"require-dev" : {
-		"phpunit/phpunit" : "~4.2",
-		"squizlabs/php_codesniffer" : "*"
-	},
-	"autoload" : {
-		"psr-4" : {
-			"Lcobucci\\ActionMapper\\" : ["src", "test"]
-		}
-	}
+    "name": "lcobucci/action-mapper",
+    "description": "Front controller framework for PHP 5.5+ applications",
+    "type": "library",
+    "authors": [
+        {
+            "name": "Luís Otávio Cobucci Oblonczyk",
+            "email": "lcobucci@gmail.com"
+        }
+    ],
+    "keywords": [
+        "front-controller"
+    ],
+    "homepage": "http://lcobucci.github.io/action-mapper/",
+    "license": [
+        "BSD-3-Clause"
+    ],
+    "require": {
+        "php": ">=5.5",
+        "symfony/http-foundation": "~2.5",
+        "lcobucci/di-builder": "~3.0",
+        "doctrine/annotations": "*@dev",
+        "doctrine/cache": "*@dev",
+        "psr/log": "~1.0",
+        "symfony/event-dispatcher": "~2.5"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "~4.2",
+        "squizlabs/php_codesniffer": "*"
+    },
+    "autoload": {
+        "psr-4": {
+            "Lcobucci\\ActionMapper\\": [
+                "src",
+                "test"
+            ]
+        }
+    }
 }

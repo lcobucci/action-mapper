@@ -5,7 +5,7 @@
  * @license http://opensource.org/licenses/BSD-3-Clause BSD-3-Clause
  */
 
-namespace Lcobucci\ActionMapper\Http\Client;
+namespace Lcobucci\ActionMapper\Http\Server;
 
 use Lcobucci\ActionMapper\Http\Exception;
 
