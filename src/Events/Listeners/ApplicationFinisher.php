@@ -12,17 +12,13 @@ use Lcobucci\ActionMapper\Events\ApplicationEvent;
 /**
  * @author Luís Otávio Cobucci Oblonczyk
  */
-class ApplicationTerminator
+class ApplicationFinisher
 {
     /**
      * @param ApplicationEvent $event
      */
-    public function terminate(ApplicationEvent $event)
+    public function finish(ApplicationEvent $event)
     {
-        $request = $event->getRequest();
-        $response = $event->getResponse();
-
-        $response->prepare($request);
-        $response->send();
+        exit();
     }
 }
