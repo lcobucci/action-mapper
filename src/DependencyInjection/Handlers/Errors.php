@@ -18,7 +18,7 @@ class Errors implements Handler
 {
     const HANDLER = 'app.errorHandler';
 
-	/**
+    /**
      * {@inheritdoc}
      */
     public function __invoke(ContainerBuilder $builder)

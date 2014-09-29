@@ -13,9 +13,11 @@ use Symfony\Component\HttpFoundation\Response;
 /**
  * @author Luís Otávio Cobucci Oblonczyk <lcobucci@gmail.com>
  */
-class RouteProcessEvent extends Event
+class RouteEvent extends Event
 {
     const PROCESS = 'app.router.process';
+
+    const REDIRECT = 'app.router.redirect';
 
     /**
      * @var string

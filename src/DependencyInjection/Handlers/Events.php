@@ -28,7 +28,7 @@ class Events implements Handler
     const EXCEPTION_PROCESSOR = 'app.events.exceptionProcessor';
     const APPLICATION_TERMINATOR = 'app.events.applicationTerminator';
 
-	/**
+    /**
      * {@inheritdoc}
      */
     public function __invoke(ContainerBuilder $builder)
