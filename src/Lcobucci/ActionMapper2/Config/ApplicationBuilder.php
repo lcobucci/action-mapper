@@ -10,7 +10,7 @@ namespace Lcobucci\ActionMapper2\Config;
 
 use Lcobucci\ActionMapper2\DependencyInjection\ContainerConfig;
 use Symfony\Component\DependencyInjection\ContainerInterface;
-use Lcobucci\DependencyInjection\XmlContainerBuilder;
+use Lcobucci\DependencyInjection\Builders\XmlBuilder;
 use Lcobucci\DependencyInjection\ContainerBuilder;
 use Lcobucci\ActionMapper2\Errors\DefaultHandler;
 use Lcobucci\ActionMapper2\Errors\ErrorHandler;
@@ -57,7 +57,7 @@ class ApplicationBuilder
     ) {
         $builder = new static(
             new RouteBuilder(),
-            new XmlContainerBuilder()
+            new XmlBuilder()
         );
 
         $dependencyContainer = null;
