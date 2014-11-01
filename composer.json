@@ -28,8 +28,8 @@
 		"phpmd/phpmd" : "*"
 	},
 	"autoload" : {
-		"psr-0" : {
-			"Lcobucci\\ActionMapper2" : "src/"
+		"psr-4" : {
+			"Lcobucci\\ActionMapper2\\" : ["src/", "test"]
 		}
 	}
 }
