@@ -50,7 +50,7 @@ class FilterCollection
      *
      * @param string $pattern
      * @param boolean $before
-     * @param Filter|\Closure|string $handler
+     * @param string $handler
      * @param array $httpMethods
      * @throws InvalidArgumentException
      */
@@ -62,31 +62,26 @@ class FilterCollection
             $filterChain = array();
         }
 
-        if ($this->isValidHandler($handler)) {
-            $filterChain[] = $this->definitionCreator->create($pattern, $handler, $httpMethods);
-            $this->filters[(int) $before] = $filterChain;
-            return;
+        if (!$this->isValidHandler($handler)) {
+            throw new InvalidArgumentException(
+                'You must pass a closure or a class that extends the '
+                . static::FILTER_CLASS . ' class'
+            );
         }
 
-        throw new InvalidArgumentException(
-            'You must pass a closure or a class that extends the '
-            . static::FILTER_CLASS . ' class'
-        );
+        $filterChain[] = $this->definitionCreator->create($pattern, $handler, $httpMethods);
+        $this->filters[(int) $before] = $filterChain;
     }
 
     /**
      * Validates if handler is a subclass of the base filter
      *
-     * @param object|string $handler
+     * @param string $handler
      * @return boolean
      */
     protected function isValidHandler($handler)
     {
-        if ($handler instanceof \Closure) {
-            return true;
-        }
-
-        return is_subclass_of($handler, static::FILTER_CLASS);
+        return is_string($handler) && is_subclass_of($handler, static::FILTER_CLASS);
     }
 
     /**

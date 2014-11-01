@@ -39,7 +39,7 @@ class RouteDefinition
     /**
      * The handler to be called
      *
-     * @var Route|Filter|\Closure|string
+     * @var string
      */
     protected $handler;
 
@@ -72,7 +72,7 @@ class RouteDefinition
      *
      * @param string $pattern
      * @param string $regex
-     * @param Route|Filter|\Closure|string $handler
+     * @param string $handler
      * @param array $httpMethods
      */
     public function __construct(
@@ -165,9 +165,7 @@ class RouteDefinition
      */
     public function process(Application $application)
     {
-        $content = $this->getContent($application);
-
-        if ($content) {
+        if ($content = $this->getContent($application)) {
             $application->getResponse()->appendContent((string) $content);
         }
     }
@@ -181,48 +179,33 @@ class RouteDefinition
      */
     protected function getContent(Application $application)
     {
-        if ($this->handler instanceof \Closure) {
-            return call_user_func_array($this->handler, $this->matchedArgs);
+        $callback = $this->getHandlerCallback();
+        $callback[0]->setRequest($application->getRequest());
+        $callback[0]->setResponse($application->getResponse());
+        $callback[0]->setApplication($application);
+
+        if (!isset($callback[1])) {
+            return $this->parseAnnotation($callback[0], $application);
         }
 
-        $method = null;
-
-        $handler = $this->getHandler($method);
-        $handler->setRequest($application->getRequest());
-        $handler->setResponse($application->getResponse());
-        $handler->setApplication($application);
-
-        if ($handler instanceof Filter) {
-            return call_user_func_array(array($handler, 'process'), $this->matchedArgs);
-        }
-
-        if ($method === null) {
-            return $this->parseAnnotation($handler, $application);
-        }
-
-        return call_user_func_array(array($handler, $method), $this->matchedArgs);
+        return call_user_func_array($callback, $this->matchedArgs);
     }
 
     /**
      * Returns the handler
      *
-     * @param string $method
-     *
      * @return Route|Filter
      */
-    protected function getHandler(&$method)
+    protected function getHandlerCallback()
     {
-        if (!is_string($this->handler)) {
-            return $this->handler;
+        $callback = explode('::', $this->handler);
+        $callback[0] = $this->handlerContainer->get($callback[0]);
+
+        if ($callback[0] instanceof Filter) {
+            $callback[1] = 'process';
         }
 
-        if (strpos($this->handler, '::') === false) {
-            return $this->handlerContainer->get($this->handler);
-        }
-
-        list($class, $method) = explode('::', $this->handler);
-
-        return $this->handlerContainer->get($class);
+        return $callback;
     }
 
     /**
@@ -238,10 +221,6 @@ class RouteDefinition
      */
     protected function parseAnnotation(Route $handler, Application $application)
     {
-        if ($this->annotationReader === null) {
-            throw new RuntimeException('Annotation parser is not setted');
-        }
-
         $class = new ReflectionClass($handler);
 
         foreach ($class->getMethods(ReflectionMethod::IS_PUBLIC) as $method) {

@@ -86,7 +86,7 @@ class RouteDefinitionCreator
      * Creates a new route definition
      *
      * @param string $pattern
-     * @param Route|Filter|\Closure|string $handler
+     * @param string $handler
      * @param array $httpMethods
      *
      * @return RouteDefinition

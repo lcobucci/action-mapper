@@ -56,7 +56,7 @@ class RouteCollection
      * Append a route for given pattern
      *
      * @param string $pattern
-     * @param Route|\Closure|string $handler
+     * @param string $handler
      *
      * @throws InvalidArgumentException
      */
@@ -78,6 +78,27 @@ class RouteCollection
         $this->sorted = false;
 
         $this->routes[$pattern] = $this->definitionCreator->create($pattern, $handler);
+    }
+
+    /**
+     * Verifies if handler is valid
+     *
+     * @param object|string $handler
+     * @return boolean
+     */
+    protected function isValidHandler($handler)
+    {
+        if (!is_string($handler)) {
+            return false;
+        }
+
+        $methodPos = strpos($handler, '::');
+
+        if ($methodPos !== false) {
+            $handler = substr($handler, 0, $methodPos);
+        }
+
+        return is_subclass_of($handler, static::ROUTE_INTERFACE);
     }
 
     /**
@@ -103,29 +124,6 @@ class RouteCollection
 
         $this->routes = array_reverse($this->routes, true);
         $this->sorted = true;
-    }
-
-    /**
-     * Verifies if handler is valid
-     *
-     * @param object|string $handler
-     * @return boolean
-     */
-    protected function isValidHandler($handler)
-    {
-        if ($handler instanceof \Closure) {
-            return true;
-        }
-
-        if (is_string($handler) && strpos($handler, '::') !== false) {
-            $handler = substr($handler, 0, strpos($handler, '::'));
-        }
-
-        if (is_object($handler) || (is_string($handler) && class_exists($handler))) {
-            return is_subclass_of($handler, static::ROUTE_INTERFACE);
-        }
-
-        return false;
     }
 
     /**
