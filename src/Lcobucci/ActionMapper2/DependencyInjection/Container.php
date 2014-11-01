@@ -67,7 +67,6 @@ class Container extends \Symfony\Component\DependencyInjection\Container
         return $this->services['app.routes.builder'] = new RouteBuilder(
             $this->get('app.routes.loader'),
             $this->get('app.routes.definition.creator'),
-            $this->get('app.annotations.reader'),
             $this->get('app.cache')
         );
     }

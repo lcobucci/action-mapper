@@ -47,7 +47,9 @@ class ApplicationBuilder
     ) {
         $dependencyContainer = self::createContainer($containerConfig);
 
-        $builder = new static(new RouteBuilder());
+        $builder = new static(
+            $dependencyContainer->get('app.routes.builder')
+        );
 
         return $builder->create(
             $routesConfig,
