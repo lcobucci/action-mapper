@@ -99,6 +99,10 @@ class RouteHandlerContainer
      */
     private function injectServices(ReflectionMethod $method, $handler)
     {
+        if ($method->getDeclaringClass()->getName() === 'Lcobucci\ActionMapper2\Routing\Controller') {
+            return;
+        }
+
         $services = $this->getServices($method);
 
         if (!empty($services)) {
