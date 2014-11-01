@@ -61,63 +61,25 @@ class RouteDefinitionCreator
     const WILDCARD2 = '/\*/';
 
     /**
-     * The defaul definition class
-     *
-     * @var string
+     * @var Reader
      */
-    const DEFINITION_CLASS = '\Lcobucci\ActionMapper2\Routing\RouteDefinition';
-
-    /**
-     * The base definition class to be used
-     *
-     * @var string
-     */
-    protected static $baseClass;
+    private $annotationReader;
 
     /**
      * @var RouteHandlerContainer
      */
-    protected static $handlerContainer;
+    private $handlerContainer;
 
     /**
+     * @param Reader $annotaionReader
      * @param RouteHandlerContainer $handlerContainer
      */
-    public static function setHandlerContainer(RouteHandlerContainer $handlerContainer)
-    {
-        static::$handlerContainer = $handlerContainer;
-    }
-
-    /**
-     * @return RouteHandlerContainer
-     */
-    public static function getHandlerContainer()
-    {
-        if (static::$handlerContainer === null) {
-            static::setHandlerContainer(new RouteHandlerContainer());
-        }
-
-        return static::$handlerContainer;
-    }
-
-    /**
-     * Configures the base definition class
-     *
-     * @param string $baseClass
-     * @throws InvalidArgumentException
-     */
-    public static function setBaseClass($baseClass)
-    {
-        $baseClass = (string) $baseClass;
-
-        if (is_subclass_of($baseClass, static::DEFINITION_CLASS)) {
-            static::$baseClass = $baseClass;
-            return ;
-        }
-
-        throw new InvalidArgumentException(
-            'Route definition must be instance of '
-            . '\Lcobucci\ActionMapper2\Routing\RouteDefinition'
-        );
+    public function __construct(
+        Reader $annotaionReader,
+        RouteHandlerContainer $handlerContainer
+    ) {
+        $this->annotationReader = $annotaionReader;
+        $this->handlerContainer = $handlerContainer;
     }
 
     /**
@@ -125,31 +87,26 @@ class RouteDefinitionCreator
      *
      * @param string $pattern
      * @param Route|Filter|\Closure|string $handler
-     * @param Reader $annotationReader
      * @param array $httpMethods
+     *
      * @return RouteDefinition
      */
-    public static function create(
+    public function create(
         $pattern,
         $handler,
-        Reader $annotationReader = null,
         array $httpMethods = null
     ) {
-        $baseClass = static::$baseClass ?: static::DEFINITION_CLASS;
         $pattern = static::preparePattern($pattern);
 
-        $route = new $baseClass(
+        $route = new RouteDefinition(
             $pattern,
             static::createRegex($pattern),
             $handler,
             $httpMethods
         );
 
-        if ($annotationReader) {
-            $route->setAnnotationReader($annotationReader);
-        }
-
-        $route->setHandlerContainer(static::getHandlerContainer());
+        $route->setAnnotationReader($this->annotationReader);
+        $route->setHandlerContainer($this->handlerContainer);
 
         return $route;
     }
@@ -187,24 +144,19 @@ class RouteDefinitionCreator
      *
      * @param string $pattern
      * @return boolean
+     *
      * @throws InvalidArgumentException
      */
     public static function preparePattern($pattern)
     {
         if (preg_match(static::URI_PATTERN, $pattern) == 0) {
-            throw new InvalidArgumentException(
-                'Pattern "' . $pattern . '" is invalid'
-            );
+            throw new InvalidArgumentException('Pattern "' . $pattern . '" is invalid');
         }
 
         if ($pattern != '/') {
             $pattern = rtrim($pattern, '/');
         }
 
-        return preg_replace(
-            static::PARAM,
-            '(x)',
-            $pattern
-        );
+        return preg_replace(static::PARAM, '(x)', $pattern);
     }
 }

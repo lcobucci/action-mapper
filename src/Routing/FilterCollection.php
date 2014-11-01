@@ -32,10 +32,16 @@ class FilterCollection
     private $filters;
 
     /**
-     * Class constructor
+     * @var RouteDefinitionCreator
      */
-    public function __construct()
+    private $definitionCreator;
+
+    /**
+     * @param RouteDefinitionCreator $definitionCreator
+     */
+    public function __construct(RouteDefinitionCreator $definitionCreator)
     {
+        $this->definitionCreator = $definitionCreator;
         $this->filters = array();
     }
 
@@ -56,11 +62,10 @@ class FilterCollection
             $filterChain = array();
         }
 
-        if ($handler instanceof \Closure || $this->isValidHandler($handler)) {
-            $filterChain[] = RouteDefinitionCreator::create($pattern, $handler, null, $httpMethods);
+        if ($this->isValidHandler($handler)) {
+            $filterChain[] = $this->definitionCreator->create($pattern, $handler, $httpMethods);
             $this->filters[(int) $before] = $filterChain;
-
-            return ;
+            return;
         }
 
         throw new InvalidArgumentException(
@@ -77,6 +82,10 @@ class FilterCollection
      */
     protected function isValidHandler($handler)
     {
+        if ($handler instanceof \Closure) {
+            return true;
+        }
+
         return is_subclass_of($handler, static::FILTER_CLASS);
     }
 

@@ -11,7 +11,6 @@ namespace Lcobucci\ActionMapper2\Routing;
 use Lcobucci\ActionMapper2\Http\Response;
 use Lcobucci\ActionMapper2\Http\Request;
 use Lcobucci\ActionMapper2\Application;
-use BadMethodCallException;
 
 /**
  * Base class of controllers
@@ -76,16 +75,11 @@ class Controller implements Route
      *
      * @param string $serviceId
      * @return mixed
-     * @throws BadMethodCallException
+     *
+     * @deprecated Use explicity injection
      */
     public function get($serviceId)
     {
-        if ($this->application->getDependencyContainer() === null) {
-            throw new BadMethodCallException(
-                'The dependency container must be defined'
-            );
-        }
-
         return $this->application->getDependencyContainer()->get($serviceId);
     }
 
