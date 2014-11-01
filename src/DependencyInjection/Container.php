@@ -15,6 +15,8 @@ use Lcobucci\ActionMapper2\Config\Loader\Xml;
 use Lcobucci\ActionMapper2\Config\RouteBuilder;
 use Lcobucci\ActionMapper2\Routing\RouteDefinitionCreator;
 use Lcobucci\ActionMapper2\Routing\RouteHandlerContainer;
+use Symfony\Component\DependencyInjection\ParameterBag\ParameterBag;
+use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 /**
@@ -30,6 +32,17 @@ class Container extends \Symfony\Component\DependencyInjection\Container
      * @var Application
      */
     protected $application;
+
+    /**
+     * Constructor.
+     */
+    public function __construct(ParameterBagInterface $parameterBag = null)
+    {
+        $parameterBag = $parameterBag ?: new ParameterBag(array('app.devmode' => true));
+
+        parent::__construct($parameterBag);
+    }
+
 
     /**
      * Configures the application
@@ -67,7 +80,8 @@ class Container extends \Symfony\Component\DependencyInjection\Container
         return $this->services['app.routes.builder'] = new RouteBuilder(
             $this->get('app.routes.loader'),
             $this->get('app.routes.definition.creator'),
-            $this->get('app.cache')
+            $this->get('app.cache'),
+            $this->getParameter('app.devmode')
         );
     }
 

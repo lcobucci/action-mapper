@@ -29,6 +29,12 @@ class ContainerConfig extends DefaultConfig
      */
     public function getBaseClass()
     {
-        return parent::getBaseClass() ?: self::DEFAULT_CONTAINER;
+        $baseClass = parent::getBaseClass();
+
+        if (is_subclass_of($baseClass, self::DEFAULT_CONTAINER)) {
+            return $baseClass;
+        }
+
+        return self::DEFAULT_CONTAINER;
     }
 }

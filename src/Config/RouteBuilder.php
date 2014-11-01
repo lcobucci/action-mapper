@@ -42,18 +42,26 @@ class RouteBuilder
     private $cache;
 
     /**
+     * @var boolean
+     */
+    private $debug;
+
+    /**
      * @param RouteLoader $loader
      * @param RouteDefinitionCreator $definitionCreator
      * @param Cache $cache
+     * @param boolean $debug
      */
     public function __construct(
         RouteLoader $loader,
         RouteDefinitionCreator $definitionCreator,
-        Cache $cache
+        Cache $cache,
+        $debug = false
     ) {
         $this->loader = $loader;
         $this->definitionCreator = $definitionCreator;
         $this->cache = $cache;
+        $this->debug = $debug;
     }
 
     /**
@@ -132,7 +140,10 @@ class RouteBuilder
     private function saveToCache($key, stdClass $metadata)
     {
         $this->cache->save($key, $metadata);
-        $this->cache->save($key . '.time', time());
+
+        if ($this->debug) {
+            $this->cache->save($key . '.time', time());
+        }
     }
 
     /**
@@ -146,10 +157,12 @@ class RouteBuilder
     {
         $metadata = $this->cache->fetch($key);
 
-        if ($metadata && $this->cache->fetch($key . '.time') > filemtime($fileName)) {
-            return $metadata;
+        if (!$metadata) {
+            return null;
         }
 
-        return null;
+        if (!$this->debug || $this->cache->fetch($key . '.time') > filemtime($fileName)) {
+            return $metadata;
+        }
     }
 }
