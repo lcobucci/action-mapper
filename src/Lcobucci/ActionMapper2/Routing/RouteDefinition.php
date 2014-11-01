@@ -120,6 +120,7 @@ class RouteDefinition
      *
      * @param string $path
      * @param string $requestedMethod
+     *
      * @return boolean
      */
     public function match($path, $requestedMethod = null)
@@ -145,6 +146,7 @@ class RouteDefinition
 
     /**
      * @param string $requestedMethod
+     *
      * @return boolean
      */
     protected function methodMatch($requestedMethod)
@@ -174,6 +176,7 @@ class RouteDefinition
      * Calls the handler returning its content
      *
      * @param Application $application
+     *
      * @return string
      */
     protected function getContent(Application $application)
@@ -190,46 +193,36 @@ class RouteDefinition
         $handler->setApplication($application);
 
         if ($handler instanceof Filter) {
-            return call_user_func_array(
-                array($handler, 'process'),
-                $this->matchedArgs
-            );
+            return call_user_func_array(array($handler, 'process'), $this->matchedArgs);
         }
 
-        if ($method !== null) {
-            $this->validateCustomAnnotations(
-                $application,
-                new ReflectionMethod($handler, $method)
-            );
-
-            return call_user_func_array(
-                array($handler, $method),
-                $this->matchedArgs
-            );
+        if ($method === null) {
+            return $this->parseAnnotation($handler, $application);
         }
 
-        return $this->parseAnnotation($handler, $application);
+        return call_user_func_array(array($handler, $method), $this->matchedArgs);
     }
 
     /**
      * Returns the handler
      *
      * @param string $method
+     *
      * @return Route|Filter
      */
     protected function getHandler(&$method)
     {
-        if (is_string($this->handler)) {
-            if (strpos($this->handler, '::') !== false) {
-                list($class, $method) = explode('::', $this->handler);
-            } else {
-                $class = $this->handler;
-            }
-
-            return $this->handlerContainer->get($class);
+        if (!is_string($this->handler)) {
+            return $this->handler;
         }
 
-        return $this->handler;
+        if (strpos($this->handler, '::') === false) {
+            return $this->handlerContainer->get($this->handler);
+        }
+
+        list($class, $method) = explode('::', $this->handler);
+
+        return $this->handlerContainer->get($class);
     }
 
     /**
@@ -237,7 +230,9 @@ class RouteDefinition
      *
      * @param Route $handler
      * @param Application $application
+     *
      * @return mixed
+     *
      * @throws RuntimeException
      * @throws PageNotFoundException
      */
@@ -255,33 +250,14 @@ class RouteDefinition
                 '\Lcobucci\ActionMapper2\Routing\Annotation\Route'
             );
 
-            if ($annotation
-                && $annotation->match($this, $application->getRequest())) {
-                $this->validateCustomAnnotations($application, $method);
-
+            if ($annotation && $annotation->match($this, $application->getRequest())) {
                 return $method->invokeArgs(
                     $handler,
-                    array_merge(
-                        $this->matchedArgs,
-                        (array) $annotation->getMatchedArgs()
-                    )
+                    array_merge($this->matchedArgs, (array) $annotation->getMatchedArgs())
                 );
             }
         }
 
         throw new PageNotFoundException('No route for the requested path');
-    }
-
-    /**
-     * Validate custom annotations
-     *
-     * @param Application $application
-     * @param ReflectionMethod $method
-     */
-    protected function validateCustomAnnotations(
-        Application $application,
-        ReflectionMethod $method
-    ) {
-        // Override if needed
     }
 }

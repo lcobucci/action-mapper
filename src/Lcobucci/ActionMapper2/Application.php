@@ -8,10 +8,9 @@
 
 namespace Lcobucci\ActionMapper2;
 
-use Lcobucci\ActionMapper2\DependencyInjection\Container as ActionMapperContainer;
+use Lcobucci\ActionMapper2\DependencyInjection\Container;
 use Symfony\Component\HttpFoundation\Session\Storage\NativeSessionStorage;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
-use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\Session\Session;
 use Lcobucci\ActionMapper2\Routing\RouteManager;
 use Lcobucci\ActionMapper2\Errors\ErrorHandler;
@@ -66,31 +65,27 @@ class Application
      *
      * @param RouteManager $routeManager
      * @param ErrorHandler $errorHandler
-     * @param ContainerInterface $dependencyContainer
+     * @param Container $dependencyContainer
      */
     public function __construct(
         RouteManager $routeManager,
         ErrorHandler $errorHandler,
-        ContainerInterface $dependencyContainer = null
+        Container $dependencyContainer
     ) {
         $this->routeManager = $routeManager;
         $this->errorHandler = $errorHandler;
 
-        if ($dependencyContainer !== null) {
-            $this->setDependencyContainer($dependencyContainer);
-        }
+        $this->setDependencyContainer($dependencyContainer);
     }
 
     /**
      * Configures the dependency container, injecting the application if need
      *
-     * @param ContainerInterface $dependencyContainer
+     * @param Container $dependencyContainer
      */
-    public function setDependencyContainer(ContainerInterface $dependencyContainer)
+    public function setDependencyContainer(Container $dependencyContainer)
     {
-        if ($dependencyContainer instanceof ActionMapperContainer) {
-            $dependencyContainer->setApplication($this);
-        }
+        $dependencyContainer->setApplication($this);
 
         $this->dependencyContainer = $dependencyContainer;
     }

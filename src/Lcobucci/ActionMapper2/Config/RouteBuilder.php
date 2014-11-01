@@ -8,13 +8,11 @@
 
 namespace Lcobucci\ActionMapper2\Config;
 
-use Lcobucci\ActionMapper2\Routing\RouteDefinitionCreator;
-use Lcobucci\ActionMapper2\Routing\RouteCollection;
-use Doctrine\Common\Annotations\AnnotationReader;
-use Lcobucci\ActionMapper2\Routing\RouteManager;
-use Lcobucci\ActionMapper2\Config\Loader\Xml;
-use Doctrine\Common\Annotations\CachedReader;
 use Doctrine\Common\Cache\Cache;
+use Lcobucci\ActionMapper2\Routing\FilterCollection;
+use Lcobucci\ActionMapper2\Routing\RouteCollection;
+use Lcobucci\ActionMapper2\Routing\RouteDefinitionCreator;
+use Lcobucci\ActionMapper2\Routing\RouteManager;
 use stdClass;
 
 /**
@@ -25,36 +23,36 @@ use stdClass;
 class RouteBuilder
 {
     /**
-     * The cache provider to be used by annotation reader
-     *
-     * @var Cache
-     */
-    protected $cache;
-
-    /**
      * The configuration loader
      *
      * @var RouteLoader
      */
-    protected $routeLoader;
+    private $loader;
 
     /**
-     * Class constructor
-     *
-     * @param RouteLoader $routeLoader
+     * @var RouteDefinitionCreator
      */
-    public function __construct(RouteLoader $routeLoader = null)
-    {
-        $this->routeLoader = $routeLoader ?: new Xml();
-    }
+    private $definitionCreator;
 
     /**
-     * Configures the cache provider
+     * The cache provider to be used by annotation reader
      *
+     * @var Cache
+     */
+    private $cache;
+
+    /**
+     * @param RouteLoader $loader
+     * @param RouteDefinitionCreator $definitionCreator
      * @param Cache $cache
      */
-    public function setCache(Cache $cache)
-    {
+    public function __construct(
+        RouteLoader $loader,
+        RouteDefinitionCreator $definitionCreator,
+        Cache $cache
+    ) {
+        $this->loader = $loader;
+        $this->definitionCreator = $definitionCreator;
         $this->cache = $cache;
     }
 
@@ -62,30 +60,18 @@ class RouteBuilder
      * Build the route manager from the configuration file
      *
      * @param string $fileName
+     *
      * @return RouteManager
      */
     public function build($fileName)
     {
-        return $this->createManager($this->getMetadata($fileName));
-    }
-
-    /**
-     * Create the route manager from configuration data
-     *
-     * @param stdClass $metadata
-     * @return RouteManager
-     */
-    protected function createManager(stdClass $metadata)
-    {
-        if (isset($metadata->definitionBaseClass)) {
-            RouteDefinitionCreator::setBaseClass($metadata->definitionBaseClass);
-        }
-
-        $routes = new RouteCollection(
-            $this->cache ? new CachedReader(new AnnotationReader(), $this->cache) : null
+        return $this->configureManager(
+            new RouteManager(
+                new RouteCollection($this->definitionCreator),
+                new FilterCollection($this->definitionCreator)
+            ),
+            $this->getMetadata($fileName)
         );
-
-        return $this->configureManager(new RouteManager($routes), $metadata);
     }
 
     /**
@@ -93,9 +79,10 @@ class RouteBuilder
      *
      * @param RouteManager $manager
      * @param stdClass $metadata
+     *
      * @return RouteManager
      */
-    protected function configureManager(RouteManager $manager, stdClass $metadata)
+    private function configureManager(RouteManager $manager, stdClass $metadata)
     {
         foreach ($metadata->routes as $route) {
             $manager->addRoute($route->pattern, $route->handler);
@@ -119,18 +106,19 @@ class RouteBuilder
      * Retrieve the configuration data
      *
      * @param string $fileName
+     *
      * @return stdClass
      */
-    protected function getMetadata($fileName)
+    private function getMetadata($fileName)
     {
         $key = md5($fileName);
 
-        $cachedData = $this->loadFromCache($key, $fileName);
-        $metadata = $cachedData ?: $this->createMetadata($fileName);
-
-        if ($this->cache && !$cachedData) {
-            $this->saveToCache($key, $metadata);
+        if ($cachedData = $this->loadFromCache($key, $fileName)) {
+            return $cachedData;
         }
+
+        $metadata = $this->loader->load($fileName);
+        $this->saveToCache($key, $metadata);
 
         return $metadata;
     }
@@ -141,7 +129,7 @@ class RouteBuilder
      * @param string $key
      * @param stdClass $metadata
      */
-    protected function saveToCache($key, stdClass $metadata)
+    private function saveToCache($key, stdClass $metadata)
     {
         $this->cache->save($key, $metadata);
         $this->cache->save($key . '.time', time());
@@ -154,28 +142,14 @@ class RouteBuilder
      * @param string $fileName
      * @return stdClass
      */
-    protected function loadFromCache($key, $fileName)
+    private function loadFromCache($key, $fileName)
     {
-        if (!$this->cache) {
-            return null;
-        }
+        $metadata = $this->cache->fetch($key);
 
-        if (($metadata = $this->cache->fetch($key))
-            && $this->cache->fetch($key . '.time') > filemtime($fileName)) {
+        if ($metadata && $this->cache->fetch($key . '.time') > filemtime($fileName)) {
             return $metadata;
         }
 
         return null;
-    }
-
-    /**
-     * Retrieve the configuration data using the loader
-     *
-     * @param string $fileName
-     * @return stdClass
-     */
-    protected function createMetadata($fileName)
-    {
-        return $this->routeLoader->load($fileName);
     }
 }

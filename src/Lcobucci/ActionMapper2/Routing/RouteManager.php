@@ -37,12 +37,10 @@ class RouteManager
      * @param RouteCollection $routes
      * @param FilterCollection $filters
      */
-    public function __construct(
-        RouteCollection $routes = null,
-        FilterCollection $filters = null
-    ) {
-        $this->routes = $routes ?: new RouteCollection();
-        $this->filters = $filters ?: new FilterCollection();
+    public function __construct(RouteCollection $routes, FilterCollection $filters)
+    {
+        $this->routes = $routes;
+        $this->filters = $filters;
     }
 
     /**

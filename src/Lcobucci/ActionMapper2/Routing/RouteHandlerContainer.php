@@ -8,21 +8,41 @@
 
 namespace Lcobucci\ActionMapper2\Routing;
 
+use Doctrine\Common\Annotations\Reader;
+use Lcobucci\ActionMapper2\DependencyInjection\Container;
+
 /**
  * @author Luís Otávio Cobucci Oblonczyk <lcobucci@gmail.com>
  */
 class RouteHandlerContainer
 {
     /**
+     * @var Reader
+     */
+    private $annotationReader;
+
+    /**
+     * @var Container
+     */
+    private $diContainer;
+
+    /**
      * @var array
      */
     protected $handlers;
 
     /**
+     * @param Reader $annotationReader
+     * @param Container $diContainer
      * @param array $handlers
      */
-    public function __construct(array $handlers = array())
-    {
+    public function __construct(
+        Reader $annotationReader,
+        Container $diContainer,
+        array $handlers = array()
+    ) {
+        $this->annotationReader = $annotationReader;
+        $this->diContainer = $diContainer;
         $this->handlers = $handlers;
     }
 

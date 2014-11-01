@@ -8,11 +8,8 @@
 
 namespace Lcobucci\ActionMapper2\Routing;
 
-use Lcobucci\ActionMapper2\Errors\PageNotFoundException;
-use Doctrine\Common\Annotations\AnnotationReader;
-use Doctrine\Common\Annotations\Reader;
 use InvalidArgumentException;
-use ReflectionClass;
+use Lcobucci\ActionMapper2\Errors\PageNotFoundException;
 
 /**
  * A collection of all application routes
@@ -22,18 +19,21 @@ use ReflectionClass;
 class RouteCollection
 {
     /**
+     * @var string
+     */
+    const ROUTE_INTERFACE = '\Lcobucci\ActionMapper2\Routing\Route';
+
+    /**
+     * @var RouteDefinitionCreator
+     */
+    private $definitionCreator;
+
+    /**
      * The list of routes
      *
      * @var array
      */
     private $routes;
-
-    /**
-     * The annotation reader
-     *
-     * @var Reader
-     */
-    private $annotationReader;
 
     /**
      * Sort controll for route list
@@ -43,13 +43,11 @@ class RouteCollection
     private $sorted;
 
     /**
-     * Class constructor
-     *
-     * @param Reader $annotationReader
+     * @param RouteDefinitionCreator $definitionCreator
      */
-    public function __construct(Reader $annotationReader = null)
+    public function __construct(RouteDefinitionCreator $definitionCreator)
     {
-        $this->annotationReader = $annotationReader ?: new AnnotationReader();
+        $this->definitionCreator = $definitionCreator;
         $this->routes = array();
         $this->sorted = false;
     }
@@ -59,6 +57,7 @@ class RouteCollection
      *
      * @param string $pattern
      * @param Route|\Closure|string $handler
+     *
      * @throws InvalidArgumentException
      */
     public function append($pattern, $handler)
@@ -69,21 +68,16 @@ class RouteCollection
             );
         }
 
-        if (!$handler instanceof \Closure
-            && !$this->isValidHandler($handler)) {
+        if (!$this->isValidHandler($handler)) {
             throw new InvalidArgumentException(
                 'You must pass a closure or a class that implements'
-                . ' \Lcobucci\ActionMapper2\Routing\Route interface'
+                . ' ' . static::ROUTE_INTERFACE . ' interface'
             );
         }
 
         $this->sorted = false;
 
-        $this->routes[$pattern] = RouteDefinitionCreator::create(
-            $pattern,
-            $handler,
-            $this->annotationReader
-        );
+        $this->routes[$pattern] = $this->definitionCreator->create($pattern, $handler);
     }
 
     /**
@@ -119,17 +113,16 @@ class RouteCollection
      */
     protected function isValidHandler($handler)
     {
+        if ($handler instanceof \Closure) {
+            return true;
+        }
+
         if (is_string($handler) && strpos($handler, '::') !== false) {
             $handler = substr($handler, 0, strpos($handler, '::'));
         }
 
-        if (is_object($handler)
-            || (is_string($handler) && class_exists($handler))) {
-            $reflection = new ReflectionClass($handler);
-
-            return $reflection->implementsInterface(
-                '\Lcobucci\ActionMapper2\Routing\Route'
-            );
+        if (is_object($handler) || (is_string($handler) && class_exists($handler))) {
+            return is_subclass_of($handler, static::ROUTE_INTERFACE);
         }
 
         return false;
@@ -140,6 +133,7 @@ class RouteCollection
      *
      * @param string $path
      * @return RouteDefinition
+     *
      * @throws PageNotFoundException
      */
     public function findRouteFor($path)

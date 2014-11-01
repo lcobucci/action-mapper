@@ -8,15 +8,13 @@
 
 namespace Lcobucci\ActionMapper2\Config;
 
+use InvalidArgumentException;
+use Lcobucci\ActionMapper2\Application;
+use Lcobucci\ActionMapper2\DependencyInjection\Container;
 use Lcobucci\ActionMapper2\DependencyInjection\ContainerConfig;
-use Symfony\Component\DependencyInjection\ContainerInterface;
-use Lcobucci\DependencyInjection\Builders\XmlBuilder;
-use Lcobucci\DependencyInjection\ContainerBuilder;
 use Lcobucci\ActionMapper2\Errors\DefaultHandler;
 use Lcobucci\ActionMapper2\Errors\ErrorHandler;
-use Lcobucci\ActionMapper2\Application;
-use Doctrine\Common\Cache\Cache;
-use InvalidArgumentException;
+use Lcobucci\DependencyInjection\Builders\XmlBuilder;
 
 /**
  * The application builder is a factory to create applications using
@@ -34,94 +32,71 @@ class ApplicationBuilder
     protected $routeBuilder;
 
     /**
-     * The dependency injection builder
-     *
-     * @var ContainerBuilder
-     */
-    protected $containerBuilder;
-
-    /**
      * Builds a ready-to-use application with given application
      *
      * @param string $routesConfig
      * @param ContainerConfig $containerConfig
      * @param ErrorHandler $errorHandler
-     * @param Cache|string $applicationCache
+     *
      * @return Application
      */
     public static function build(
         $routesConfig,
         ContainerConfig $containerConfig = null,
-        ErrorHandler $errorHandler = null,
-        $applicationCache = null
+        ErrorHandler $errorHandler = null
     ) {
-        $builder = new static(
-            new RouteBuilder(),
-            new XmlBuilder()
+        $dependencyContainer = self::createContainer($containerConfig);
+
+        $builder = new static(new RouteBuilder());
+
+        return $builder->create(
+            $routesConfig,
+            $dependencyContainer,
+            $errorHandler
         );
+    }
 
-        $dependencyContainer = null;
-
-        if ($containerConfig !== null) {
-            $dependencyContainer = $builder->containerBuilder->getContainer($containerConfig);
+    /**
+     * @param ContainerConfig $containerConfig
+     *
+     * @return Container
+     */
+    private static function createContainer(ContainerConfig $containerConfig = null)
+    {
+        if ($containerConfig === null) {
+            return new Container();
         }
 
-        $builder->configureCache($dependencyContainer, $applicationCache);
-
-        $routeManager = $builder->routeBuilder
-                                ->build(realpath($routesConfig));
-
-        return new Application(
-            $routeManager,
-            $errorHandler ?: new DefaultHandler(),
-            $dependencyContainer
-        );
+        $builder = new XmlBuilder();
+        return $builder->getContainer($containerConfig);
     }
 
     /**
      * Class constructor
      *
      * @param RouteBuilder $routeBuilder
-     * @param ContainerBuilder $containerBuilder
      */
-    public function __construct(
-        RouteBuilder $routeBuilder,
-        ContainerBuilder $containerBuilder
-    ) {
+    public function __construct(RouteBuilder $routeBuilder)
+    {
         $this->routeBuilder = $routeBuilder;
-        $this->containerBuilder = $containerBuilder;
     }
 
     /**
-     * Configure the cache provider for route builder
+     * @param string $routesConfig
+     * @param Container $dependencyContainer
+     * @param ErrorHandler $errorHandler
      *
-     * @param ContainerInterface $container
-     * @param string $applicationCache
-     * @throws InvalidArgumentException
+     * @return Application
      */
-    protected function configureCache(
-        ContainerInterface $container = null,
-        $applicationCache = null
+    public function create(
+        $routesConfig,
+        Container $dependencyContainer,
+        ErrorHandler $errorHandler = null
     ) {
-        if ($applicationCache === null) {
-            return ;
-        }
-
-        if ($applicationCache instanceof Cache) {
-            $this->routeBuilder->setCache($applicationCache);
-
-            return ;
-        }
-
-        if ($container && is_string($applicationCache)) {
-            $this->routeBuilder->setCache($container->get($applicationCache));
-
-            return ;
-        }
-
-        throw new InvalidArgumentException(
-            'Application cache must be an instance of Cache or an existing '
-            . 'service on container'
+        return new Application(
+            $this->routeBuilder->build(realpath($routesConfig)),
+            $errorHandler ?: new DefaultHandler(),
+            $dependencyContainer
         );
     }
 }
