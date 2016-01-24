@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<container xmlns="http://symfony.com/schema/dic/services"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://symfony.com/schema/dic/services ../vendor/symfony/dependency-injection/Loader/schema/dic/services/services-1.0.xsd">
+    <services>
+        <service id="app.routes.builder" class="Lcobucci\ActionMapper2\Config\RouteBuilder">
+            <argument type="service" id="app.routes.loader" />
+            <argument type="service" id="app.routes.definition.creator" />
+            <argument type="service" id="app.cache" />
+            <argument>%app.devmode%</argument>
+        </service>
+        
+        <service id="app.routes.definition.creator" class="Lcobucci\ActionMapper2\Routing\RouteDefinitionCreator"
+            public="false">
+            <argument type="service" id="app.annotations.reader" />
+            <argument type="service" id="app.routes.handler.container" />
+        </service>
+        
+        <service id="app.routes.handler.container" class="Lcobucci\ActionMapper2\Routing\RouteHandlerContainer"
+            public="false">
+            <argument type="service" id="app.annotations.reader" />
+            <argument type="service" id="service_container" />
+        </service>
+        
+        <service id="app.routes.loader" class="Lcobucci\ActionMapper2\Config\Loader\Xml"
+            public="false" />
+            
+        <service id="app.annotations.reader" class="Doctrine\Common\Annotations\CachedReader"
+            public="false">
+            <argument type="service" id="app.annotations.internal_reader" />
+            <argument type="service" id="app.cache" />
+        </service>
+            
+        <service id="app.annotations.internal_reader" class="Doctrine\Common\Annotations\AnnotationReader"
+            public="false" />
+    </services>
+</container>

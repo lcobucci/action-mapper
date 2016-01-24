@@ -8,14 +8,14 @@
 
 namespace Lcobucci\ActionMapper2;
 
-use Lcobucci\ActionMapper2\DependencyInjection\Container;
-use Symfony\Component\HttpFoundation\Session\Storage\NativeSessionStorage;
-use Symfony\Component\HttpFoundation\Session\SessionInterface;
-use Symfony\Component\HttpFoundation\Session\Session;
-use Lcobucci\ActionMapper2\Routing\RouteManager;
 use Lcobucci\ActionMapper2\Errors\ErrorHandler;
-use Lcobucci\ActionMapper2\Http\Response;
 use Lcobucci\ActionMapper2\Http\Request;
+use Lcobucci\ActionMapper2\Http\Response;
+use Lcobucci\ActionMapper2\Routing\RouteManager;
+use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\HttpFoundation\Session\Session;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
+use Symfony\Component\HttpFoundation\Session\Storage\NativeSessionStorage;
 
 /**
  * The application is main resource of this library, it is capable of handling
@@ -65,12 +65,12 @@ class Application
      *
      * @param RouteManager $routeManager
      * @param ErrorHandler $errorHandler
-     * @param Container $dependencyContainer
+     * @param ContainerInterface $dependencyContainer
      */
     public function __construct(
         RouteManager $routeManager,
         ErrorHandler $errorHandler,
-        Container $dependencyContainer
+        ContainerInterface $dependencyContainer
     ) {
         $this->routeManager = $routeManager;
         $this->errorHandler = $errorHandler;
@@ -81,12 +81,10 @@ class Application
     /**
      * Configures the dependency container, injecting the application if need
      *
-     * @param Container $dependencyContainer
+     * @param ContainerInterface $dependencyContainer
      */
-    public function setDependencyContainer(Container $dependencyContainer)
+    public function setDependencyContainer(ContainerInterface $dependencyContainer)
     {
-        $dependencyContainer->setApplication($this);
-
         $this->dependencyContainer = $dependencyContainer;
     }
 
@@ -177,9 +175,12 @@ class Application
      */
     public function setSession(SessionInterface $session)
     {
-        if (!$this->getRequest()->hasSession()) {
-            $this->getRequest()->setSession($session);
+        if ($this->getRequest()->hasSession()) {
+            return;
         }
+
+        $this->getRequest()->setSession($session);
+        $this->dependencyContainer->set('session', $session);
     }
 
     /**
@@ -216,10 +217,11 @@ class Application
      */
     public function forward($path, $interrupt = false)
     {
-        try {
-            $request = $this->getRequest();
-            $previousPath = $request->getRequestedPath();
+        $error = null;
+        $request = $this->getRequest();
+        $previousPath = $request->getRequestedPath();
 
+        try {
             $request->setRequestedPath($path);
             $this->routeManager->process($this);
             $request->setRequestedPath($previousPath);

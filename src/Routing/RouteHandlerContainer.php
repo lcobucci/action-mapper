@@ -9,9 +9,9 @@
 namespace Lcobucci\ActionMapper2\Routing;
 
 use Doctrine\Common\Annotations\Reader;
-use Lcobucci\ActionMapper2\DependencyInjection\Container;
 use ReflectionClass;
 use ReflectionMethod;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * @author Luís Otávio Cobucci Oblonczyk <lcobucci@gmail.com>
@@ -24,7 +24,7 @@ class RouteHandlerContainer
     private $annotationReader;
 
     /**
-     * @var Container
+     * @var ContainerInterface
      */
     private $diContainer;
 
@@ -35,12 +35,12 @@ class RouteHandlerContainer
 
     /**
      * @param Reader $annotationReader
-     * @param Container $diContainer
+     * @param ContainerInterface $diContainer
      * @param array $handlers
      */
     public function __construct(
         Reader $annotationReader,
-        Container $diContainer,
+        ContainerInterface $diContainer,
         array $handlers = array()
     ) {
         $this->annotationReader = $annotationReader;
