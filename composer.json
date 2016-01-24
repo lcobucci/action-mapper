@@ -15,11 +15,11 @@
 		"BSD-3-Clause"
 	],
 	"require" : {
-		"php" : ">=5.3.9",
-		"symfony/http-foundation" : "~2.4",
-		"lcobucci/di-builder" : "~2.0",
+		"php" : "^5.6||^7.0",
+		"symfony/http-foundation" : "~3.0",
+		"lcobucci/di-builder" : "~4.0",
 		"doctrine/annotations" : "~1.2",
-		"doctrine/cache" : "~1.3",
+		"doctrine/cache" : "~1.6",
 		"psr/log" : "~1.0"
 	},
 	"require-dev" : {
@@ -29,7 +29,12 @@
 	},
 	"autoload" : {
 		"psr-4" : {
-			"Lcobucci\\ActionMapper2\\" : ["src/", "test"]
+			"Lcobucci\\ActionMapper2\\" : "src/"
 		}
-	}
+	},
+    "autoload-dev" : {
+        "psr-4" : {
+            "Lcobucci\\ActionMapper2\\" : "test"
+        }
+    }
 }

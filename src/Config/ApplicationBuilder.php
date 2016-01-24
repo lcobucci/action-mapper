@@ -8,13 +8,11 @@
 
 namespace Lcobucci\ActionMapper2\Config;
 
-use InvalidArgumentException;
 use Lcobucci\ActionMapper2\Application;
-use Lcobucci\ActionMapper2\DependencyInjection\Container;
-use Lcobucci\ActionMapper2\DependencyInjection\ContainerConfig;
 use Lcobucci\ActionMapper2\Errors\DefaultHandler;
 use Lcobucci\ActionMapper2\Errors\ErrorHandler;
-use Lcobucci\DependencyInjection\Builders\XmlBuilder;
+use Lcobucci\DependencyInjection\ContainerBuilder;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * The application builder is a factory to create applications using
@@ -35,17 +33,17 @@ class ApplicationBuilder
      * Builds a ready-to-use application with given application
      *
      * @param string $routesConfig
-     * @param ContainerConfig $containerConfig
+     * @param ContainerBuilder $containerBuilder
      * @param ErrorHandler $errorHandler
      *
      * @return Application
      */
     public static function build(
         $routesConfig,
-        ContainerConfig $containerConfig = null,
+        ContainerBuilder $containerBuilder = null,
         ErrorHandler $errorHandler = null
     ) {
-        $dependencyContainer = self::createContainer($containerConfig);
+        $dependencyContainer = self::createContainer($containerBuilder);
 
         $builder = new static(
             $dependencyContainer->get('app.routes.builder')
@@ -59,18 +57,16 @@ class ApplicationBuilder
     }
 
     /**
-     * @param ContainerConfig $containerConfig
+     * @param ContainerBuilder $containerBuilder
      *
-     * @return Container
+     * @return ContainerInterface
      */
-    private static function createContainer(ContainerConfig $containerConfig = null)
+    private static function createContainer(ContainerBuilder $containerBuilder = null)
     {
-        if ($containerConfig === null) {
-            return new Container();
-        }
+        $containerBuilder = $containerBuilder ?: new ContainerBuilder();
 
-        $builder = new XmlBuilder();
-        return $builder->getContainer($containerConfig);
+        return $containerBuilder->addFile(__DIR__ . '/../../config/services.xml')
+                                ->getContainer();
     }
 
     /**
@@ -85,14 +81,14 @@ class ApplicationBuilder
 
     /**
      * @param string $routesConfig
-     * @param Container $dependencyContainer
+     * @param ContainerInterface $dependencyContainer
      * @param ErrorHandler $errorHandler
      *
      * @return Application
      */
     public function create(
         $routesConfig,
-        Container $dependencyContainer,
+        ContainerInterface $dependencyContainer,
         ErrorHandler $errorHandler = null
     ) {
         return new Application(
