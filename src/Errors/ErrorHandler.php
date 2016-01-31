@@ -90,7 +90,7 @@ abstract class ErrorHandler
      */
     public function handlePhpError($severity, $message, $fileName, $lineNumber)
     {
-        if ($this->shouldSkipError($severity, $message)) {
+        if (error_reporting() === 0) {
             return ;
         }
 
@@ -199,16 +199,4 @@ abstract class ErrorHandler
      * @return string
      */
     abstract protected function getErrorContent(HttpException $error);
-
-    /**
-     * Verifies if the handler should ignore the given error
-     *
-     * @param int $severity
-     * @param string $message
-     * @return boolean
-     */
-    protected function shouldSkipError($severity, $message)
-    {
-        return false;
-    }
 }
